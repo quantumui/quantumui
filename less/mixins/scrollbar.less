@@ -1,0 +1,48 @@
+﻿.webkit-scrollbar-variant(@bg-color; @color; @thumb-bg;) {
+    &::-webkit-scrollbar {
+        background-color: @bg-color; 
+    }
+
+    body::-webkit-scrollbar,
+    html::-webkit-scrollbar,
+    &::-webkit-scrollbar-button { 
+        background-color:@bg-color; 
+        color:@color;
+        border-color:lighten(@thumb-bg, 15%); 
+    }
+    &::-webkit-scrollbar-button { 
+        &:hover{
+            background-color:darken(@bg-color, 10%);
+        }
+    }
+    &::-webkit-scrollbar-thumb:window-inactive {
+	    background-color:fade(@thumb-bg, 15%); 
+    }      
+    &::-webkit-scrollbar-corner {
+	    background-color: @bg-color;
+	    border-color:@bg-color;
+    }                                                                                                                 
+}
+
+.nq-scrollbar-variant(@bg-color; @color; @thumb-bg;) {
+   .scrollbar .scrollbar-thumb{
+        background-color:@thumb-bg;
+    }    
+   .scrollbar-track{
+       > .track-inner{
+           background-color:@bg-color; 
+        }
+    }     
+    .bar-increment,
+    .bar-decrement {
+        background-color:@thumb-bg;
+
+        > span {
+            border-color:@color;
+        }
+    }                                                                                                    
+}
+.scrollbar-variant(@bg-color; @color; @thumb-bg;) {
+   .webkit-scrollbar-variant(@bg-color; @color; @thumb-bg;);
+   .nq-scrollbar-variant(@bg-color; @color; @thumb-bg;)                                                                                                 
+}

@@ -1,0 +1,103 @@
+//
+// Carousel extend
+// --------------------------------------------------
+
+
+.carousel-inner {
+
+  > .item {
+    position: absolute;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+  }
+}
+
+.carousel-title{
+    position: absolute;
+    left:0;
+    right:0;
+    top:0;
+    height:45px;
+    line-height:45px;
+    white-space:nowrap;
+    overflow:hidden;
+    font-size:22px;
+    font-weight:bold;
+    margin:0;
+    padding-left:20px;
+    color: #ffffff !important;
+    background:rgba(0,0,0, 0.4)
+}
+
+/*number navigation*/
+.carousel.number-navigation,
+.carousel.thumb-navigation {
+    padding:2px;
+    padding-bottom:30px;
+    border: 1px solid @skin-base-light;
+    border-radius:4px;
+   .carousel-indicators {
+      bottom: 0;
+      left: 0;
+      z-index: 15;
+      width: 100%;
+      padding: 2px;
+      margin: 0;
+      background-color:@skin-base-light;
+      #gradient > .vertical(@start-color: lighten(@skin-base-light, 4%); @end-color: @skin-base-light;);
+      
+        > li{
+            width: 30px;
+            height: 30px;
+            margin: 1px;
+            text-indent: 0;
+            border-radius:4px;
+            #gradient > .radial(@inner-color: lighten(@skin-base-light, 4%); @outer-color: darken(@skin-base-light, 8%););
+       }
+       
+   }
+    .indicator-no {
+        display:block;
+        font-size:16px;
+        font-weight:bold;
+        line-height:30px;
+        color:@skin-inverse;
+    }
+    .carousel-caption {
+        right: 0;
+        bottom: 0;
+        left: 0;
+        color: #ffffff;
+        text-align: justify;
+        padding:10px;
+        border-top: 1px solid @skin-base-light;
+        background-color:fade(@skin-inverse, 50%);
+    }
+}
+
+/*thumb navigation*/
+.carousel.thumb-navigation {
+    padding-bottom:5px;
+    .carousel-indicators {
+      overflow:hidden;
+      height:54px;
+      > li{
+          width: 70px;
+          height: 50px;
+          line-height:50px;
+          margin: 1px;
+          margin-bottom:3px;
+          text-indent: 0;
+          border-radius:0;
+          opacity:0.6;
+      }
+    }
+    .indicator-no {
+        display:block;
+    }
+    .carousel-caption {
+      bottom: 50px;
+      color: #ffffff;
+    }
+}

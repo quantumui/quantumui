@@ -1,0 +1,21 @@
+{
+  "asi"      : false,
+  "boss"     : true,
+  "browser"  : true,
+  "curly"    : true,
+  "debug"    : true,
+  "devel"    : true,
+  "eqeqeq"   : false,
+  "eqnull"   : true,
+  "es3"      : true,
+  "expr"     : true,
+  "jquery"   : true,
+  "latedef"  : true,
+  "laxbreak" : true,
+  "nonbsp"   : true,
+  "quotmark" : "single",
+  "strict"   : true,
+  "undef"    : true,
+  "unused"   : true,
+  "validthis": true
+}

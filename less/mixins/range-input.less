@@ -1,0 +1,171 @@
+﻿.range-track(@height; @bg-color) {
+  &::-webkit-slider-runnable-track {
+      width: 100%;
+      height: @height;
+      background: @bg-color;
+      border: none;
+      border-radius: ceil((@height /2));
+  }
+  &:focus::-webkit-slider-runnable-track {
+      background: darken(@bg-color, 7%);
+  }
+  &::-moz-range-track {
+      width: 100%;
+      height: @height;
+      background: @bg-color;
+      border: none;
+      border-radius: ceil((@height /2));
+  }
+  &:focus::-moz-range-track {
+      background: darken(@bg-color, 7%);
+  }
+  &::-ms-track {
+      width: 100%;
+      height: @height;
+      background: transparent;
+      border-color: transparent;
+      border-width: (@height + 1px) 0;
+      /*remove default tick marks*/
+      color: transparent;
+  }
+  &::-ms-fill-lower {
+      background: @bg-color;
+      border-radius: ceil((@height /2));
+  }
+  &::-ms-fill-upper {
+      background: darken(@bg-color, 7%);
+      border-radius: ceil((@height /2));
+  }
+  &:focus::-ms-fill-lower {
+      background: darken(@bg-color, 3%);
+  }
+  &:focus::-ms-fill-upper {
+      background: darken(@bg-color, 10%);
+  }
+}
+.range-thumb(@height; @bg-color; @border-color) {
+  &::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: (@height * 3) + 2px;
+      height: (@height * 3) + 2px;
+      border-radius: 50%;
+      background: @bg-color;
+      border: @height solid @border-color;
+      margin-top: -(@height  + 2px);
+  }
+  &:hover::-webkit-slider-thumb {
+      background: darken(@bg-color, 7%);
+      border-color: darken(@border-color, 7%);
+  }
+  &::-moz-range-thumb {
+      height: @height  + 2px;
+      width: @height  + 2px;
+      border-radius: 50%;
+      background: @bg-color;
+      border: @height solid @border-color;
+  }
+  &:hover::-moz-range-thumb {
+      background: darken(@bg-color, 7%);
+      border-color: darken(@border-color, 7%);
+  }
+  &::-ms-thumb {
+      height: @height  + 2px;
+      width: @height  + 2px;
+      border-radius: 50%;
+      background: @bg-color;
+      border: @height solid @border-color;
+  }
+  &:hover::-ms-thumb {
+      background: darken(@bg-color, 7%);
+      border-color: darken(@border-color, 7%);
+  }  
+}
+.range-input-size(@height) {
+  &::-webkit-slider-thumb {
+      width: (@height * 3) + 2px;
+      height: (@height * 3) + 2px;
+      border-width: @height;
+      margin-top: @height  + 2px;
+  }
+  &::-moz-range-thumb {
+      height: @height  + 2px;
+      width: @height  + 2px;
+      border-width: @height;
+      
+  }
+  &::-ms-thumb {
+      height: @height  + 2px;
+      width: @height  + 2px;
+      border-width: @height;
+  }   
+  &::-webkit-slider-runnable-track {
+      height: @height;
+      border-radius: ceil((@height /2));
+  }
+  &::-moz-range-track {
+      height: @height;
+      border-radius: ceil((@height /2));
+  }
+  &::-ms-track {
+      width: 100%;
+      height: @height;
+      border-width: (@height + 1px) 0;
+  }
+  &::-ms-fill-lower {
+      border-radius: ceil((@height /2));
+  }
+  &::-ms-fill-upper {
+      border-radius: ceil((@height /2));
+  }
+}
+.range-input-skin(@bg-color; @border-color) {
+  &::-webkit-slider-thumb {
+      background: @bg-color;
+      border-color:@border-color;
+  }
+  &:hover::-webkit-slider-thumb {
+      background: darken(@bg-color, 7%);
+      border-color: darken(@border-color, 7%);
+  }
+  &::-moz-range-thumb {
+      background: @bg-color;
+      border-color: @border-color;
+  }
+  &:hover::-moz-range-thumb {
+      background: darken(@bg-color, 7%);
+      border-color: darken(@border-color, 7%);
+  }
+  &::-ms-thumb {
+      background: @bg-color;
+      border-color: @border-color;
+  }
+  &:hover::-ms-thumb {
+      background: darken(@bg-color, 7%);
+      border-color: darken(@border-color, 7%);
+  }  
+  &::-webkit-slider-runnable-track {
+      background: @bg-color;
+  }
+  &:focus::-webkit-slider-runnable-track {
+      background: darken(@bg-color, 7%);
+  }
+  &::-moz-range-track {
+      background: @bg-color;
+  }
+  &:focus::-moz-range-track {
+      background: darken(@bg-color, 7%);
+  }
+ 
+  &::-ms-fill-lower {
+      background: @bg-color;
+  }
+  &::-ms-fill-upper {
+      background: darken(@bg-color, 7%);
+  }
+  &:focus::-ms-fill-lower {
+      background: darken(@bg-color, 3%);
+  }
+  &:focus::-ms-fill-upper {
+      background: darken(@bg-color, 10%);
+  }
+}

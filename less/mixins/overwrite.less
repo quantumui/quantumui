@@ -1,0 +1,33 @@
+﻿.box-shadow(@shadow,@shadow2:X, @shadow3:X, @shadow4:X,@shadow5:X) {
+  @shadow-prop: ~`"@{arguments}".replace(/[\[\]]|\,\sX/g, '')`;
+  -webkit-box-shadow: @shadow-prop; // iOS <4.3 & Android <4.1
+          box-shadow: @shadow-prop;
+}
+.transition(@transition, @transition2:X, @transition3:X) {
+    @transition-prop: ~`"@{arguments}".replace(/[\[\]]|\,\sX/g, '')`;
+  -webkit-transition: @transition-prop;
+       -o-transition: @transition-prop;
+          transition: @transition-prop;
+}
+
+// Gradients
+
+#gradient {
+    #gradient();
+
+  .elipse(@inner-color: #555; @outer-color: #333) {
+    background-image: -webkit-radial-gradient(center, ellipse cover, @inner-color, @outer-color);
+    background-image: radial-gradient(ellipse at center, @inner-color, @outer-color);
+    background-repeat: no-repeat;
+  }
+  .elipse-button(@inner-color: #555; @outer-color: #333) {
+    background-image: -webkit-radial-gradient(center, ellipse farthest-corner, @inner-color 0, @inner-color 50%, @outer-color 150%);
+    background-image: radial-gradient(ellipse farthest-corner at center, @inner-color 0, @inner-color 50%, @outer-color 150%);
+    background-repeat: no-repeat;
+  }
+  .elipse-button-hover(@inner-color: #555; @outer-color: #333) {
+    background-image: -webkit-radial-gradient(center, ellipse farthest-corner, @inner-color 0, @inner-color 60%, @outer-color 120%);
+    background-image: radial-gradient(ellipse farthest-corner at center, @inner-color 0, @inner-color 60%, @outer-color 120%);
+    background-repeat: no-repeat;
+  }
+}

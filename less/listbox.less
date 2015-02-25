@@ -1,0 +1,272 @@
+﻿.listbox-panel {
+    display:none;
+    position:absolute;
+    min-height:20px;
+    max-width:@listbox-max-width;
+    z-index:@listbox-z-index;
+    padding:3px;
+    font-size: @listbox-font-size;
+    list-style: none;
+    background-color: @listbox-bg;
+    border: 1px solid @listbox-border-color;
+    border-radius: @listbox-border-radius;
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+          box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    margin-top:0px;
+
+    > span {
+        display: block;
+        font-size:14px;
+        padding-left:10px;
+        background-color:#f8fafe;
+    }
+    > span.search-label {
+        position:relative;
+        padding:3px;
+    }
+    > span > .spin-icon {
+      position:absolute;
+      right:5px;
+      top:7px;
+    }
+   > .scrollable {
+        width:100%;
+        margin:0;
+        padding:0;
+        max-height:@listbox-max-height;
+        overflow:hidden;
+        padding:0;
+
+       > .listbox {
+          max-height:none;
+      }
+    }
+   > .select-input{
+       height:26px;
+       padding:4px 8px;
+       font-size:12px;
+   }
+}
+
+.select-toggle {
+  text-align:left;
+  padding-right:35px;
+  position:relative;
+}
+.select-toggle:focus {
+  outline: 0;
+  .box-shadow(none)
+}
+.select-toggle.active, 
+.btn.select-toggle.active{
+    background-image:none !important;
+}
+.select-toggle:after, 
+.btn.select-toggle:after {
+    font-family:@component-font-family;
+    background-color:transparent;
+    border-top-right-radius:inherit;
+    border-bottom-right-radius:inherit;
+    position: absolute;
+    content: @angle-icon;
+    display: inline-block;
+    right: 0;
+    padding-right:5px;
+    padding-left: 5px;
+    padding-top: inherit;
+    font-weight: normal;
+    border-left: 1px solid transparent;
+    border-color:inherit;
+    top: 0;
+    bottom: 0;
+}
+.select-toggle.active:after, 
+.btn.select-toggle.active:after {
+    content:@angle-up-icon;
+}
+.select-toggle + select{
+  display:none !important;
+}
+.nav.select-render-nav {
+    height:auto;
+    padding:3px 2px 3px 4px;
+    min-height:@input-height-base;
+
+    > li {
+        margin-top:1px;
+        margin-bottom:1px;
+        > a {
+            padding:0 8px;
+            font-size:14px;
+            margin-right:2px;
+            height:@input-height-base - 9px;
+            line-height:@input-height-base - 8px;
+            &:hover {
+                opacity:1;
+            }
+            > .clear-icon{
+                position:relative;
+                color:inherit;
+                font-size:1.25em;
+                margin-left:5px;
+                top:0.2em;
+            }
+        }
+    }
+    > li + li {
+        margin-left:0;
+        margin-right:2px;
+    }
+    &.single-option {
+        display:table;
+        li{
+            display:table-cell;
+            width:100%;
+        }
+        li + li{
+            display:none;
+        }
+         li > a > .clear-icon{
+            position:absolute;
+            right:1px;
+            top:0.3em;
+            margin-top:-1px !important;
+        }
+    }
+    li + li .select-input{
+        max-width:70px;
+    }
+   .select-input{
+        min-width:20px;
+        width:auto;
+        max-width:200px;
+        padding:0;
+        padding-left:7px;
+        font-size:inherit;
+        height:@input-height-base - 9px;
+        line-height:@input-height-base - 9px;
+        border:0;
+        outline:0;
+        background-color:transparent;
+        .box-shadow(none);
+
+        &:focus{
+            .box-shadow(none);
+            border:0;
+            outline:0;
+        }
+    
+    }
+
+    &.input-sm {
+        padding:2px 1px 2px 3px;
+        min-height:@input-height-small;
+        .select-input,
+        > li > a{
+            font-size:11px;
+            padding:3px;
+            height:@input-height-small - 7px;
+            line-height:@input-height-small - 7px;
+        }
+        > li > a{
+            padding:0 4px;
+        }
+    }
+    &.input-lg {
+        padding:4px 4px 4px 6px;
+        min-height:@input-height-large;
+        .select-input,
+        > li > a {
+            padding:5px 4px;
+            height:@input-height-small - 11px;
+            line-height:@input-height-small - 11px;
+        }
+        > li > a {
+            padding:0px 7px;
+        }
+    }  
+}
+
+.listbox {
+    width:100%;
+    margin-top:5px;
+    margin-bottom:0;
+    list-style-type:none;
+    padding:0;
+   ul{
+       margin-bottom:0;
+       list-style-type:none;
+       padding:0;
+   }
+   > li,
+   > li li{
+        color:@listbox-color;
+        padding-bottom:3px;
+    }
+   > li:hover,
+   > li:focus{
+       background-color:transparent;
+    }
+   .option-group > .group-label{
+       font-weight:bold;
+       padding-left:7px;
+       font-size: @listbox-font-size + 1px;
+    }
+   .select-option{
+        line-height:@listbox-font-size + 3px;
+        width:100%;
+        display:block;
+        padding:4px 5px 4px 8px;
+        cursor:pointer;
+        color:@listbox-color;
+        position:relative;
+        margin-bottom:2px;
+    }
+   li li > .select-option{
+        padding-left:15px;
+    }
+  .select-option:hover,
+  .select-option:focus{
+       background-color:@listbox-option-hover-bg;
+       color:@listbox-option-hover-color;
+    }
+  .select-option.selected {
+       background-color:@listbox-option-active-bg;
+       color:@listbox-option-active-color;
+    }
+  .highlight{
+      text-decoration:underline;
+      color:@listbox-highlight-color;
+  }
+}
+
+
+
+.btn .clear-icon{
+    position:absolute;
+    line-height:1.1;
+    right:1.3em;
+    z-index:90;
+    font-size:1.3em;
+}
+.btn .clear-icon:hover{
+   background-color:rgba(255, 255, 255, 0.26);
+   border-radius:50%;
+}
+.btn .clear-icon:hover:before{
+   margin-top:0 !important;
+}
+
+.show-tick .select-option.selected {
+   padding-left:1em;
+   
+}
+.show-tick .select-option.selected:after {
+   font-family:@component-font-family;
+   content:@tick-icon;
+   padding:inherit;
+   position:absolute;
+   right:0;
+   top:0;
+   bottom:0;
+}

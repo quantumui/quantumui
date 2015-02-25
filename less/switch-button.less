@@ -1,0 +1,62 @@
+﻿.btn-group.btn-switch {
+    display: table;
+    border-collapse: separate;
+    >input {
+      display:none;
+    }
+    > .btn {
+      display: table-cell;
+      float: none;
+      position:relative;
+      overflow:hidden;
+      table-layout: fixed;
+      width:50%;
+    }
+    > .btn > span{
+      visibility:hidden;
+      display:none;
+    }
+    > .btn > .visibleswitch{
+      visibility:visible;
+      display:block;
+    }
+    > .btn > .switch-label{
+      position:relative;
+      color:#333;
+      text-shadow: 0 1px 0 #fff;
+      text-transform:uppercase;
+      z-index:1;
+    }
+    > .btn > .switch-bg{
+      content:'';
+      position:absolute;
+      color:#666;
+      left:0;
+      right:0;
+      top:0;
+      bottom:0;
+      z-index:0;
+      background-color:rgba(255, 255, 255, 0.80);
+    }
+    > .btn:first-child > .switch-bg {
+      border-top-left-radius:inherit;
+      border-bottom-left-radius:inherit;
+    }
+    > .btn:last-child > .switch-bg {
+      border-top-right-radius:inherit;
+      border-bottom-right-radius:inherit;
+    }
+}
+
+.btn-stripped.btn-switch > .btn > .switch-bg{
+  background-color:rgba(55, 65, 75, 0.1);
+}
+
+.btn-switch.slide-left .visibleswitch-add {
+    -webkit-animation:slideLeftIn 0.35s linear;
+    animation:slideLeftIn 0.35s linear;
+}
+.btn-switch.slide-right .visibleswitch-add {
+    -webkit-animation:slideRightIn 0.35s linear;
+    animation:slideRightIn 0.35s linear;
+}

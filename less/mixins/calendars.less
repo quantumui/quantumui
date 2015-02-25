@@ -1,0 +1,71 @@
+﻿.calendar-skin(@panel-bg; @color; @table-bg; @border-color; @active-bg; @active-color) {
+    background-color:@panel-bg;
+    &.with-arrow:after {
+        border-color:@panel-bg;
+    }
+    a, .calendar-header button{
+        color:@color;
+    }
+    .calendar-table {
+        color: lighten(@color, 12%);
+        background-color: @table-bg;
+        border-color: @border-color;
+        thead th,
+        thead td {
+            color: lighten(@color, 8%);
+            #gradient > .vertical(@start-color: @table-bg; @end-color: darken(@table-bg, 6%))
+        }
+
+        thead th.cal-week-no,
+        tbody th {
+           color:lighten(@color, 12%);
+        }
+        tbody td.selected,
+        tbody td:hover {
+           background-color:@active-bg;
+           color:@active-color !important;
+        }
+
+        tbody th.out-month,
+        tbody td.out-month {
+           color:saturate(@color, 12%);
+           background-color: desaturate(@table-bg, 10%);
+        }
+        tbody th.weekend,
+        tbody td.weekend {
+           color:lighten(@color, 12%);
+           background-color: darken(@table-bg, 10%);
+        }
+        tbody th.unselectable,
+        tbody td.unselectable {
+           background-color: greyscale(@table-bg, 50%);
+        }
+        tbody th.unselectable:hover,
+        tbody td.unselectable:hover {
+           background-color: greyscale(@table-bg, 50%);
+        }
+    }
+    .year-selector{
+        border-top-color:@border-color;
+        background-color:lighten(@border-color, 10%);
+        a.active span,
+        a:hover span{
+            border-color:darken(@active-bg, 12%);
+            background-color:@active-bg;
+            color:@active-color;
+        }
+    }
+    .tp-visible {
+        .tp-switcher{
+            background-color: lighten(@border-color, 7%);
+            border-bottom-color: @border-color;
+        }
+    }
+    .tp-time-list {
+        > a:hover span,
+        > a.active  span{
+            background-color:@active-bg;
+            color: @active-color;
+        }
+    }
+}

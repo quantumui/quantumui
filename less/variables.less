@@ -1,0 +1,316 @@
+//
+// QuantumUI Variables
+// You must import bootstrap variabled 
+// --------------------------------------------------
+
+//== Colors
+//
+//## skin colors for use across QuantumUI.
+@skin-base:                 darken(@gray-lighter, 20%);
+@skin-base-dark:            darken(@skin-base, 10%);
+@skin-base-darker:          darken(@skin-base, 20%);
+@skin-base-light:           lighten(@skin-base, 15%);
+@skin-base-lighter:         lighten(@skin-base, 25%);
+@skin-base-active:          #da3282;
+@skin-base-accent:          #ff000a;
+
+
+@skin-inverse:                 @gray;
+@skin-inverse-dark:            @gray-dark;
+@skin-inverse-darker:          @gray-darker;
+@skin-inverse-light:           lighten(spin(@skin-inverse, 5%), 10%);
+@skin-inverse-lighter:         lighten(spin(@skin-inverse, 5%), 20%);
+
+@brand-primary-darker:         darken(@brand-primary, 15%);
+@brand-primary-dark:           darken(@brand-primary, 7.5%);
+@brand-primary-light:          lighten(@brand-primary, 18%);
+@brand-primary-lighter:        lighten(@brand-primary, 38%);
+
+@brand-info-darker:            darken(@brand-info, 15%);
+@brand-info-dark:              darken(@brand-info, 7.5%);
+@brand-info-light:             lighten(@brand-info, 18%);
+@brand-info-lighter:           lighten(@brand-info, 33%);
+
+@brand-success-darker:         darken(@brand-success, 15%);
+@brand-success-dark:           darken(@brand-success, 7.5%);
+@brand-success-light:          lighten(@brand-success, 18%);
+@brand-success-lighter:        lighten(@brand-success, 40%);
+
+@brand-warning-darker:         darken(@brand-warning, 15%);
+@brand-warning-dark:           darken(@brand-warning, 7.5%);
+@brand-warning-light:          lighten(@brand-warning, 11%);
+@brand-warning-lighter:        lighten(@brand-warning, 20%);
+
+
+@brand-danger-darker:         darken(@brand-danger, 15%);
+@brand-danger-dark:           darken(@brand-danger, 7.5%);
+@brand-danger-light:          lighten(@brand-danger, 18%);
+@brand-danger-lighter:        lighten(@brand-danger, 33%);
+
+
+
+//== Iconography
+//
+//## Specify custom location and filename of the included Glyphicons icon font. Useful for those including Bootstrap via Bower.
+
+
+//** Global color for active items (e.g., navs or dropdowns).
+@component-active-color:    @skin-base-active;
+//** Global background color for active items (e.g., navs or dropdowns).
+@component-active-bg:       @brand-primary;
+
+//** component font family.
+@component-font-family:        'glyphicons-halflings-regular';
+@angle-icon:                   '\e259';
+@angle-up-icon:                '\e260';
+@tick-icon:                    '\e013';
+@info-icon:                    '\e086';
+@danger-icon:                  '\e107';
+@warning-icon:                 '\e101';
+
+
+//** Carets increase slightly in size for larger components.
+@caret-width-large:                        5px;
+
+
+//** Background for the dropdown container.
+@dropdown-container-bg:                    @skin-base-light;
+
+@dropdown-container-box-shadow:            0 5px 10px fade(@skin-inverse, 1.75%);
+
+@dropdown-container-box-shadow-top:        0 -5px 10px fade(@skin-inverse, 1.75%);
+//** Dropdown container `border-color`.
+@dropdown-container-border:                darken(@dropdown-container-bg, 5.5%);
+
+@dropdown-container-fallback-border:       darken(@dropdown-container-bg, 5.5%);
+
+@dropdown-container-min-width:             170px;
+//** Dropdown container `max-width`.
+@dropdown-container-max-width:             360px;
+@dropdown-container-header-padding:        5px 7px;
+@dropdown-container-footer-padding:        5px 7px;
+@dropdown-container-header-color:          @skin-inverse-dark;
+@dropdown-container-footer-color:          @skin-inverse-dark;
+
+//-- Z-index master list
+//
+// Warning: Avoid customizing these values. They're used for a bird's eye view
+// of components dependent on the z-axis and are designed to all work together.
+//
+// Note: These variables are not generated into the Customizer.
+
+@zindex-dropdown:          1040;
+@zindex-aside:             1040;
+@zindex-modal:             1050;
+@zindex-titip:             9999;
+
+
+
+//== Modals extend
+//
+//##
+
+
+@modal-box-lg:                    600px;
+@modal-box-md:                    450px;
+@modal-box-sm:                    250px;
+
+//== Tabs
+@nav-tabs-font-size:                        @font-size-base - 1px;
+
+//== Scrollbar
+//
+//##
+
+//** general scrollbar size.
+@scrollbar-image-path:       "images/scrollbar";
+@scrollbar-size:              8px; 
+//** page scrollbar size.
+@scrollbar-page-size:         12px; 
+
+@scrollbar-offset:            5px;
+
+@scrollbar-color:             #fff;
+@scrollbar-bg-color:          fade(@skin-base-light, 30%); 
+@scrollbar-button-bg-color:   fade(@skin-base-light, 50%);
+@scrollbar-hover-bg-color:    fade(@skin-base-light, 65%); 
+@scrollbar-border-color:      lighten(@skin-base-light, 35%); 
+
+@scrollbar-track-border-radius:    6px; 
+@scrollbar-track-box-shadow:       inset 0 0 6px rgba(0,0,0,0.3);
+
+@scrollbar-thumb-opacity:          0.9;
+@scrollbar-thumb-bg-color:         lighten(@skin-inverse, 10%);
+@scrollbar-thumb-border-radius:    6px; 
+@scrollbar-thumb-box-shadow:       inset 3px 3px 9px rgba(255, 255, 255, 0.3), inset -3px -3px 9px rgba(255, 255, 255, 0.3);
+@scrollbar-thumb-box-shadow-hover: inset 3px 3px 9px rgba(0, 0, 0, 0.2), inset -3px -3px 9px rgba(0, 0, 0, 0.2);
+@scrollbar-thumb-filter-image:     radial-gradient(ellipse at center, rgba(255,255,255,0.2) 40%, rgba(0,0,0,0.1) 100%);
+
+@scrollbar-corner-bg-color:          lighten(@skin-base, 20%); 
+@scrollbar-corner-border-color:      @scrollbar-corner-bg-color;
+
+//** quantum scrollbar settings
+@scrollbar-z-index:                9;
+
+@scrollbar-button-bg-color:        @scrollbar-thumb-bg-color;
+@scrollbar-button-box-shadow:      1px 1px 2px 0px rgba(50, 50, 50, 0.3);
+@scrollbar-button-size:            @scrollbar-size;
+@scrollbar-button-border-width:    4px;
+@scrollbar-button-border-color:    rgba(255, 255, 255, 0.8);
+
+
+@scrollbar-info-bg                    : @brand-info-lighter;
+@scrollbar-info-color                 : @brand-info-lighter;
+@scrollbar-info-thumb-bg              : @brand-info;
+
+@scrollbar-warning-bg                 : @brand-warning-lighter;
+@scrollbar-warning-color              : @brand-warning-lighter;
+@scrollbar-warning-thumb-bg           : @brand-warning-dark;
+
+@scrollbar-danger-bg                  : @brand-danger-lighter;
+@scrollbar-danger-color               : @brand-danger-lighter;
+@scrollbar-danger-thumb-bg            : @brand-danger;
+
+@scrollbar-success-bg                 : @brand-success-lighter;
+@scrollbar-success-color              : @brand-success-lighter;
+@scrollbar-success-thumb-bg           : @brand-success;
+
+
+//== with-arrow Utils
+//
+//##
+@with-arrow-border-width:           10px;
+@with-arrow-margin:                 @with-arrow-border-width;
+@with-arrow-offset:                 @with-arrow-border-width;
+@with-arrow-top-box-shadow:         0 -6px 12px rgba(0, 0, 0, 0.175);
+
+@with-arrow-border-inner-color:    #fff;
+@with-arrow-border-outer-color:    #fff;
+
+//== titip pure CSS tooltip
+//
+//##
+@titip-tringle-width:               8px;
+@titip-bg:                          @skin-inverse-dark;
+@titip-border-color:                @skin-inverse-darker;
+@titip-color:                       @skin-base-lighter;
+@titip-padding:                     6px 9px 7px;
+@titip-font-size:                   13px;
+@titip-line-height:                 13px;
+@titip-radius:                      @border-radius-base;
+@titip-box-shadow:                  1px 1px 7px 0px rgba(50, 50, 50, 0.09);
+
+//== input[type="range"] IE10+ and nq-range-slider
+//
+//##
+@range-height:                      6px;
+@range-bg:                          @skin-base-lighter;
+@range-selection-bg:                @skin-base;
+@range-thumb-border:                @skin-inverse;
+@range-ticks-color:                 @skin-inverse-darker;
+@range-ticks-border-color:          @skin-base-light;
+@range-values-font-size:            11px;
+@range-thumb-width:                 10px;
+@range-thumb-height:                20px;
+
+@range-box-shadow:                  inset 0 1px 2px rgba(0, 0, 0, 0.2);
+@range-box-shadow-horizontal:       inset 0 -1px 2px rgba(0, 0, 0, 0.1);
+@range-thumb-box-shadow:            inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
+
+@range-height-xs:                   4px;
+@range-thumb-width-xs:              8px;
+@range-thumb-height-xs:             16px;
+@range-height-md:                   10px;
+@range-thumb-width-md:              14px;
+@range-thumb-height-md:             24px;
+@range-height-lg:                   14px;
+@range-thumb-width-lg:              18px;
+@range-thumb-height-lg:             28px;
+@range-slider-size:                 210px;
+@range-ticks-size:                  12px;
+
+@range-primary-bg:                 @brand-primary-lighter;
+@range-primary-selection-bg:       @brand-primary;
+@range-primary-border:             @brand-primary-dark;
+
+@range-success-bg:                 @state-success-bg;
+@range-success-selection-bg:       @brand-success;
+@range-success-border:             @brand-success-dark;
+
+
+@range-info-bg:                    @state-info-bg;
+@range-info-selection-bg:          @brand-info;
+@range-info-border:                @brand-info-dark;
+
+@range-warning-bg:                 @state-warning-bg;
+@range-warning-selection-bg:       @brand-warning;
+@range-warning-border:             @brand-warning-dark;
+
+@range-danger-bg:                  @state-danger-bg;
+@range-danger-selection-bg:        @brand-danger;
+@range-danger-border:              @brand-danger-dark;
+
+//== calendars, datepicker, datetimepicker
+//
+//##
+@cal-panel-bg:                      #fff;
+@cal-panel-z-index:                 @listbox-z-index;
+@cal-panel-border-color:            @skin-base-light;
+@cal-panel-color:                   @skin-inverse-dark;
+@cal-active-bg:                     @skin-base-active;
+@cal-active-color:                  #fff;
+@cal-hover-bg:                      @skin-inverse;
+@cal-hover-color:                   #fff;
+@cal-panel-padding:                 3px;
+@cal-panel-radius:                  @border-radius-base;
+@cal-panel-max-width:               270px;
+@cal-panel-font:                    "Trebuchet MS", "Lucida Sans Unicode", "Lucida Sans", Arial, Helvetica, sans-serif;
+
+//cal-table
+@cal-table-bg:                      @skin-base-lighter;
+@cal-table-color:                   @cal-panel-color;
+@cal-table-border-color:            @cal-panel-border-color;
+@cal-table-header-size:             25px;
+
+@cal-table-cell-size:               30px;
+@cal-table-cell-color:              lighten(@cal-panel-color, 12%);
+@cal-table-cell-hover-color:        #fff;
+@cal-table-cell-hover-bg:           @cal-hover-bg;
+//== aside
+//
+//##
+@aside-bg:                          @skin-inverse-dark;
+@aside-overlay-bg:                  #fff;
+@aside-color:                       @skin-inverse-lighter;
+@aside-width:                       220px;
+@aside-collapsed-width:             60px;
+@aside-font:                       "Trebuchet MS", "Lucida Sans Unicode", "Lucida Sans", Arial, Helvetica, sans-serif;
+@aside-header-height:               35px;
+@aside-footer-height:               35px;
+@aside-transition-duration:         0.2s;
+/*aside menu*/
+@aside-menu-color:                  @skin-inverse-lighter;
+@aside-menu-link-height:            40px;
+
+@aside-default-bg:                          @skin-base-lighter;
+@aside-default-overlay-bg:                  @skin-base-darker;
+@aside-default-color:                       @skin-inverse-darker;
+@aside-default-menu-color:                  @skin-inverse-darker;
+
+
+//== listbox(select)
+//
+//##
+@listbox-max-height:                 180px;
+@listbox-max-width:                  350px;
+@listbox-color:                      @skin-inverse-darker;
+@listbox-bg:                         #fff;
+@listbox-border-color:               @skin-base-light;
+@listbox-font-size:                  @font-size-base - 1px;
+@listbox-border-radius:              @border-radius-base;
+@listbox-z-index:                    @zindex-dropdown;
+@listbox-option-hover-bg:            @skin-base-light;
+@listbox-option-hover-color:         @skin-inverse-dark;
+@listbox-option-active-bg:           @skin-base-active;
+@listbox-option-active-color:        #fff;
+@listbox-highlight-color:            @skin-base-accent;

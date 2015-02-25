@@ -1,0 +1,257 @@
+﻿.fic
+{
+  position: relative;
+  top: 0.2em;
+  display: inline-block;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size:1.367em;
+   &.fic-bold{
+      font-weight:bold;
+  }
+  &.fic-xs{
+      font-size:.867em;
+  }
+  &.fic-sm{
+      font-size:1em;
+  }
+  &.fic-md{
+      font-size:1.5em;
+      line-height:0.85;
+  }
+  &.fic-lg{
+      font-size:2.2em;
+      line-height:0.6;
+  }
+  &.fic-xl{
+      font-size:3.2em;
+      line-height:0.45;
+  }
+  &.fic-xxl{
+      font-size:5em;
+      line-height:0.35;
+  }
+  &.fic-right{
+      float:right;
+      height:100%;
+  }
+  &.fic-right:before{
+      margin-top:50%;
+      line-height:0.9;
+      display:block;
+  }
+  &.fic-circle-32{
+      border-radius:50%;
+      border-width:2px;
+      width:32px;
+      height:32px;
+  }
+}
+.control-label,
+.input-group-addon {
+    .fic{
+        /*top:0;*/
+        line-height:0;
+    }
+}
+
+.fic.spin,
+.fic.hover-spin:hover {
+  -webkit-animation: spin 2s infinite linear;
+  -moz-animation: spin 2s infinite linear;
+  -o-animation: spin 2s infinite linear;
+  animation: spin 2s infinite linear;
+}
+.fic.hover-spin:empty, .fic.hover-spin:not(:empty) 
+.fic.spin:empty, .fic.spin:not(:empty) {
+    min-width:initial;
+}
+.fic.flash {
+  -webkit-animation: flashIn 1s infinite linear;
+  -moz-animation: flashIn 1s infinite linear;
+  -o-animation: flashIn 1s infinite linear;
+  animation: flashIn 1s infinite linear;
+}
+
+.fic.rotate-90 {
+    -webkit-transition:ease 1s; 
+    transition:ease 1s;
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+.fic.rotate-180 {
+    -webkit-transition:ease 1s; 
+    transition:ease 1s;
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+.fic.rotate-270 {
+    -webkit-transition:ease 1s; 
+    transition:ease 1s;
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+  -webkit-transform: rotate(270deg);
+  -moz-transform: rotate(270deg);
+  -ms-transform: rotate(270deg);
+  -o-transform: rotate(270deg);
+  transform: rotate(270deg);
+}
+.fic.flip-horizontal,
+* > .fic.flip-horizontal,
+.fic.flip-vertical,
+*>.fic.flip-vertical  {
+    -webkit-transition:ease 1s; 
+    transition:ease 1s;
+}
+.fic:hover.flip-horizontal,
+*:hover > .fic.flip-horizontal {
+    -webkit-transition:ease 1s; 
+    transition:ease 1s;
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1);
+  -webkit-transform: scale(-1, 1);
+  -moz-transform: scale(-1, 1);
+  -ms-transform: scale(-1, 1);
+  -o-transform: scale(-1, 1);
+  transform: scale(-1, 1);
+}
+.fic:hover.flip-vertical,
+*:hover >.fic.flip-vertical  {
+    -webkit-transition:ease 1s; 
+    transition:ease 1s;
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1);
+  -webkit-transform: scale(1, -1);
+  -moz-transform: scale(1, -1);
+  -ms-transform: scale(1, -1);
+  -o-transform: scale(1, -1);
+  transform: scale(1, -1);
+}
+@-moz-keyframes spin {
+  0% {
+    -moz-transform: rotate(0deg);
+  }
+  25% {
+    color:yellow;
+  }
+  50% {
+    color:green;
+  }
+  75% {
+    color:red;
+  }
+  100% {
+    -moz-transform: rotate(359deg);
+  }
+}
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  25% {
+    color:yellow;
+  }
+  50% {
+    color:green;
+  }
+  75% {
+    color:red;
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+  }
+}
+@-o-keyframes spin {
+  0% {
+    -o-transform: rotate(0deg);
+  }
+  25% {
+    color:yellow;
+  }
+  50% {
+    color:green;
+  }
+  75% {
+    color:red;
+  }
+  100% {
+    -o-transform: rotate(359deg);
+  }
+}
+@-ms-keyframes spin {
+  0% {
+    -ms-transform: rotate(0deg);
+  }
+  25% {
+    color:yellow;
+  }
+  50% {
+    color:green;
+  }
+  75% {
+    color:red;
+  }
+  100% {
+    -ms-transform: rotate(359deg);
+  }
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    color:yellow;
+  }
+  50% {
+    color:green;
+  }
+  75% {
+    color:red;
+  }
+  100% {
+    transform: rotate(359deg);
+  }
+}
+@-webkit-keyframes flashIn {
+  0%{
+    opacity: 0.8;
+    color:yellow;
+  }
+  50% {
+    opacity: 0.8;
+    color:purple;
+  }
+  100% {
+    opacity: 1;
+  }
+  25%, 75% {
+    opacity: 0.1;
+    color:red;
+  }
+}
+
+@keyframes flashIn {
+   0%{
+    opacity: 0.8;
+    color:yellow;
+  }
+  50% {
+    opacity: 0.8;
+    color:purple;
+  }
+  100% {
+    opacity: 1;
+  }
+  25%, 75% {
+    opacity: 0.1;
+    color:red;
+  }
+}

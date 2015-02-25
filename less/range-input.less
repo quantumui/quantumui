@@ -1,0 +1,45 @@
+﻿input[type=range] {
+    -webkit-appearance: none;
+    border: 1px solid white;
+    outline: none; /* no focus outline */
+    width: 100%;
+    &:focus {
+        outline: none;
+    }
+    + datalist{
+        display:none;
+    }
+    &:-moz-focusring{
+        outline: 1px solid white;
+        outline-offset: -1px;
+    }
+    .range-track(@range-height, @range-bg);
+    .range-thumb(@range-height, @range-bg, @range-thumb-border);
+    &.range-xs{
+        .range-input-size(@range-height-xs)
+    }
+    &.range-md{
+        .range-input-size(@range-height-md)
+    }
+    &.range-lg{
+        .range-input-size(@range-height-lg)
+    }
+    &.range-primary{
+        .range-input-skin(@range-primary-bg, @range-primary-border)
+    }
+    &.range-success{
+        .range-input-skin(@range-success-bg, @range-success-border)
+    }
+    &.range-info{
+        .range-input-skin(@range-info-bg, @range-info-border)
+    }
+    &.range-warning{
+        .range-input-skin(@range-warning-bg, @range-warning-border)
+    }
+    &.range-danger{
+        .range-input-skin(@range-danger-bg, @range-danger-border)
+    }
+}
+
+
+

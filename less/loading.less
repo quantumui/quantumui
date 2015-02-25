@@ -1,0 +1,74 @@
+﻿.loading-container {
+    position:fixed;
+    z-index:99999;
+    top:0;
+    left:0;
+    right:0;
+    min-height:50px;
+    background:transparent;
+    display:none;
+    > .progress {
+        margin-bottom:3px;
+        height:7px;
+        border-radius:0;
+        .box-shadow(@progress-bar-bg 1px 0 6px 1px);
+          > .progress-bar {
+            width:0;
+            line-height: 7px;
+            .transition(width .2s ease);
+        }
+    }
+}
+.spinner-container {
+    width:auto;
+    min-width:120px;
+    max-width:320px;
+    overflow:visible;
+    padding:0 15px;
+    height:40px;
+    margin:0 auto;
+    line-height:40px;
+    border:1px solid @progress-bar-bg;
+    background-color:fade(@progress-bar-bg, 75%);
+    border-radius:4px;
+    .box-shadow(@progress-bar-bg 1px 0 6px 1px);
+      > .busy-text {
+        font-size:17px;
+        display:block;
+        line-height:40px;
+        color:#fff;
+        white-space:nowrap;
+    }
+    > .spin-icon {
+        font-size:2em;
+    }
+}
+body > .loading-container {
+    /*position:fixed;*/
+}
+.loading-container.loading-bottom {
+    top:auto;
+    bottom:45px;
+}
+.loading-variant(@bg) {
+    > .progress {
+          .box-shadow(@bg 1px 0 6px 1px)
+    }
+    .spinner-container {
+        border-color:darken(@bg, 10%);
+        background-color:fade(@bg, 75%);
+        .box-shadow(@bg 1px 0 6px 1px)   
+    }
+}
+.loading-info {
+    .loading-variant(@progress-bar-info-bg);
+}
+.loading-warning {
+    .loading-variant(@progress-bar-warning-bg);
+}
+.loading-success {
+    .loading-variant(@progress-bar-success-bg);
+}
+.loading-danger {
+    .loading-variant(@progress-bar-danger-bg);
+}

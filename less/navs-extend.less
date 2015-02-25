@@ -1,0 +1,147 @@
+﻿.nav-tabs {
+    border: 1px solid @nav-tabs-border-color;
+    border-width:0 0 1px;
+    > li {
+        margin-bottom: 0;
+        > a {
+            top:1px;
+            text-transform:uppercase;
+            font-weight:600;
+            font-size:@nav-tabs-font-size;
+        }
+    }
+}
+.tab-container {
+   position:relative;
+   width:100%;
+   &:extend(clearfix all);
+}
+.tab-content {
+   position:relative;
+   width:100%;
+   border: 1px solid @nav-tabs-border-color;
+   border-top-width:0;
+   .border-bottom-radius(@border-radius-base);
+}
+.tab-pane {
+   padding-left:15px;
+   padding-right:15px;
+}
+.tab-bottom{
+    .nav-tabs {
+      border-width:1px 0 0;
+      > li {
+          margin-bottom: 0;
+        > a {
+          top:-1px;
+          border: 1px solid transparent;
+          border-radius: 0 0 @border-radius-base @border-radius-base;
+          &:hover {
+            border-color:@nav-tabs-border-color @nav-tabs-link-hover-border-color @nav-tabs-link-hover-border-color;
+          }
+        }
+
+        // Active state, and its :hover to override normal :hover
+        &.active > a {
+          &,
+          &:hover,
+          &:focus {
+            border-color: @nav-tabs-active-link-hover-border-color;
+            border-top-color: transparent;
+          }
+        }
+      }
+    }
+    .tab-content {
+       border-top-width:1px;
+       border-bottom-width:0;
+       border-radius:0;
+       .border-top-radius(@border-radius-base);
+    }
+}
+.tab-left {
+    display:table;
+    .nav-tabs {
+        display:table-cell;
+        vertical-align:top;
+        border-width:0 1px 0 0;
+        height:100%;
+      > li {
+          margin: 0;
+          margin-bottom: 3px;
+          
+          > a {
+            border-color: transparent;
+            border-radius:0;
+            white-space:nowrap;
+            margin-right: -1px;
+            .border-left-radius(@border-radius-base);
+            &:hover {
+              border-color:@nav-tabs-link-hover-border-color @nav-tabs-border-color @nav-tabs-link-hover-border-color @nav-tabs-link-hover-border-color;
+            }
+          }
+          
+          // Active state, and its :hover to override normal :hover
+          &.active > a {
+            &,
+            &:hover,
+            &:focus {
+              border-color: @nav-tabs-active-link-hover-border-color;
+              border-right-color: transparent;
+            }
+          }
+      }
+    }
+    .tab-content {
+       display:table-cell;
+       vertical-align:top;
+       border-width:1px;
+       border-left-width:0;
+       border-radius:0;
+       height:100%;
+       .border-right-radius(@border-radius-base);
+    }
+}
+.tab-right {
+    display:table;
+    .nav-tabs {
+        display:table-cell;
+        vertical-align:top;
+        border-width:0 0 0 1px;
+        height:100%;
+      > li {
+          margin: 0;
+          margin-bottom: 3px;
+          
+          > a {
+            border-color: transparent;
+            border-radius:0;
+            white-space:nowrap;
+            margin-left: -1px;
+            .border-right-radius(@border-radius-base);
+            &:hover {
+              border-color:@nav-tabs-link-hover-border-color @nav-tabs-link-hover-border-color @nav-tabs-link-hover-border-color @nav-tabs-border-color;
+            }
+          }
+          
+          // Active state, and its :hover to override normal :hover
+          &.active > a {
+            &,
+            &:hover,
+            &:focus {
+              border-color: @nav-tabs-active-link-hover-border-color;
+              border-left-color: transparent;
+            }
+          }
+      }
+    }
+    .tab-content {
+       display:table-cell;
+       vertical-align:top;
+       border-width:1px;
+       border-right-width:0;
+       border-radius:0;
+       height:100%;
+       .border-left-radius(@border-radius-base);
+    }
+}
