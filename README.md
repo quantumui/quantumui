@@ -28,13 +28,13 @@ Read the [getting started page](http://angularui.net/appdoc/documents/home/dashb
 
 Examples: <http://angularui.net/appdoc/documents/quantumui/index/>.
 
-## Features of OuantumUI 
+## Features of QuantumUI 
 
-OuantumUI Core is a free and open-source subset of AngularUI. The following table details the widgets and features available in QunatumUI Core.
+QuantumUI Core is a free and open-source subset of AngularUI. The following table details the widgets and features available in QunatumUI Core.
 
 
 | Feature | Core |
-| ------- | :----: |
+| ------------------------- | :-----------: |
 | **Bottons** |
 | CheckboxGroup | Yes |
 | RadioGroup | Yes |
