@@ -1,4 +1,4 @@
-﻿# [QuantumUI](http://quantumui.net/)
+﻿# [QuantumUI](http://angularui.net/)
 
 QuantumUI is the most powerful and well designed ANGULARJS and Bootstrap CSS based UI components make developer life easy.
 
@@ -6,13 +6,13 @@ It complately MVVM structure, easy, light, fast, mobile friendly 25+ components 
 
 It optimized and extended Bootstrap based CSS structure with pure CSS3 plugins.
 
-To get started, check out [getting started page](http://quantumui.net/ui/start) or follow instructions below.
+To get started, check out [getting started page](http://angularui.net/ui/start) or follow instructions below.
 
 
 ## Links:
 
-+ [Home Page](http://quantumui.net/)
-+ [Documentations](http://quantumui.net/appdoc/documents/home/dashboard) (with more examples)
++ [Home Page](http://angularui.net/)
++ [Documentations](http://angularui.net/appdoc/documents/home/dashboard) (with more examples)
 
 ## Quick start
 
@@ -24,9 +24,9 @@ Three quick start options are available:
 
 Run `npm install` and `bower install` to install dependencies.
 
-Read the [getting started page](http://quantumui.net/appdoc/documents/home/dashboard) for information.
+Read the [getting started page](http://angularui.net/appdoc/documents/home/dashboard) for information.
 
-Examples: <http://quantumui.net/appdoc/documents/quantumui/index/>.
+Examples: <http://angularui.net/appdoc/documents/quantumui/index/>.
 
 ## Features of OuantumUI 
 
@@ -95,7 +95,7 @@ quantumui/
 
 ## Documentation
 
-QuantumUI's is full documented with lots of examples on online page, <http://quantumui.net/appdoc/documents/quantumui/index/>.
+QuantumUI's is full documented with lots of examples on online page, <http://angularui.net/appdoc/documents/quantumui/index/>.
 
 
 
