@@ -118,9 +118,6 @@ module.exports = function (grunt) {
                     map: true
                 },
                 src: 'dist/css/<%= pkg.name %>.css'
-            },
-            assets: {
-                //src: ['docs/assets/css/docs.css', 'docs/assets/css/demo.css']
             }
         },
 
@@ -288,7 +285,7 @@ module.exports = function (grunt) {
         }
         if (target === 'css') {
             // CSS distribution task.
-            return grunt.task.run(['less', 'autoprefixer', 'usebanner', 'csscomb', 'cssmin']);
+            return grunt.task.run(['less', 'autoprefixer', 'csscomb', 'cssmin']);
         }
 
         if (target === 'docs') {
@@ -304,7 +301,7 @@ module.exports = function (grunt) {
             return grunt.task.run(['copy:distVendorJS', 'copy:distVendorCSS']);
         }
         // Full distribution task.
-        grunt.task.run(['clean', 'dist:css', 'dist:copy', 'dist:js']);
+        grunt.task.run(['clean', 'dist:css', 'dist:copy', 'dist:js', 'usebanner']);
     });
 
 

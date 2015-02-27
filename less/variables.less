@@ -3,7 +3,15 @@
 // You must import bootstrap variabled 
 // --------------------------------------------------
 
-//== Colors
+
+//== Import Bootstap variables
+//
+//## Import Bootstap variables
+
+@import "../../bower_components/bootstrap/less/variables.less";
+
+
+//==Inverse Colors
 //
 //## skin colors for use across QuantumUI.
 @skin-base:                 darken(@gray-lighter, 20%);
@@ -53,6 +61,17 @@
 //
 //## Specify custom location and filename of the included Glyphicons icon font. Useful for those including Bootstrap via Bower.
 
+//** Load fonts from this directory.
+@icon-font-path:          "../fonts/";
+//** File name for all font files.
+@icon-font-name:          "glyphicons-halflings-regular";
+//** Element ID within SVG icon file.
+@icon-font-svg-id:        "glyphicons_halflingsregular";
+
+
+
+
+
 
 //** Global color for active items (e.g., navs or dropdowns).
 @component-active-color:    @skin-base-active;
@@ -70,7 +89,7 @@
 
 
 //** Carets increase slightly in size for larger components.
-@caret-width-large:                        5px;
+@caret-width-large:         5px;
 
 
 //** Background for the dropdown container.
@@ -123,7 +142,7 @@
 //##
 
 //** general scrollbar size.
-@scrollbar-image-path:       "images/scrollbar";
+@scrollbar-image-path:       "../images/scrollbar";
 @scrollbar-size:              8px; 
 //** page scrollbar size.
 @scrollbar-page-size:         12px; 

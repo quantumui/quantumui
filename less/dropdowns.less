@@ -8,7 +8,7 @@
 	outline: 0;
 }
 .caret.big {
-    @caret-width-big: @caret-width-large;
+    @caret-width-big: ceil((@caret-width-base * 0.5));
   margin-left: @caret-width-big /2;
   border-top: @caret-width-big solid;
   border-right: @caret-width-big solid transparent;
@@ -194,7 +194,7 @@
 .dropup,
 .navbar-fixed-bottom .dropdown {
   .caret.big {
-        @caret-width-big: @caret-width-large;
+        @caret-width-big: ceil((@caret-width-base * 0.5));
         border-bottom: @caret-width-big solid;
     }
   // Different positioning for bottom up menu

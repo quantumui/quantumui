@@ -99,8 +99,8 @@
             padding:0 8px;
             font-size:14px;
             margin-right:2px;
-            height:@input-height-base - 9px;
-            line-height:@input-height-base - 8px;
+            height:ceil((@input-height-base - 9px));
+            line-height:ceil((@input-height-base - 8px));
             &:hover {
                 opacity:1;
             }
@@ -143,8 +143,8 @@
         padding:0;
         padding-left:7px;
         font-size:inherit;
-        height:@input-height-base - 9px;
-        line-height:@input-height-base - 9px;
+        height:ceil((@input-height-base - 9px));
+        line-height:ceil((@input-height-base - 9px));
         border:0;
         outline:0;
         background-color:transparent;
@@ -165,8 +165,8 @@
         > li > a{
             font-size:11px;
             padding:3px;
-            height:@input-height-small - 7px;
-            line-height:@input-height-small - 7px;
+            height:ceil((@input-height-small - 7px));
+            line-height:ceil((@input-height-small - 7px));
         }
         > li > a{
             padding:0 4px;
@@ -178,8 +178,8 @@
         .select-input,
         > li > a {
             padding:5px 4px;
-            height:@input-height-small - 11px;
-            line-height:@input-height-small - 11px;
+            height:ceil((@input-height-small - 11px));
+            line-height:ceil((@input-height-small - 11px));
         }
         > li > a {
             padding:0px 7px;
@@ -210,10 +210,10 @@
    .option-group > .group-label{
        font-weight:bold;
        padding-left:7px;
-       font-size: @listbox-font-size + 1px;
+       font-size: ceil((@listbox-font-size + 1px));
     }
    .select-option{
-        line-height:@listbox-font-size + 3px;
+        line-height:ceil((@listbox-font-size + 3px));
         width:100%;
         display:block;
         padding:4px 5px 4px 8px;
@@ -269,4 +269,14 @@
    right:0;
    top:0;
    bottom:0;
+}
+
+.listbox-inline {
+    display:none;
+    + .listbox-panel{
+        display:block !important;
+        max-height:350px;
+        position:relative;
+        z-index:2;
+    } 
 }

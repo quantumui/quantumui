@@ -2,6 +2,11 @@
  * QuantumUI Free v0.0.1 (http://angularui.net)
  * Copyright 2014-2015 Mehmet Otkun, angularui.net.
  */
+
+/*!
+ * QuantumUI Free v0.0.1 (http://angularui.net)
+ * Copyright 2014-2015 Mehmet Otkun, angularui.net.
+ */
 if (!String.prototype.trim) {
     String.prototype.trim = function () {
         return this.replace(/^\s+|\s+$/g, '');

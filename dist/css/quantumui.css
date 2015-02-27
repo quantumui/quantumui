@@ -8,10 +8,10 @@
   outline: 0;
 }
 .caret.big {
-  margin-left: 5px / 2;
-  border-top: 5px solid;
-  border-right: 5px solid transparent;
-  border-left: 5px solid transparent;
+  margin-left: 2px / 2;
+  border-top: 2px solid;
+  border-right: 2px solid transparent;
+  border-left: 2px solid transparent;
 }
 .dropdown-toggle {
   position: relative;
@@ -175,7 +175,7 @@ a.dropdown-toggle {
 }
 .dropup .caret.big,
 .navbar-fixed-bottom .dropdown .caret.big {
-  border-bottom: 5px solid;
+  border-bottom: 2px solid;
 }
 .dropup .dropdown-menu,
 .navbar-fixed-bottom .dropdown .dropdown-menu,
@@ -1184,7 +1184,7 @@ a.dropdown-toggle {
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 1040 - 9;
+  z-index: 1031;
   background-color: #fff;
   opacity: .5;
 }
@@ -1358,7 +1358,7 @@ html::-webkit-scrollbar-button {
 }
 :not(textarea)::-webkit-resizer {
   background-color: #eee;
-  background-image: url("images/scrollbar/resizer.png");
+  background-image: url("../images/scrollbar/resizer.png");
   background-repeat: no-repeat;
   background-position: top bottom;
   border-top: 1px solid transparent;
@@ -1370,21 +1370,21 @@ html::-webkit-scrollbar-button {
   border-left: 1px solid #eee;
 }
 ::-webkit-scrollbar-button:vertical:decrement {
-  background-image: url('images/scrollbar/arrow-up.png'), -webkit-radial-gradient(center, ellipse, rgba(255, 255, 255, .7) 40%, rgba(0, 0, 0, .15) 100%);
-  background-image: url('images/scrollbar/arrow-up.png'), radial-gradient(ellipse at center, rgba(255, 255, 255, .7) 40%, rgba(0, 0, 0, .15) 100%);
+  background-image: url('../images/scrollbar/arrow-up.png'), -webkit-radial-gradient(center, ellipse, rgba(255, 255, 255, .7) 40%, rgba(0, 0, 0, .15) 100%);
+  background-image: url('../images/scrollbar/arrow-up.png'), radial-gradient(ellipse at center, rgba(255, 255, 255, .7) 40%, rgba(0, 0, 0, .15) 100%);
   border-bottom-width: 1px;
 }
 ::-webkit-scrollbar-button:vertical:increment {
-  background-image: url('images/scrollbar/arrow-down.png'), -webkit-radial-gradient(center, ellipse, rgba(255, 255, 255, .7) 40%, rgba(0, 0, 0, .15) 100%);
-  background-image: url('images/scrollbar/arrow-down.png'), radial-gradient(ellipse at center, rgba(255, 255, 255, .7) 40%, rgba(0, 0, 0, .15) 100%);
+  background-image: url('../images/scrollbar/arrow-down.png'), -webkit-radial-gradient(center, ellipse, rgba(255, 255, 255, .7) 40%, rgba(0, 0, 0, .15) 100%);
+  background-image: url('../images/scrollbar/arrow-down.png'), radial-gradient(ellipse at center, rgba(255, 255, 255, .7) 40%, rgba(0, 0, 0, .15) 100%);
 }
 ::-webkit-scrollbar-button:horizontal:decrement {
-  background-image: url('images/scrollbar/arrow-left.png'), -webkit-radial-gradient(center, ellipse, rgba(255, 255, 255, .7) 40%, rgba(0, 0, 0, .15) 100%);
-  background-image: url('images/scrollbar/arrow-left.png'), radial-gradient(ellipse at center, rgba(255, 255, 255, .7) 40%, rgba(0, 0, 0, .15) 100%);
+  background-image: url('../images/scrollbar/arrow-left.png'), -webkit-radial-gradient(center, ellipse, rgba(255, 255, 255, .7) 40%, rgba(0, 0, 0, .15) 100%);
+  background-image: url('../images/scrollbar/arrow-left.png'), radial-gradient(ellipse at center, rgba(255, 255, 255, .7) 40%, rgba(0, 0, 0, .15) 100%);
 }
 ::-webkit-scrollbar-button:horizontal:increment {
-  background-image: url('images/scrollbar/arrow-right.png'), -webkit-radial-gradient(center, ellipse, rgba(255, 255, 255, .7) 40%, rgba(0, 0, 0, .15) 100%);
-  background-image: url('images/scrollbar/arrow-right.png'), radial-gradient(ellipse at center, rgba(255, 255, 255, .7) 40%, rgba(0, 0, 0, .15) 100%);
+  background-image: url('../images/scrollbar/arrow-right.png'), -webkit-radial-gradient(center, ellipse, rgba(255, 255, 255, .7) 40%, rgba(0, 0, 0, .15) 100%);
+  background-image: url('../images/scrollbar/arrow-right.png'), radial-gradient(ellipse at center, rgba(255, 255, 255, .7) 40%, rgba(0, 0, 0, .15) 100%);
 }
 .bar-slimmest::-webkit-scrollbar-button,
 .bar-slim::-webkit-scrollbar-button,
@@ -2094,7 +2094,7 @@ iframe::-webkit-scrollbar {
   color: #333;
 }
 .calendar-panel.picker-datarange {
-  max-width: (270px * 2) + 15px;
+  max-width: 555px;
 }
 .calendar-header,
 .calendar-footer {
@@ -2183,7 +2183,7 @@ iframe::-webkit-scrollbar {
 }
 .calendar-table.has-week-no tbody th,
 .calendar-table.has-week-no tbody td {
-  height: 30px - 3px;
+  height: 27px;
 }
 .calendar-table thead th.cal-week-no,
 .calendar-table tbody th {
@@ -3903,11 +3903,11 @@ body > .loading-container {
   margin-bottom: 1px;
 }
 .nav.select-render-nav > li > a {
-  height: 34px - 9px;
+  height: 25px;
   padding: 0 8px;
   margin-right: 2px;
   font-size: 14px;
-  line-height: 34px - 8px;
+  line-height: 26px;
 }
 .nav.select-render-nav > li > a:hover {
   opacity: 1;
@@ -3946,11 +3946,11 @@ body > .loading-container {
   width: auto;
   min-width: 20px;
   max-width: 200px;
-  height: 34px - 9px;
+  height: 25px;
   padding: 0;
   padding-left: 7px;
   font-size: inherit;
-  line-height: 34px - 9px;
+  line-height: 25px;
   background-color: transparent;
   border: 0;
   outline: 0;
@@ -3967,10 +3967,10 @@ body > .loading-container {
 }
 .nav.select-render-nav.input-sm .select-input,
 .nav.select-render-nav.input-sm > li > a {
-  height: 30px - 7px;
+  height: 23px;
   padding: 3px;
   font-size: 11px;
-  line-height: 30px - 7px;
+  line-height: 23px;
 }
 .nav.select-render-nav.input-sm > li > a {
   padding: 0 4px;
@@ -3981,9 +3981,9 @@ body > .loading-container {
 }
 .nav.select-render-nav.input-lg .select-input,
 .nav.select-render-nav.input-lg > li > a {
-  height: 30px - 11px;
+  height: 19px;
   padding: 5px 4px;
-  line-height: 30px - 11px;
+  line-height: 19px;
 }
 .nav.select-render-nav.input-lg > li > a {
   padding: 0 7px;
@@ -4011,7 +4011,7 @@ body > .loading-container {
 }
 .listbox .option-group > .group-label {
   padding-left: 7px;
-  font-size: 14px - 1px + 1px;
+  font-size: 14px;
   font-weight: bold;
 }
 .listbox .select-option {
@@ -4020,7 +4020,7 @@ body > .loading-container {
   width: 100%;
   padding: 4px 5px 4px 8px;
   margin-bottom: 2px;
-  line-height: 14px - 1px + 3px;
+  line-height: 16px;
   color: #222;
   cursor: pointer;
 }
@@ -4065,6 +4065,15 @@ body > .loading-container {
   padding: inherit;
   font-family: 'glyphicons-halflings-regular';
   content: '\e013';
+}
+.listbox-inline {
+  display: none;
+}
+.listbox-inline + .listbox-panel {
+  position: relative;
+  z-index: 2;
+  display: block !important;
+  max-height: 350px;
 }
 .nav-tabs {
   border: 1px solid #ddd;

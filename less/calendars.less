@@ -50,7 +50,7 @@
 .calendar-panel.picker-datetime {
 }
 .calendar-panel.picker-datarange {
-    max-width:(@cal-panel-max-width * 2) + 15px;
+    max-width:ceil(((@cal-panel-max-width * 2) + 15px));
 }
 
 .calendar-header,
@@ -136,7 +136,7 @@
 
     &.has-week-no tbody th,
     &.has-week-no tbody td {
-        height:@cal-table-cell-size - 3px;
+        height:ceil((@cal-table-cell-size - 3px));
     }
     thead th.cal-week-no,
     tbody th {
