@@ -533,10 +533,10 @@ a.dropdown-toggle {
 .titip-content:before,
 .titip-content:after {
   position: absolute;
-  z-index: 9999 + 1;
+  z-index: 10000;
 }
 .titip-content:after {
-  z-index: 9999 + 2;
+  z-index: 9999;
   width: 0;
   height: 0;
   padding: 0;
@@ -546,7 +546,7 @@ a.dropdown-toggle {
   border-style: solid;
   border-width: 8px;
 }
-.titip-content .titip-content.thick-border {
+.titip-content.thick-border {
   border-width: 4px;
 }
 [class*="titip"][data-title]:after,
@@ -602,12 +602,12 @@ a.dropdown-toggle {
 [class*="titip-top"] > .titip-content:before,
 [class*="titip-bottom"] > .titip-content:before {
   left: 50%;
-  margin-left: -ceil(4px);
+  margin-left: -4px;
 }
 [class*="titip-top"] > .titip-content:after,
 [class*="titip-bottom"] > .titip-content:after {
   left: 50%;
-  margin-left: -ceil(6px);
+  margin-left: -6px;
 }
 [class*="titip-top"] > .titip-content.thick-border:after,
 [class*="titip-bottom"] > .titip-content.thick-border:after {
@@ -645,7 +645,7 @@ a.dropdown-toggle {
   bottom: -8px;
 }
 [class*="titip-top"] > .titip-content:after {
-  bottom: -ceil(10px);
+  bottom: -10px;
 }
 [class*="titip-top"] > .titip-content.thick-border {
   margin-bottom: 16px;
@@ -683,7 +683,7 @@ a.dropdown-toggle {
   top: -8px;
 }
 [class*="titip-bottom"] > .titip-content:after {
-  top: -ceil(10px);
+  top: -10px;
 }
 [class*="titip-bottom"] > .titip-content.thick-border {
   margin-top: 13px;
@@ -728,10 +728,12 @@ a.dropdown-toggle {
 [class*="titip-top-left"] > .titip-content:before,
 [class*="titip-bottom-left"] > .titip-content:before {
   right: 14px;
+  left: auto;
 }
 [class*="titip-top-left"] > .titip-content:after,
 [class*="titip-bottom-left"] > .titip-content:after {
-  right: 16px;
+  right: 12px;
+  left: auto;
 }
 [class*="titip-top-left"] > .titip-content.thick-border:after,
 [class*="titip-bottom-left"] > .titip-content.thick-border:after {
@@ -756,7 +758,7 @@ a.dropdown-toggle {
 }
 [class*="titip-top-right"] > .titip-content:after,
 [class*="titip-bottom-right"] > .titip-content:after {
-  left: 16px;
+  left: 14px;
 }
 [class*="titip-left"] > .titip-content,
 [class*="titip-right"] > .titip-content,
@@ -781,15 +783,13 @@ a.dropdown-toggle {
 [class*="titip-left"] > .titip-content:before,
 [class*="titip-right"] > .titip-content:before {
   top: 50%;
-  margin-top: -ceil(4px);
+  margin-top: -4px;
 }
 [class*="titip-left"] > .titip-content:after,
 [class*="titip-right"] > .titip-content:after {
   top: 50%;
-  margin-top: -ceil(6px);
+  margin-top: -6px;
 }
-[class*="titip-left"] > .titip-content.thick-border:after,
-[class*="titip-right"] > .titip-content.thick-border:after,
 [class*="titip-left"] > .titip-content.thick-border:after,
 [class*="titip-right"] > .titip-content.thick-border:after {
   margin-top: -9px;
@@ -819,7 +819,7 @@ a.dropdown-toggle {
   right: -8px;
 }
 [class*="titip-left"] > .titip-content:after {
-  right: -ceil(10px);
+  right: -10px;
 }
 [class*="titip-left"] > .titip-content.thick-border {
   margin-right: 16px;
@@ -857,7 +857,7 @@ a.dropdown-toggle {
   left: -8px;
 }
 [class*="titip-right"] > .titip-content:after {
-  left: -ceil(10px);
+  left: -10px;
 }
 [class*="titip-right"] > .titip-content.thick-border {
   margin-left: 16px;
@@ -870,92 +870,14 @@ a.dropdown-toggle {
   left: -15px;
   border-width: 10px 15px 10px 0;
 }
-.titip-fade:before,
-.titip-fade:after,
-.titip-fade .titip-content {
-  -webkit-transition: opacity .3s linear, visibility .3s linear;
-          transition: opacity .3s linear, visibility .3s linear;
-}
-.titip-flip:hover:before,
-.titip-flip:hover:after,
-.titip-flip:hover .titip-content {
-  -webkit-animation: flipYIn .3s linear;
-          animation: flipYIn .3s linear;
-}
-.titip-flip-x:hover:before,
-.titip-flip-x:hover:after,
-.titip-flip-x:hover .titip-content {
-  -webkit-animation: flipXIn .3s linear;
-          animation: flipXIn .3s linear;
-}
-.titip-swing:hover:before,
-.titip-swing:hover:after,
-.titip-swing:hover .titip-content {
-  -webkit-animation: swing .3s linear;
-          animation: swing .3s linear;
-}
-.titip-rotate:hover:before,
-.titip-rotate:hover:after,
-.titip-rotate:hover .titip-content {
-  -webkit-animation: rotateLeftIn .3s linear;
-          animation: rotateLeftIn .3s linear;
-}
-.titip-slide:hover:before,
-.titip-slide:hover:after,
-.titip-slide:hover .titip-content {
-  -webkit-animation: slideIn .3s linear;
-          animation: slideIn .3s linear;
-}
-.titip-slide-up:hover:before,
-.titip-slide-up:hover:after,
-.titip-slide-up:hover .titip-content {
-  -webkit-animation: slideBottomIn .3s linear;
-          animation: slideBottomIn .3s linear;
-}
-.titip-fall:hover:before,
-.titip-fall:hover:after,
-.titip-fall:hover .titip-content {
-  -webkit-animation: fallIn .3s linear;
-          animation: fallIn .3s linear;
-}
-.titip-scale:hover:before,
-.titip-scale:hover:after,
-.titip-scale:hover .titip-content {
-  -webkit-animation: scaleIn .3s ease-in-out;
-          animation: scaleIn .3s ease-in-out;
-
-  -webkit-animation-fill-mode: both;
-          animation-fill-mode: both;
-}
-.titip-alert:hover:before,
-.titip-alert:hover:after,
-.titip-alert:hover .titip-content {
-  -webkit-animation: redAlertIn .3s linear;
-          animation: redAlertIn .3s linear;
-}
-.titip-pulse:hover:before,
-.titip-pulse:hover:after,
-.titip-pulse:hover .titip-content {
-  -webkit-animation: pulse .3s linear;
-          animation: pulse .3s linear;
-}
-.titip-sing:hover:before,
-.titip-sing:hover:after,
-.titip-sing:hover .titip-content {
-  -webkit-animation: singIn .3s ease-in-out;
-          animation: singIn .3s ease-in-out;
-
-  -webkit-animation-fill-mode: both;
-          animation-fill-mode: both;
-}
 .titip-wrapped:after,
 .titip-wrapped > .titip-content {
-  width: 170px;
+  width: 170px !important;
   height: auto;
   padding: 11px;
   line-height: 19px;
   text-align: left;
-  white-space: normal;
+  white-space: normal !important;
 }
 .titip-wrapped-large:after,
 .titip-wrapped-large > .titip-content {
@@ -964,7 +886,7 @@ a.dropdown-toggle {
   padding: 11px;
   line-height: 19px;
   text-align: left;
-  white-space: normal;
+  white-space: normal !important;
 }
 .with-arrow {
   /**horizontal setting**/

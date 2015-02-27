@@ -42,11 +42,11 @@
     border:1px solid @titip-border-color;
     &:before,
     &:after {
-      position: absolute;
-      z-index: @zindex-titip + 1;
+      position: absolute;  
+      z-index: ceil((@zindex-titip + 1));
     }
     &:after {
-      z-index: @zindex-titip + 2;
+      z-index: @zindex-titip;
       content: '';
       border-style:solid;
       border-color:inherit;
@@ -56,7 +56,7 @@
       padding:0;
       margin:0;
     }
-    .titip-content.thick-border {
+    &.thick-border {
       border-width:4px;
     }
 }
@@ -104,12 +104,14 @@
         border-right-color: transparent !important;
     }
     > .titip-content:before {
+         @margin:ceil((@titip-tringle-width / 2));
         left:50%;
-        margin-left:-ceil((@titip-tringle-width / 2))
+        margin-left:-@margin;
     }
     > .titip-content:after {
+        @margin:ceil(((@titip-tringle-width / 2) + 2px));
         left:50%;
-        margin-left:-ceil(((@titip-tringle-width / 2) + 2px))
+        margin-left:-@margin;
     }
     > .titip-content.thick-border:after {
         margin-left:-9px;
@@ -148,7 +150,8 @@
         bottom: -@titip-tringle-width;
     }
     > .titip-content:after {
-        bottom: -ceil((@titip-tringle-width + 2px));
+        @margin:ceil((@titip-tringle-width + 2px));
+        bottom: -@margin;
     }
     > .titip-content.thick-border {
        margin-bottom: 16px;
@@ -189,7 +192,8 @@
         top: -@titip-tringle-width;
     }
     > .titip-content:after {
-        top: -ceil((@titip-tringle-width + 2px));
+        @margin:ceil((@titip-tringle-width + 2px));
+        top: -@margin;
     }
     > .titip-content.thick-border {
        margin-top: 13px;
@@ -227,13 +231,15 @@
       right: ceil((@titip-tringle-width + 2px));
     }
     > .titip-content:before {
-      right: ceil((@titip-tringle-width + 6px));
+        left:auto;
+        right: ceil((@titip-tringle-width + 6px));
     }
     > .titip-content:after {
-      right: ceil((@titip-tringle-width + 8px));
+        left:auto;
+        right: ceil((@titip-tringle-width + 4px));
     }
     > .titip-content.thick-border:after {
-        right:9px;
+        right: 9px;
     }
 }
 [class*="titip-top-right"], 
@@ -251,7 +257,7 @@
       left: ceil((@titip-tringle-width + 6px));
     }
     > .titip-content:after {
-      left: ceil((@titip-tringle-width + 8px));
+      left: ceil((@titip-tringle-width + 6px));
     }
 }
 [class*="titip-left"],
@@ -269,16 +275,18 @@
         border-bottom-color: transparent !important;
     }
     > .titip-content:before {
+        @margin:ceil((@titip-tringle-width / 2));
         top:50%;
-        margin-top:-ceil((@titip-tringle-width / 2))
+        margin-top:-@margin
     }
     > .titip-content:after {
+        @margin:ceil(((@titip-tringle-width / 2) + 2px));
         top:50%;
-        margin-top:-ceil(((@titip-tringle-width / 2) + 2px))
+        margin-top:-@margin
     }
-    > .titip-content.thick-border:after,
     > .titip-content.thick-border:after {
-      margin-top:-9px;
+        @margin:ceil(((@titip-tringle-width / 2) + 5px));
+      margin-top:-@margin
     }
 }
 [class*="titip-left"]{
@@ -307,7 +315,8 @@
         right: -@titip-tringle-width;
     }
     > .titip-content:after {
-        right: -ceil((@titip-tringle-width + 2px));
+        @margin:ceil((@titip-tringle-width + 2px));
+        right: -@margin;
     }
     > .titip-content.thick-border {
       margin-right: 16px;
@@ -347,7 +356,8 @@
         left: -@titip-tringle-width;
     }
     > .titip-content:after {
-        left: -ceil((@titip-tringle-width + 2px));
+        @margin:ceil((@titip-tringle-width + 2px));
+        left: -@margin;
     }
     > .titip-content.thick-border {
       margin-left: 16px;
@@ -361,101 +371,14 @@
       left: -15px;
     }
 }
-.titip-fade {
-    &:before, 
-    &:after,
-    .titip-content {
-        .transition(opacity 0.3s linear, visibility 0.3s linear);
-    }
-}
-.titip-flip:hover {
-    &:before, 
-    &:after,
-    .titip-content {
-        .animation(flipYIn 0.3s linear);
-    }
-}
-.titip-flip-x:hover {
-    &:before, 
-    &:after,
-    .titip-content {
-        .animation(flipXIn 0.3s linear);
-    }
-}
-.titip-swing:hover {
-    &:before, 
-    &:after,
-    .titip-content {
-        .animation(swing 0.3s linear);
-    }
-}
-.titip-rotate:hover {
-    &:before, 
-    &:after,
-    .titip-content {
-        .animation(rotateLeftIn 0.3s linear);
-    }
-}
-.titip-slide:hover {
-    &:before, 
-    &:after,
-    .titip-content {
-        .animation(slideIn 0.3s linear);
-    }
-}
-.titip-slide-up:hover {
-    &:before, 
-    &:after,
-    .titip-content {
-        .animation(slideBottomIn 0.3s linear);
-    }
-}
-.titip-fall:hover {
-    &:before, 
-    &:after,
-    .titip-content {
-        .animation(fallIn 0.3s linear);
-    }
-}
-.titip-scale:hover {
-    &:before, 
-    &:after,
-    .titip-content {
-        .animation(scaleIn 0.3s ease-in-out);
-        -webkit-animation-fill-mode: both;
-                animation-fill-mode: both;
-    }
-}
-.titip-alert:hover {
-    &:before, 
-    &:after,
-    .titip-content {
-        .animation(redAlertIn 0.3s linear);
-    }
-}
-.titip-pulse:hover {
-    &:before, 
-    &:after,
-    .titip-content {
-        .animation(pulse 0.3s linear);
-    }
-}
-.titip-sing:hover {
-    &:before, 
-    &:after,
-    .titip-content {
-        .animation(singIn 0.3s  ease-in-out);
-        -webkit-animation-fill-mode: both;
-                animation-fill-mode: both;
-    }
-}
+
 .titip-wrapped:after,
 .titip-wrapped > .titip-content {
   height: auto;
-  width: 170px;
+  width: 170px !important;
   padding: 11px;
   line-height: 19px;
-  white-space: normal;
+  white-space: normal !important;
   text-align: left;
 }
 .titip-wrapped-large:after,
@@ -464,6 +387,6 @@
   width: 300px;
   padding: 11px;
   line-height: 19px;
-  white-space: normal;
+  white-space: normal !important;
   text-align: left;
 }

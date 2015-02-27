@@ -18,7 +18,7 @@ String.prototype.trimEnd = function (c) {
         return that;
 };
 String.prototype.trimStart = function (c) {
-    that = this.trim();
+    var that = this.trim();
     if (c == null || c == "" || c.length > 1 || that.length < 2)
         return that;
     var s = that.slice(0, 1);
