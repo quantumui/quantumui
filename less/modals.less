@@ -11,10 +11,10 @@
    .dropdown-container,
    .popover,
    .alert {
-        z-index: @zindex-modal + 10;
+        z-index: ceil((@zindex-modal + 10));
     }
    .modal {
-        z-index: @zindex-modal + 1;
+        z-index: ceil((@zindex-modal + 1));
     }
    .modal .modal-dialog {
       margin-right: 20px;

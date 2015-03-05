@@ -9,7 +9,7 @@
 }
 .caret.big {
     @caret-width-big: ceil((@caret-width-base * 0.5));
-  margin-left: @caret-width-big /2;
+  margin-left: ceil((@caret-width-big /2));
   border-top: @caret-width-big solid;
   border-right: @caret-width-big solid transparent;
   border-left: @caret-width-big solid transparent;

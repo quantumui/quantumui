@@ -111,7 +111,7 @@
    .slider-track {
       height: @range-height;
       width: 100%;
-      margin-top: @range-height / 2;
+      margin-top: ceil((@range-height / 2));
       left: 0;
     }
     .slider-selection {
@@ -140,7 +140,7 @@
     }
     .slider-values{
         width:100%;
-        margin-top:(@range-height / 2) - 1px;
+        margin-top:ceil(((@range-height / 2) - 1px));
     }
     .values-min,
     .values-max {
@@ -173,7 +173,7 @@
     .slider-track {
       width: @range-height;
       height: 100%;
-      margin-left: @range-height / 2;
+      margin-left: ceil((@range-height / 2));
       top: 0;
       float:left;
     }
@@ -293,7 +293,7 @@
     }
     &.slider-horizontal .slider-track {
       height: @track-size;
-      margin-top: @track-size / 2;
+      margin-top: ceil((@track-size / 2));
     }
     &.slider-horizontal .slider-thumb {
       width: @thumb-width;
@@ -314,7 +314,7 @@
     &.slider-vertical {
         .slider-track {
           width: @track-size;
-          margin-left: @thumb-height / 2;
+          margin-left: ceil((@thumb-height / 2));
         }
         .slider-thumb {
           height: @thumb-width;
@@ -330,7 +330,7 @@
         }
         .slider-thumb.triangle {
           border-width: @thumb-width;
-          left: @track-size / 2;
+          left: ceil((@track-size / 2));
           width:0;
           height:0;
         }

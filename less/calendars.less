@@ -1,4 +1,4 @@
-﻿@cal-table-min-width: (@cal-table-cell-size * 7) + 2px;
+﻿@cal-table-min-width: ceil(((@cal-table-cell-size * 7) + 2px));
 .calendar-panel {
     display:none;
     position:absolute;
@@ -381,14 +381,18 @@ table.cal-header-table{
     overflow:hidden;
 
     .calendar-panel {
-        display:block;
+        display:block !important;
         position:relative;
         width:100%;
         min-width:100%;
+        max-width:100%;
+        z-index:2;
+        .calendar-table,
+        .year-selector{
+            width:100%;
+        }
     }
     td.hide-cal{
         display:none;
     }
 }
-
-

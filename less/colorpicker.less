@@ -4,11 +4,11 @@
 @colorpicker-row-cell-count         :8;
 @colorpicker-padding-horizontal     :7px;
 @colorpicker-padding-vertical       :7px;
-@colorpicker-calculated-innerwidth  :(@colorpicker-cell-size * @colorpicker-row-cell-count) 
-                                     + (@colorpicker-cellspace  * (@colorpicker-row-cell-count - 1));
-@colorpicker-calculated-width       : @colorpicker-calculated-innerwidth + (@colorpicker-padding-horizontal * 2) + 2px;
+@colorpicker-calculated-innerwidth  :ceil(((@colorpicker-cell-size * @colorpicker-row-cell-count) 
+                                     + (@colorpicker-cellspace  * (@colorpicker-row-cell-count - 1))));
+@colorpicker-calculated-width       : ceil((@colorpicker-calculated-innerwidth + (@colorpicker-padding-horizontal * 2) + 2px));
 
-@colorpicker-saturation-size        : @colorpicker-calculated-innerwidth - @colorpicker-cell-size - 15px;
+@colorpicker-saturation-size        : ceil((@colorpicker-calculated-innerwidth - @colorpicker-cell-size - 15px));
 .color-pick {
         border: 1px solid @colorpicker-cell-border-color;
         width:16px;
@@ -128,7 +128,7 @@
 }
 .color-button
 {
-    width: @colorpicker-cell-size + 15px;
+    width: ceil((@colorpicker-cell-size + 15px));
     margin:0;
     padding:0;
     float: left;
@@ -137,10 +137,10 @@
 .color-button .btn
 {
     border-radius:50%;
-    width:@colorpicker-cell-size + 5px;
-    height:@colorpicker-cell-size + 5px;
+    width:ceil((@colorpicker-cell-size + 5px));
+    height:ceil((@colorpicker-cell-size + 5px));
     padding:0;
-    line-height:@colorpicker-cell-size + 5px;
+    line-height:ceil((@colorpicker-cell-size + 5px));
     font-size:10px;
 }
 .sat-point{
