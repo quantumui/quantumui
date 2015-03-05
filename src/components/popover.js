@@ -37,7 +37,7 @@ angular.module('ngQuantum.popover', ['ngQuantum.popMaster'])
                       config = $helpers.parseOptions(attr, config)
                       var options = angular.extend({}, defaults, config);
 
-                      if (!options.independent || options.useTemplate) {
+                      if (!options.independent && !options.useTemplate) {
                           var target;
                           if (options.target)
                               target = angular.element(options.target);
@@ -101,7 +101,7 @@ angular.module('ngQuantum.popover', ['ngQuantum.popMaster'])
                       options.delayShow = 10;
                   }
 
-                  if (angular.isDefined(attr.qsTitle) || angular.isDefined(attr.qsContent)
+                  if (angular.isDefined(attr.qsTitle) || angular.isDefined(attr.qsContent) || attr.nqPopover
                       || angular.isDefined(attr.qoTemplate) || angular.isDefined(attr.qoContentTemplate))
                       options.useTemplate = true;
                   var popover = {};

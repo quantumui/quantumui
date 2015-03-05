@@ -7,7 +7,7 @@ angular.module('ngQuantum.loading', ['ngQuantum.services.lazy'])
                 $rootScope.$pendingRequestCount = $rootScope.$pendingRequestCount + (newVal-oldVal);
             },0)
         })
-
+        
     }])
     .provider('$loading', function () {
         var defaults = this.defaults = {
@@ -33,15 +33,19 @@ angular.module('ngQuantum.loading', ['ngQuantum.services.lazy'])
                           placement: placement
                       }
                   }
-                  var options = $loading.$options = $.extend({}, defaults, config);
+                  var options = $loading.$options = angular.extend({}, defaults, config);
                   var container = angular.isElement(options.container) ? options.container : angular.element(options.container)
                   if (!container.length)
                       container = angular.element('body');
                   var scope = $loading.$scope = options.$scope || $rootScope.$new(), cancel;
 
                   var template = angular.element(getTemplate());
-                  var place = container == 'body'? 'prepend':'append'
-                  container[place]($compile(template)(scope));
+                  var place = options.container == 'body' ? 'prepend' : 'append';
+                  $compile(template)(scope);
+                  $timeout(function () {
+                      container[place](template);
+                  }, 0)
+                  
                   scope.busyText = options.busyText;
                   if (options.theme) {
                       scope.loadingTheme = 'loading-' + options.theme;

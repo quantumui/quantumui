@@ -325,7 +325,7 @@
                           $target && $target.focus();
                       };
                       $master.clearExists = function () {
-                          var exists = $('.' + options.typeClass + ":visible", $('body'));
+                          var exists = angular.element('.' + options.typeClass + ":visible", angular.element('body'));
                           angular.forEach(exists, function (key, value) {
                               var sc = angular.element(key).scope();
                               sc && (sc.$id != scope.$id) && sc.$hide && sc.$hide();
@@ -344,6 +344,8 @@
                           $master.$isShown ? element.blur() : element.focus();
                       };
                       $master.$applyPlacement = function () {
+                          if (options.inline)
+                              return;
                           if ($container)
                               $target.appendTo($container)
                           if (!options.preventReplace) {
@@ -384,15 +386,15 @@
                               return false;
                           var elm = $master.$currentElement && $master.$currentElement || element;
                           if (evt.target === elm[0])
-                              return;
-                          else if (elm.has($(evt.target)).length)
-                              return;
-                          else if ((options.multiple || options.overseeingTarget) && (evt.target == $master.$target[0] || $master.$target.has($(evt.target)).length))
-                              return;
+                              return false;
+                          else if (elm.has(angular.element(evt.target)))
+                              return false;
+                          else if ((options.multiple || options.overseeingTarget) && (evt.target == $master.$target[0] || $master.$target.has(evt.target)))
+                              return false;
                           return evt.target !== elm[0] && $master.leave();
                       }
                       function outerHoverTrigger(evt) {
-                          if ($master.$target[0] == evt.target || $master.$target.has($(evt.target)).length) {
+                          if ($master.$target[0] == evt.target || $master.$target.has(angular.element(evt.target))) {
                               if (evt.type == 'mouseenter')
                                   return hoverState = 'in';
                               else if (evt.type == 'mouseleave') {
@@ -453,8 +455,8 @@
                       function complateHide(callback) {
                           $master.$hoverShown = false;
                           if (options.keyboard) {
-                              $(document).off('keyup', $master.$onKeyUp);
-                              $(document).off('keyup', $master.$onFocusKeyUp);
+                              angular.element(document).off('keyup', $master.$onKeyUp);
+                              angular.element(document).off('keyup', $master.$onFocusKeyUp);
                           }
                           if (options.blur && options.trigger === 'focus') {
                               element && element.blur();
@@ -476,9 +478,9 @@
                           $master.$hoverShown = true;
                           if (options.keyboard) {
                               if (options.trigger !== 'focus') {
-                                  $(document).on('keyup', $master.$onKeyUp);
+                                  angular.element(document).on('keyup', $master.$onKeyUp);
                               } else {
-                                  element && $(document).on('keyup', $master.$onFocusKeyUp);
+                                  element && angular.element(document).on('keyup', $master.$onFocusKeyUp);
                               }
                           }
                           element && element.addClass('active')
@@ -500,10 +502,10 @@
                                  
                               var $checkElements = $target.add($target.parents());
                               var isFixed = false;
-                              var scaleW = $(window).width() / 2;
-                              var scaleH = $(window).height() / 2;
-                              $checkElements.each(function () {
-                                  var fx = $(this);
+                              var scaleW = angular.element(window).width() / 2;
+                              var scaleH = angular.element(window).height() / 2;
+                              angular.forEach($checkElements, function (node) {
+                                  var fx = angular.element(node);
                                   if (fx.css("position") === "fixed") {
                                       options.insideFixed = true;
                                       var val = fx.css("bottom");

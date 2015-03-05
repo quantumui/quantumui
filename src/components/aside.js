@@ -152,7 +152,10 @@ var asideoptions = {
                       if (!options.pinnable)
                           return;
                       if ($aside.$pinned) {
-                          if (pin) return;
+                          if (pin) {
+                              applyBody && body.addClass(options.side + '-aside-pinned');
+                              return;
+                          };
                           element.removeClass('aside-pinned');
                           applyBody && body.removeClass(options.side + '-aside-pinned');
                           $aside.$pinned = false;
@@ -184,12 +187,13 @@ var asideoptions = {
                       checkSizes();
                   }
                   
-                  angular.element(window).resize(function () {
+                  angular.element(window).on('resize', function () {
                       var newVal = $window.innerWidth;
                       checkSizes(newVal);
                   })
                   function clearStyle() {
                       applyBody && body.removeClasses([options.side + '-aside-opened', options.side + '-aside-collapsed', options.side + '-aside-pinned']);
+                      element && element.removeClasses(classes);
                   }
                   function checkSizes(newVal) {
                       newVal = newVal || $window.innerWidth;
@@ -347,6 +351,9 @@ var asideoptions = {
                     element.css('padding-bottom', fh);
                 }
                 var aside = new $aside(element, options, attr);
+                var asideName = attr.nqAside;
+                if (asideName)
+                    scope.$parent[asideName] = aside;
             }
         };
     }])

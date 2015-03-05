@@ -19,14 +19,15 @@ angular.module('ngQuantum.services.placement', ['ngQuantum.services.helpers'])
                 }
                 var width = $target.outerWidth(true),
                     height = $target.outerHeight(true);
-
                 var offset = getCalculatedOffset(placement, position, width, height);
+                
                 offset.top = offset.top + $helpers.ensureNumber(options.offsetTop)
                 offset.left = offset.left + $helpers.ensureNumber(options.offsetLeft)
                 var marginTop = parseInt($target.css('margin-top'), 10)
                 var marginLeft = parseInt($target.css('margin-left'), 10)
                 if (isNaN(marginTop)) marginTop = 0;
                 if (isNaN(marginLeft)) marginLeft = 0;
+                
                 offset.top = offset.top + marginTop;
                 offset.left = offset.left + marginLeft;
                 if (options.insideFixed) {
@@ -38,7 +39,7 @@ angular.module('ngQuantum.services.placement', ['ngQuantum.services.helpers'])
                 return options;
             }
             fn.verticalPlacement = function ($target, options) {
-                var windowHeght = $(window).height() || 0;
+                var windowHeght = window.screen.height || 0;
                 var targetHeight = $target.height() || 0;
                 var diff = windowHeght - targetHeight - 10;
                 if (diff > 0) {
@@ -64,7 +65,7 @@ angular.module('ngQuantum.services.placement', ['ngQuantum.services.helpers'])
 
             }
             fn.ensurePosition = function ($target, element) {
-                var offset = $target.offset(), ww = angular.element(window).width(), dh = angular.element(document).height(),
+                var offset = $target.offset(), ww = window.screen.width, dh = $helpers.docHeight(),
                     tw = $target.width(), th = $target.height(), eh = element.height(), eo = element.offset(), classList = $target.attr('class');
                 if (offset.left < 0) {
                     $target.css('left', 0);
@@ -90,11 +91,17 @@ angular.module('ngQuantum.services.placement', ['ngQuantum.services.helpers'])
             }
             function getPosition(element, options) {
                 var el = element[0];
-                
-                return $.extend({}, (typeof el.getBoundingClientRect == 'function') ? el.getBoundingClientRect() : {
+                var clipRect = (typeof el.getBoundingClientRect == 'function') ? el.getBoundingClientRect() : {
                     width: el.offsetWidth
                    , height: el.offsetHeight
-                }, options.insideFixed ? element.position() : element.offset());
+                };
+                var rectObj = {};
+                for (var o in clipRect) {
+                    rectObj[o] = clipRect[o];
+                }
+                var offset = options.insideFixed ? element.position() : element.offset();
+                var result = angular.extend({}, rectObj, offset);
+               return result;
             }
             function getCalculatedOffset(placement, position, actualWidth, actualHeight) {
                 var offset;

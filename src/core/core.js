@@ -51,8 +51,18 @@ if (typeof String.prototype.endsWith != 'function') {
 }
 +function (window, angular, undefined) {
     'use strict';
-    var jqLite = angular.element;
-    jqLite.prototype.removeClasses = function (classList) {
+    var  $$raf  =
+        window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function (callback) {
+            setTimeout(function () {
+                callback.call(null, false)
+            }, 150);
+        };
+    angular.element.prototype.removeClasses = function (classList) {
         var el = this;
         var list = angular.isArray(classList) ? classList : angular.isStrign(classList) ? classList.split(" ") : [];
         angular.forEach(list, function (val, key) {
@@ -60,40 +70,31 @@ if (typeof String.prototype.endsWith != 'function') {
         })
         return this;
     }
-    jqLite.prototype.animationStart = function (callback) {
-        var el = this, called = false;
-        el.one('animationstart webkitAnimationStart oAnimationStart oanimationstart MSAnimationStart',
-            function (evt) {
-                callback(evt);
-            });
-        return this;
-    }
-    jqLite.prototype.animationEnd = function (callback) {
-        var el = this, called = false;
-        el.one('animationstart webkitAnimationStart oAnimationStart oanimationstart MSAnimationStart',
-            function (evt) {
-                called = true;
-            });
+   
+
+    angular.element.prototype.animationEnd = function (callback) {
+        var el = this;
         el.one('animationend webkitAnimationEnd oAnimationEnd oanimationend MSAnimationEnd',
             function (evt) {
                 callback(evt);
             });
+        $$raf(function (evt) {
+            if (evt === false)
+                callback(evt);
+        })
         return this;
     }
-    jqLite.prototype.transitionEnd = function (callback) {
-        var el = this, called = false;
-        el.one('transitionstart webkitTransitionStart oTransitionStart otransitionstart',
-            function (evt) {
-                called = true;
-            });
+    angular.element.prototype.transitionEnd = function (callback) {
+        var el = this;
+        
         el.one('transitionend webkitTransitionEnd oTransitionEnd otransitionend',
             function (evt) {
                 callback(evt);
             });
-        setTimeout(function () {
-            if (!called)
-                callback(null);
-        }, 150)
+        $$raf(function (evt) {
+            if (evt === false)
+                callback(evt);
+        })
         return this;
     }
     var nqCoreApp = angular.module('ngQuantum.directives', [])
@@ -116,7 +117,8 @@ if (typeof String.prototype.endsWith != 'function') {
                                 element.prepend(value)
                                 break;
                             case 'nqBind':
-                                element.html(value)
+                                element.html('')
+                                element.append(value)
                                 break;
                         }
                     }

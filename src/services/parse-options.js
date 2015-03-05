@@ -52,13 +52,13 @@ angular.module('ngQuantum.services.parseOptions', [])
                           var array = [];
 
                           angular.forEach(element.children(), function (value, key) {
-                              if ($(value).is("option")) {
-                                  array.push(optionToData($(value)))
+                              if (angular.element(value).is("option")) {
+                                  array.push(optionToData(angular.element(value)))
                               }
-                              else if ($(value).is("optgroup")) {
-                                  var group = optionGroupToData($(value));
-                                  angular.forEach($(value).children(), function (gval, gkey) {
-                                      array.push(optionToData($(gval), group))
+                              else if (angular.element(value).is("optgroup")) {
+                                  var group = optionGroupToData(angular.element(value));
+                                  angular.forEach(angular.element(value).children(), function (gval, gkey) {
+                                      array.push(optionToData(angular.element(gval), group))
                                   })
 
                               }

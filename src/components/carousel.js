@@ -197,7 +197,7 @@
                 }
                 scope.$watch(function () { return item.thumbImage }, function (image) {
                     if (image) {
-                        image.load(function () {
+                        angular.element(image).on('load',function () {
                             var c = document.createElement("canvas"),
                                 w = controller.thumbWidth,
                                 h = controller.thumbHeight,

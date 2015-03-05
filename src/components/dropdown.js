@@ -58,14 +58,14 @@ angular.module('ngQuantum.dropdown', ['ngQuantum.popMaster'])
                       e.preventDefault();
                       e.stopPropagation();
 
-                      var $items = $('[role="menuitem"]:visible', $dropdown.$target)
+                      var $items = angular.element('[role="menuitem"]:visible', $dropdown.$target)
                       if (!$items.length) return;
                       var index = scope.lastIndex > -1 ? scope.lastIndex : -1
                       if (e.keyCode == 38 && index > 0) index--                  // up
                       if (e.keyCode == 40 && index < $items.length - 1) index++  // down
                       if (!~index) index = 0
                       if (e.keyCode === 13) {
-                          return $($items[index]).trigger('click');
+                          return angular.element($items[index]).trigger('click');
                       }
                       $items.eq(index).focus()
                       scope.lastIndex = index;
@@ -74,8 +74,8 @@ angular.module('ngQuantum.dropdown', ['ngQuantum.popMaster'])
                   var show = $dropdown.show;
                   $dropdown.show = function (callback) {
                       var promise = show(callback);
-                      $(document).off('keydown.dropdown.api.data', $dropdown.$target, $dropdown.$onKeyDown);
-                      $(document).on('keydown.dropdown.api.data', $dropdown.$target, $dropdown.$onKeyDown);
+                      angular.element(document).off('keydown.nqDropdown.api.data');
+                      angular.element(document).on('keydown.nqDropdown.api.data', $dropdown.$onKeyDown);
 
                       if (!scope.$$phase) {
                           scope.$apply(function () {
@@ -94,7 +94,7 @@ angular.module('ngQuantum.dropdown', ['ngQuantum.popMaster'])
                   var hide = $dropdown.hide;
                   $dropdown.hide = function (callback) {
                       scope.lastIndex = -1;
-                      $(document).off('keydown.dropdown.api.data', $dropdown.$onKeyDown);
+                      angular.element(document).off('keydown.nqDropdown.api.data');
                      return hide(callback);
                   };
                   if (attr && angular.isDefined(options.directive)) {

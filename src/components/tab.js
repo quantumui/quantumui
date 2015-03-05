@@ -54,7 +54,7 @@ angular.module('ngQuantum.tabset', ['ngQuantum.services.helpers'])
               function TabFactory($scope, config) {
 
                   var $tabset = {},
-                  options = $tabset.$options = $.extend(true, {}, defaults, config),
+                  options = $tabset.$options = angular.extend({}, defaults, config),
 
                   panes = $tabset.panes = $scope.panes = [];
                   var nc = 'nav-' + options.type;

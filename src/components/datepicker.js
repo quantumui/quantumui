@@ -309,13 +309,6 @@ angular.module('ngQuantum.datepicker', [
 
 
                   };
-
-                  var appPlacement = $picker.$applyPlacement;
-                  $picker.$applyPlacement = function () {
-                      if (!options.inline)
-                          appPlacement();
-
-                  };
                   function buildFirst(disablenew) {
                       $target = $picker.$target;
                       getElements($target);
@@ -465,8 +458,8 @@ angular.module('ngQuantum.datepicker', [
                   function buildTable() {
                       if (!table) {
                           table = angular.element('<table/>').addClass('calendar-table');
-                          tbody = angular.element('<tbody/>').appendTo(table)
                           var thead = angular.element('<thead/>').appendTo(table);
+                          tbody = angular.element('<tbody/>').appendTo(table)
                           var tfoot = angular.element('<tfoot/>').appendTo(table);
                           var names = options.dayHeader == 'shortest' ? moment.localeData()._weekdaysMin || moment.localeData()._weekdaysShort : moment.localeData()._weekdaysShort;
                           if (options.dayOfWeekStart > 0) {
@@ -507,7 +500,7 @@ angular.module('ngQuantum.datepicker', [
                               trdate.append('<th class="cal-week-no">' + rdates[0].week + '</th>');
                           angular.forEach(rdates, function (val, key) {
                               var slday = val.month + '-' + val.day;
-                              var td = angular.element('<td cal-date-item="' + idx + '" ng-class="{selected:selectedDay==\'' + slday + '\'}"></td>').append(val.day).appendTo(trdate);
+                              var td = angular.element('<td cal-date-item="' + idx + '" ng-class="{selected:selectedDay==\'' + slday + '\'}">'+val.day+'</td>').appendTo(trdate);
                               if (val.unselectable)
                                   td.addClass('unselectable')
                               if (val.isWeekend)
@@ -804,7 +797,7 @@ angular.module('ngQuantum.datepicker', [
                       (options.timeView == 'list') && scrollTime();
                       angular.forEach(['onTimeChange', 'onChange'], function (key) {
                           if (angular.isDefined(options[key]))
-                              options[key](scope, { $date: scope.currentDate.toDate() });
+                              options[key](scope, { $currentDate: scope.currentDate.toDate() });
                       })
                   })
                   scope.$watch('currentDateObject.month', function (newval, oldval) {

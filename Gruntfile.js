@@ -71,6 +71,16 @@ module.exports = function (grunt) {
                   'src/ngquantum.js',
                 ],
                 dest: 'dist/js/<%= pkg.name %>.js'
+            },
+            nojq: {
+                src: [
+                  'src/nojq/*.js',
+                  'src/core/*.js',
+                  'src/services/*.js',
+                  'src/components/*.js',
+                  'src/ngquantum.js',
+                ],
+                dest: 'dist/js/<%= pkg.name %>-nojq.js'
             }
         },
 
@@ -83,6 +93,13 @@ module.exports = function (grunt) {
             dist: {
                 src: '<%= concat.dist.dest %>',
                 dest: 'dist/js/<%= pkg.name %>.min.js'
+            },
+            nojq: {
+                options: {
+                    sourceMapName: 'dist/js/<%= pkg.name %>-nojq.min.js.map'
+                },
+                src: '<%= concat.nojq.dest %>',
+                dest: 'dist/js/<%= pkg.name %>-nojq.min.js'
             }
         },
 
@@ -161,9 +178,8 @@ module.exports = function (grunt) {
                       'dist/css/addon/*.css',
                       'dist/css/<%= pkg.name %>.css',
                       'dist/css/<%= pkg.name %>.min.css',
-                      'dist/js/<%= pkg.name %>.js',
-                      'dist/js/<%= pkg.name %>.min.js',
-                      'dist/js/<%= pkg.name %>.min.js.map'
+                      'dist/js/<%= pkg.name %>.min.js.map',
+                      'dist/js/<%= pkg.name %>nojq.min.js.map'
                     ]
                 }
             }
@@ -204,8 +220,6 @@ module.exports = function (grunt) {
                 cwd: './bower_components',
                 src: [
                   'moment/min/moment.min.js',
-                  'jquery/dist/jquery.min.js',
-                  'jquery/dist/jquery.min.map',
                   'angular/angular.min.js',
                   'angular/angular.min.js.map',
                   'angular-animate/angular-animate.min.js',

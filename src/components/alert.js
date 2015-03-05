@@ -96,7 +96,7 @@ angular.module('ngQuantum.alert', ['ngQuantum.popMaster', 'ngQuantum.services.he
                   function getContainer() {
                       var placement = '';
                       options.placement && (placement = '.' + options.placement)
-                      container = $('body').find('.alert-container' + placement);
+                      container = angular.element('body').find('.alert-container' + placement);
                       if (!container || container.length < 1) {
                           container = angular.element('<div class="alert-container ' + options.placement + '"></div>');
                           container.prependTo('body')

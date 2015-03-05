@@ -123,10 +123,10 @@ angular.module('ngQuantum.modal', ['ngQuantum.popMaster'])
                           }
                           if ($modal.$animateTarget && options.size)
                               $modal.$animateTarget.addClass('modal-' + options.size);
+                          
                           setTimeout(function () {
                               resizeModal();
-                          });
-                          
+                          }, 0);
                           return promise;
                       };
                       var hide = $modal.hide;
@@ -208,6 +208,12 @@ angular.module('ngQuantum.modal', ['ngQuantum.popMaster'])
                       
                       
                       function resizeModal() {
+                          if (!$modal.$target) {
+                              setTimeout(function () {
+                                  resizeModal();
+                              }, 10);
+                              return false;
+                          }
                           var cnt = $modal.$target.find('.modal-content'),
                           bdy = $modal.$target.find('.modal-body'),
                           hdr = $modal.$target.find('.modal-header'),

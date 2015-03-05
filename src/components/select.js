@@ -78,18 +78,27 @@ var selectApp = angular.module('ngQuantum.select', [
                   var searchInput = angular.element(['<input ng-hide="$hideFilter" ng-model="filterModel.label" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="{{$placeholder}}" class="select-input form-control" role="combobox" aria-expanded="true"',
                                     , ' aria-autocomplete="list" style="max-width:100%;" />'].join(""))
 
-                  var options = $.extend(true, {}, defaults, config);
+                  var options = angular.extend({}, defaults, config);
                   var isTagsInput = controller.isTagsInput = (options.directive == 'nqTagsInput');
                   var clearIcon = options.clearIcon;
                   var noMatch, charLabel, searchLabel;
                   if (options.filterable) {
                       if (angular.isString(options.noMatch) && options.noMatch.length > 2 && options.noMatch.substr(0, 1) == '#')
-                          noMatch = $(document).find(options.noMatch)
+                          noMatch = angular.element(document).find(options.noMatch)
                       else
                           noMatch = angular.element('<span>' + options.noMatch + '</span>');
                       !noMatch.length && (noMatch = null)
                       if (noMatch)
                           noMatch.addClass('no-match').attr('ng-show', '$noResultFound')
+                  }
+                  if (options.inline) {
+                      options.show = true;
+                      options.trigger = false;
+                      options.showArrow = false;
+                      options.container = false;
+                      element.addClass('listbox-inline');
+                      options.effect = false;
+                      options.autoHide = false;
                   }
                   $select = new $popMaster(element, options);
                   var scope = $select.$scope;
@@ -284,11 +293,11 @@ var selectApp = angular.module('ngQuantum.select', [
                       e.preventDefault();
                       e.stopPropagation();
 
-                      var $items = $('.select-option:visible', $target);
+                      var $items = angular.element('.select-option:visible', $target);
 
                       if (!$items || !$items.length) return;
                       
-                      var index = scope.$lastIndex > -1 ? scope.$lastIndex : ($($target.find('.selected')[0]).closest('li')).index() || -1;
+                      var index = scope.$lastIndex > -1 ? scope.$lastIndex : (angular.element($target.find('.selected')[0]).closest('li')).index() || -1;
                       index >= $items.length && (index = 0)
                       if (e.keyCode == 38 && index > 0) index--                  // up
                       if (e.keyCode == 40 && index < $items.length - 1) index++  // down
@@ -315,8 +324,8 @@ var selectApp = angular.module('ngQuantum.select', [
 
                       });
                       if (options.keyboard && $select.$target) {
-                          $(document).off('keydown.nq.select.data-api', $select.$onKeyDown);
-                          $(document).on('keydown.nq.select.data-api', $select.$onKeyDown);
+                          angular.element(document).off('keydown', $select.$onKeyDown);
+                          angular.element(document).on('keydown', $select.$onKeyDown);
                       }
 
                       $select.$target.css('min-width', element.outerWidth(true));
@@ -325,8 +334,8 @@ var selectApp = angular.module('ngQuantum.select', [
                   $select.hide = function () {
                       $select.$target.off(isTouch ? 'touchstart' : 'mousedown', $select.$onMouseDown);
                       if (options.keyboard && $select.$target)
-                          $(document).off('keydown.nq.select.data-api', $select.$onKeyDown);
-                      _hide();
+                          angular.element(document).off('keydown', $select.$onKeyDown);
+                     !options.inline && _hide();
                       if (options.directive != 'nqTagsInput')
                           searchInput.val('');
                       scope.$lastIndex = -1;
@@ -400,6 +409,10 @@ var selectApp = angular.module('ngQuantum.select', [
 
                           if (searchInput && newValue) {
                               searchInput.css('min-width', newValue.length * 0.7 + 'em')
+                          }
+                          var scrollVal = newValue ? 0 : '.selected';
+                          if (scrollbar && newValue) {
+                              scrollbar.scrollTo(scrollVal, 'y', 10);
                           }
 
                       });

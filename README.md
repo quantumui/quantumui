@@ -1,12 +1,19 @@
 ﻿# [QuantumUI](http://angularui.net/)
 
-QuantumUI is the most powerful and well designed ANGULARJS and Bootstrap CSS based UI components make developer life easy.
+QuantumUI is the most powerful and well designed NATIVE AngularJS and Bootstrap CSS based UI components make developer life easy.
 
 It complately MVVM structure, easy, light, fast, mobile friendly 25+ components and lots of native angular services.
 
 It optimized and extended Bootstrap based CSS structure with pure CSS3 plugins.
 
 To get started, check out [getting started page](http://angularui.net/ui/start) or follow instructions below.
+
+## Dependencies:
+
++ [Angularjs](https://github.com/angular/angular.js)
++ [angular-sanitize](https://github.com/angular/bower-angular-sanitize)
++ [angular-animate](https://github.com/angular/bower-angular-animate)
++ [momentjs](https://github.com/moment/moment) (for datepicker)
 
 
 ## Links:
@@ -23,6 +30,8 @@ Three quick start options are available:
 - Install with [Bower](http://bower.io): `bower install quantumui`.
 
 Run `npm install` and `bower install` to install dependencies.
+
+For running sample page, navigate to directory quantumui theni run `grunt server`.
 
 Read the [getting started page](http://angularui.net/appdoc/documents/home/dashboard) for information.
 

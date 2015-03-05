@@ -157,12 +157,12 @@ angular.module('ngQuantum.slider', ['ngQuantum.services.mouse', 'ngQuantum.servi
                       thumb.removeClass('titip-active');
                       thumb2 && thumb2.removeClass('titip-active');
                   }
-                  $('body').removeClass('unselectable');
+                  angular.element('body').removeClass('unselectable');
                   $mouse.offUp($document);
                   
               }
               function slideThumb(event) {
-                  $('body').addClass('unselectable')
+                  angular.element('body').addClass('unselectable')
                   if (!sizes)
                       findSizes();
                   if (options.showTooltip && !options.tooltipVisible) {
@@ -286,7 +286,6 @@ angular.module('ngQuantum.slider', ['ngQuantum.services.mouse', 'ngQuantum.servi
                   }
                   var margins = {};
                   if (options.direction == 'vertical') {
-                      console.log(sizes)
                       margins['margin-bottom'] = -(sizes.thh / 2);
                       margins['margin-left'] = -((sizes.thw - sizes.trw) / 2);
                   }
