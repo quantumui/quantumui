@@ -12,8 +12,8 @@
     "framework",
     "web"
   ],
-  "homepage": "http://angularui.net",
-  "author": "Mehmet Otkun, angularui.net.",
+  "homepage": "http://quantumui.org",
+  "author": "Mehmet Otkun, quantumui.org",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -22,14 +22,14 @@
   "main": "dist/js/quantumui.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/angularui/quantumui.git"
+    "url": "https://github.com/quantumui/quantumui.git"
   },
   "bugs": {
-    "url": "https://github.com/angularui/quantumui/issues"
+    "url": "https://github.com/quantumui/quantumui/issues"
   },
   "license": {
     "type": "MIT",
-    "url": "https://github.com/angularui/quantumui/blob/master/LICENSE"
+    "url": "https://github.com/quantumui/quantumui/blob/master/LICENSE"
   },
   "devDependencies": {
     "grunt": "~0.4.5",

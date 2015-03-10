@@ -23,7 +23,7 @@
     "nojq"
   ],
   "license": "MIT",
-  "homepage": "http://angularui.net",
+  "homepage": "http://quantumui.org",
   "ignore": [
     "**/.*",
     "node_modules",
