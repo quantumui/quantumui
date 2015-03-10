@@ -1,4 +1,4 @@
-﻿# [QuantumUI](http://angularui.net/)
+﻿# [QuantumUI](http://quantumui.org/)
 
 QuantumUI is the most powerful and well designed NATIVE AngularJS and Bootstrap CSS based UI components make developer life easy.
 
@@ -6,7 +6,7 @@ It complately MVVM structure, easy, light, fast, mobile friendly 25+ components 
 
 It optimized and extended Bootstrap based CSS structure with pure CSS3 plugins.
 
-To get started, check out [getting started page](http://angularui.net/ui/start) or follow instructions below.
+To get started, check out [getting started page](http://quantumui.org/ui/start) or follow instructions below.
 
 ## Dependencies:
 
@@ -18,28 +18,28 @@ To get started, check out [getting started page](http://angularui.net/ui/start) 
 
 ## Links:
 
-+ [Home Page](http://angularui.net/)
-+ [Documentations](http://angularui.net/appdoc/documents/home/dashboard) (with more examples)
++ [Home Page](http://quantumui.org/)
++ [Documentations](http://quantumui.org/appdoc/documents/home/dashboard) (with more examples)
 
 ## Quick start
 
 Three quick start options are available:
 
-- [Download the latest release](https://github.com/angularui/quantumui/archive/master.zip).
-- Clone the repo: `git clone https://github.com/angularui/quantumui.git`.
+- [Download the latest release](https://github.com/quantumui/quantumui/archive/master.zip).
+- Clone the repo: `git clone https://github.com/quantumui/quantumui.git`.
 - Install with [Bower](http://bower.io): `bower install quantumui`.
 
 Run `npm install` and `bower install` to install dependencies.
 
 For running sample page, navigate to directory quantumui theni run `grunt server`.
 
-Read the [getting started page](http://angularui.net/appdoc/documents/home/dashboard) for information.
+Read the [getting started page](http://quantumui.org/appdoc/documents/home/dashboard) for information.
 
-Examples: <http://angularui.net/appdoc/documents/quantumui/index/>.
+Examples: <http://quantumui.org/appdoc/documents/quantumui/index/>.
 
 ## Features of OuantumUI 
 
-OuantumUI Core is a free and open-source subset of AngularUI. The following table details the widgets and features available in QunatumUI Core.
+OuantumUI Core is a free and open-source Component set. The following table details the widgets and features available in QunatumUI Core.
 
 
 | Feature | Core |
@@ -104,7 +104,7 @@ quantumui/
 
 ## Documentation
 
-QuantumUI's is full documented with lots of examples on online page, <http://angularui.net/appdoc/documents/quantumui/index/>.
+QuantumUI's is full documented with lots of examples on online page, <http://quantumui.org/appdoc/documents/quantumui/index/>.
 
 
 
@@ -113,10 +113,10 @@ QuantumUI's is full documented with lots of examples on online page, <http://ang
 
 **Mehmet Ötkün**
 
-+ <http://angularui.net>
++ <http://quantumui.org>
 + <https://twitter.com/angular_ui>
-+ <https://www.facebook.com/angularui>
-+ <https://github.com/angularui>
++ <https://www.facebook.com/quantumui>
++ <https://github.com/quantumui>
 + <https://github.com/mehmetotkun>
 
 
@@ -125,7 +125,7 @@ QuantumUI's is full documented with lots of examples on online page, <http://ang
 
 QuantumUI Free is licensed under a Creative Commons Attribution 3.0 Unported (CC BY 3.0)  (http://creativecommons.org/licenses/by/3.0/) and MIT License - http://opensource.org/licenses/mit-license.html.
 
-You are allowed to use these elements anywhere you want, however we’ll highly appreciate if you will link to our [website](http://angularui.net).
+You are allowed to use these elements anywhere you want, however we’ll highly appreciate if you will link to our [website](http://quantumui.org).
 
 
 
@@ -133,7 +133,7 @@ Social Media:
 
 Twitter: <https://twitter.com/angular_ui>
 
-Facebook: <https://www.facebook.com/angularui>
+Facebook: <https://www.facebook.com/quantumui>
 
 Google+: <https://plus.google.com/u/0/b/116727412287168023986/dashboard/overview>
 
