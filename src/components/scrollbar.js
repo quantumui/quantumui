@@ -87,6 +87,7 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
                               evt.deltaY = -1
                               break;
                       }
+                      
                       mouseWheel(evt);
 
                   };
@@ -330,7 +331,7 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
                                       watchResult();
                                   if (options.keyboard) {
                                       angular.element(document).off('.scrollbarkeyboard');
-                                      angular.element(document).on('keydown.scrollbarkeyboard', element[0], $bar.$onKeyDown);
+                                      angular.element(document).on('keydown.scrollbarkeyboard', $bar.$onKeyDown);
                                   }
 
                               })
@@ -339,12 +340,12 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
                               })
                           }
                           else {
-                              element.on('touchstart', element[0], function (event) {
+                              element.on('touchstart', function (event) {
                                   var lastY = $y.stepSize || 0, lastX = $x.stepSize || 0;
                                   var sTouch = event.originalEvent.touches[0] || event.originalEvent.changedTouches[0];
                                   $y.bar && $y.bar.css('visibility', 'visible');
                                   $x.bar && $x.bar.css('visibility', 'visible');
-                                  angular.element(document).on('touchmove.scrollbar', element[0], function (evt) {
+                                  angular.element(document).on('touchmove.scrollbar', function (evt) {
                                       var touch = evt.originalEvent.touches[0] || evt.originalEvent.changedTouches[0];
                                       var newY = (sTouch.pageY - touch.pageY) + lastY;
                                       var newX = (sTouch.pageX - touch.pageX) + lastX;
@@ -384,7 +385,7 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
 
                                   })
                               })
-                              angular.element(document).on('touchend.scrollbar touchcancel.scrollbar', element[0], function (evt) {
+                              angular.element(document).on('touchend.scrollbar touchcancel.scrollbar', function (evt) {
                                   $y.bar && $y.bar.css('visibility', 'hidden');
                                   $x.bar && $x.bar.css('visibility', 'hidden');
                                   angular.element(document).off('touchmove')
@@ -608,6 +609,7 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
                           cont.css('max-width', $size.width)
                   }
                   function applyY(newval) {
+                      newval = $container[0].scrollHeight;
                       if (newval && /y|both/.test(options.axis)) {
                           var h = $container.outerHeight(true);
                           $y = barSizes($y, newval, h);
@@ -627,6 +629,7 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
                       }
                   }
                   function applyX(newval) {
+                      newval = $container[0].scrollWidht;
                       if (newval && /x|both/.test(options.axis)) {
                           var w = $container.outerWidth()
                           $x = barSizes($x, newval, w);

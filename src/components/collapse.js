@@ -33,13 +33,18 @@
                           }, 1)
 
                       } else {
-                          target.addClass('collapsing')[dimension](0)
+                          size = target[dimension]();
+                          target[dimension](size)
+                          setTimeout(function () {
+                              target.addClass('collapsing')[dimension](0)
                               .transitionEnd(function () {
                                   target[dimension]('');
                                   target.removeClass('collapsing').removeClass('in').css(dimension, '');
                                   $collapse.collapsed = true;
                                   options.onToggle && options.onToggle(true);
                               });
+                          }, 1)
+                          
                       }
                   }
                   element && element.on('click', function (evt) {
@@ -48,13 +53,6 @@
                       toggle();
 
                   });
-                  setTimeout(function () {
-                      if (!$collapse.collapsed) {
-                          size = target[dimension](),
-                          target[dimension](size);
-                      }
-                      
-                  }, 0)
                   $collapse.toggle = toggle;
                   return $collapse;
               }
