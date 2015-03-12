@@ -58,7 +58,8 @@ angular.module('ngQuantum.dropdown', ['ngQuantum.popMaster'])
                       e.preventDefault();
                       e.stopPropagation();
 
-                      var $items = angular.element('[role="menuitem"]:visible', $dropdown.$target)
+                      var $items = $dropdown.$target.find('[role="menuitem"]:visible');
+                      $dropdown.$target.focus();
                       if (!$items.length) return;
                       var index = scope.lastIndex > -1 ? scope.lastIndex : -1
                       if (e.keyCode == 38 && index > 0) index--                  // up
