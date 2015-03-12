@@ -9,7 +9,7 @@ var asideoptions = {
     collapsed: false,
     collapsible: false,
     pinnable: false,
-    pinnedScreenSize: 1300,
+    pinnedScreenSize: 1600,
     collapsedScreenSize: 991,
     closedScreenSize: 767,
     position: 'fixed',   // can be fixed|relative|absolute
@@ -153,13 +153,7 @@ var asideoptions = {
                           return;
                       if ($aside.$pinned) {
                           if (pin) {
-                              if (!$aside.$isOpen) {
-                                  $aside.open()
-                                  return;
-                              }
-                              element.addClass('aside-pinned');
                               applyBody && body.addClass(options.side + '-aside-pinned');
-                              $aside.$pinned = true;
                               return;
                           };
                           element.removeClass('aside-pinned');
@@ -194,11 +188,8 @@ var asideoptions = {
                   }
                   
                   angular.element(window).on('resize', function () {
-                      $timeout(function () {
-                          var newVal = $window.innerWidth;
-                          checkSizes(newVal);
-                      }, 0)
-                      
+                      var newVal = $window.innerWidth;
+                      checkSizes(newVal);
                   })
                   function clearStyle() {
                       applyBody && body.removeClasses([options.side + '-aside-opened', options.side + '-aside-collapsed', options.side + '-aside-pinned']);
@@ -214,7 +205,7 @@ var asideoptions = {
                           if (options.collapsedScreenSize && options.collapsedScreenSize >= newVal) {
                               $aside.toggleCollapse(true);
                           }
-                          if (options.pinnedScreenSize && options.pinnedScreenSize <= newVal) {
+                          else if (options.pinnedScreenSize && options.pinnedScreenSize <= newVal) {
                               $aside.togglePin(true);
                           }
                       }

@@ -502,22 +502,6 @@
             }
             if (selector.charAt(0) === '>')
                 selector = ':scope ' + selector;
-            if (selector.indexOf(':visible') > -1) {
-                var elems = angular.element(context.querySelectorAll(selector.split(':visible')[0]))
-                var matches = [];
-                forEach(elems, function (val, i) {
-                    if (angular.element(val).is(':visible'))
-                        matches.push(val);
-                })
-                if (matches.length) {
-                    if (matches.length == 1)
-                        return angular.element(matches[0])
-                    else {
-                        return this.pushStack(matches)
-                    }
-                }
-                return angular.element();
-            }
             return angular.element(context.querySelectorAll(selector));
         };
         jqLite.prototype.has = function (node) {
@@ -533,7 +517,7 @@
 
         jqLite.prototype.closest = function (selector) {
             if (!this.length)
-                return angular.element();
+                return [];
             var matches = [];
             forEach(this, function (val, i) {
                 var node = closest(val, selector);
