@@ -134,6 +134,10 @@ var selectApp = angular.module('ngQuantum.select', [
                           else {
                               options.buttonClass && element.addClass(options.buttonClass)
                               $target.prepend(searchInput);
+                              searchInput.on('click', function (e) {
+                                  e.preventDefault();
+                                  searchInput.focus();
+                              })
                           }
                       }
                       if (noMatch) {
@@ -289,15 +293,18 @@ var selectApp = angular.module('ngQuantum.select', [
                   };
                   $select.$onKeyDown = function (e) {
                       if (!/(38|40|13)/.test(e.keyCode))
-                          return;
+                          return true;
                       e.preventDefault();
                       e.stopPropagation();
-
-                      var $items = angular.element('.select-option:visible', $target);
-
-                      if (!$items || !$items.length) return;
                       
-                      var index = scope.$lastIndex > -1 ? scope.$lastIndex : (angular.element($target.find('.selected')[0]).closest('li')).index() || -1;
+                      var $items = $target.find('.select-option:visible');
+                    
+                      if (!$items || !$items.length) return;
+                      $target.focus();
+                      var index = scope.$lastIndex > -1 ? scope.$lastIndex : -1;
+                      if (index == -1) {
+                          index = angular.element($target.find('.selected')[0]).closest('.select-option').index();
+                      }
                       index >= $items.length && (index = 0)
                       if (e.keyCode == 38 && index > 0) index--                  // up
                       if (e.keyCode == 40 && index < $items.length - 1) index++  // down
@@ -567,18 +574,21 @@ var selectApp = angular.module('ngQuantum.select', [
                       return li.append(angular.element('<a></a>').append(item.label).append(closer))
                   }
                   function highlightText(value) {
-                      if (options.highlight && $target) {
-                          var items = $target.find('.option-label')
-                          if (items.length) {
-                              angular.forEach(items, function (val) {
-                                  var el = angular.element(val);
-                                  if (value)
-                                      el.html(el.text().replace(new RegExp('(' + value + ')', 'gi'), '<span class="highlight">$1</span>'));
-                                  else
-                                      el.html(el.text());
-                              })
+                      setTimeout(function () {
+                          if (options.highlight && $target) {
+                              var items = $target.find('.option-label')
+                              if (items.length) {
+                                  angular.forEach(items, function (val) {
+                                      var el = angular.element(val);
+                                      if (value)
+                                          el.html(el.text().replace(new RegExp('(' + value + ')', 'gi'), '<span class="highlight">$1</span>'));
+                                      else
+                                          el.html(el.text());
+                                  })
+                              }
                           }
-                      }
+                      }, 100)
+                      
                   }
                   function localFiler(newValue, oldValue) {
                       if (!options.customFilter) {

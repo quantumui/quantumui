@@ -1,6 +1,6 @@
 /*!
- * QuantumUI Free v0.0.1 (http://angularui.net)
- * Copyright 2014-2015 Mehmet Otkun, angularui.net.
+ * QuantumUI Free v0.0.1 (http://quantumui.org)
+ * Copyright 2014-2015 Mehmet Otkun, quantumui.org
  */
 if (!String.prototype.trim) {
     String.prototype.trim = function () {
@@ -1141,7 +1141,7 @@ var asideoptions = {
     collapsed: false,
     collapsible: false,
     pinnable: false,
-    pinnedScreenSize: 1600,
+    pinnedScreenSize: 1300,
     collapsedScreenSize: 991,
     closedScreenSize: 767,
     position: 'fixed',   // can be fixed|relative|absolute
@@ -1285,7 +1285,13 @@ var asideoptions = {
                           return;
                       if ($aside.$pinned) {
                           if (pin) {
+                              if (!$aside.$isOpen) {
+                                  $aside.open()
+                                  return;
+                              }
+                              element.addClass('aside-pinned');
                               applyBody && body.addClass(options.side + '-aside-pinned');
+                              $aside.$pinned = true;
                               return;
                           };
                           element.removeClass('aside-pinned');
@@ -1320,8 +1326,11 @@ var asideoptions = {
                   }
                   
                   angular.element(window).on('resize', function () {
-                      var newVal = $window.innerWidth;
-                      checkSizes(newVal);
+                      $timeout(function () {
+                          var newVal = $window.innerWidth;
+                          checkSizes(newVal);
+                      }, 0)
+                      
                   })
                   function clearStyle() {
                       applyBody && body.removeClasses([options.side + '-aside-opened', options.side + '-aside-collapsed', options.side + '-aside-pinned']);
@@ -1337,7 +1346,7 @@ var asideoptions = {
                           if (options.collapsedScreenSize && options.collapsedScreenSize >= newVal) {
                               $aside.toggleCollapse(true);
                           }
-                          else if (options.pinnedScreenSize && options.pinnedScreenSize <= newVal) {
+                          if (options.pinnedScreenSize && options.pinnedScreenSize <= newVal) {
                               $aside.togglePin(true);
                           }
                       }
@@ -1914,13 +1923,18 @@ var asideoptions = {
                           }, 1)
 
                       } else {
-                          target.addClass('collapsing')[dimension](0)
+                          size = target[dimension]();
+                          target[dimension](size)
+                          setTimeout(function () {
+                              target.addClass('collapsing')[dimension](0)
                               .transitionEnd(function () {
                                   target[dimension]('');
                                   target.removeClass('collapsing').removeClass('in').css(dimension, '');
                                   $collapse.collapsed = true;
                                   options.onToggle && options.onToggle(true);
                               });
+                          }, 1)
+                          
                       }
                   }
                   element && element.on('click', function (evt) {
@@ -1929,13 +1943,6 @@ var asideoptions = {
                       toggle();
 
                   });
-                  setTimeout(function () {
-                      if (!$collapse.collapsed) {
-                          size = target[dimension](),
-                          target[dimension](size);
-                      }
-                      
-                  }, 0)
                   $collapse.toggle = toggle;
                   return $collapse;
               }
@@ -3370,7 +3377,8 @@ angular.module('ngQuantum.dropdown', ['ngQuantum.popMaster'])
                       e.preventDefault();
                       e.stopPropagation();
 
-                      var $items = angular.element('[role="menuitem"]:visible', $dropdown.$target)
+                      var $items = $dropdown.$target.find('[role="menuitem"]:visible');
+                      $dropdown.$target.focus();
                       if (!$items.length) return;
                       var index = scope.lastIndex > -1 ? scope.lastIndex : -1
                       if (e.keyCode == 38 && index > 0) index--                  // up
@@ -5008,6 +5016,7 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
                               evt.deltaY = -1
                               break;
                       }
+                      
                       mouseWheel(evt);
 
                   };
@@ -5251,7 +5260,7 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
                                       watchResult();
                                   if (options.keyboard) {
                                       angular.element(document).off('.scrollbarkeyboard');
-                                      angular.element(document).on('keydown.scrollbarkeyboard', element[0], $bar.$onKeyDown);
+                                      angular.element(document).on('keydown.scrollbarkeyboard', $bar.$onKeyDown);
                                   }
 
                               })
@@ -5260,12 +5269,12 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
                               })
                           }
                           else {
-                              element.on('touchstart', element[0], function (event) {
+                              element.on('touchstart', function (event) {
                                   var lastY = $y.stepSize || 0, lastX = $x.stepSize || 0;
                                   var sTouch = event.originalEvent.touches[0] || event.originalEvent.changedTouches[0];
                                   $y.bar && $y.bar.css('visibility', 'visible');
                                   $x.bar && $x.bar.css('visibility', 'visible');
-                                  angular.element(document).on('touchmove.scrollbar', element[0], function (evt) {
+                                  angular.element(document).on('touchmove.scrollbar', function (evt) {
                                       var touch = evt.originalEvent.touches[0] || evt.originalEvent.changedTouches[0];
                                       var newY = (sTouch.pageY - touch.pageY) + lastY;
                                       var newX = (sTouch.pageX - touch.pageX) + lastX;
@@ -5305,7 +5314,7 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
 
                                   })
                               })
-                              angular.element(document).on('touchend.scrollbar touchcancel.scrollbar', element[0], function (evt) {
+                              angular.element(document).on('touchend.scrollbar touchcancel.scrollbar', function (evt) {
                                   $y.bar && $y.bar.css('visibility', 'hidden');
                                   $x.bar && $x.bar.css('visibility', 'hidden');
                                   angular.element(document).off('touchmove')
@@ -5529,6 +5538,7 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
                           cont.css('max-width', $size.width)
                   }
                   function applyY(newval) {
+                      newval = $container[0].scrollHeight;
                       if (newval && /y|both/.test(options.axis)) {
                           var h = $container.outerHeight(true);
                           $y = barSizes($y, newval, h);
@@ -5548,6 +5558,7 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
                       }
                   }
                   function applyX(newval) {
+                      newval = $container[0].scrollWidht;
                       if (newval && /x|both/.test(options.axis)) {
                           var w = $container.outerWidth()
                           $x = barSizes($x, newval, w);
@@ -5741,6 +5752,10 @@ var selectApp = angular.module('ngQuantum.select', [
                           else {
                               options.buttonClass && element.addClass(options.buttonClass)
                               $target.prepend(searchInput);
+                              searchInput.on('click', function (e) {
+                                  e.preventDefault();
+                                  searchInput.focus();
+                              })
                           }
                       }
                       if (noMatch) {
@@ -5896,15 +5911,18 @@ var selectApp = angular.module('ngQuantum.select', [
                   };
                   $select.$onKeyDown = function (e) {
                       if (!/(38|40|13)/.test(e.keyCode))
-                          return;
+                          return true;
                       e.preventDefault();
                       e.stopPropagation();
-
-                      var $items = angular.element('.select-option:visible', $target);
-
-                      if (!$items || !$items.length) return;
                       
-                      var index = scope.$lastIndex > -1 ? scope.$lastIndex : (angular.element($target.find('.selected')[0]).closest('li')).index() || -1;
+                      var $items = $target.find('.select-option:visible');
+                    
+                      if (!$items || !$items.length) return;
+                      $target.focus();
+                      var index = scope.$lastIndex > -1 ? scope.$lastIndex : -1;
+                      if (index == -1) {
+                          index = angular.element($target.find('.selected')[0]).closest('.select-option').index();
+                      }
                       index >= $items.length && (index = 0)
                       if (e.keyCode == 38 && index > 0) index--                  // up
                       if (e.keyCode == 40 && index < $items.length - 1) index++  // down
@@ -6174,18 +6192,21 @@ var selectApp = angular.module('ngQuantum.select', [
                       return li.append(angular.element('<a></a>').append(item.label).append(closer))
                   }
                   function highlightText(value) {
-                      if (options.highlight && $target) {
-                          var items = $target.find('.option-label')
-                          if (items.length) {
-                              angular.forEach(items, function (val) {
-                                  var el = angular.element(val);
-                                  if (value)
-                                      el.html(el.text().replace(new RegExp('(' + value + ')', 'gi'), '<span class="highlight">$1</span>'));
-                                  else
-                                      el.html(el.text());
-                              })
+                      setTimeout(function () {
+                          if (options.highlight && $target) {
+                              var items = $target.find('.option-label')
+                              if (items.length) {
+                                  angular.forEach(items, function (val) {
+                                      var el = angular.element(val);
+                                      if (value)
+                                          el.html(el.text().replace(new RegExp('(' + value + ')', 'gi'), '<span class="highlight">$1</span>'));
+                                      else
+                                          el.html(el.text());
+                                  })
+                              }
                           }
-                      }
+                      }, 100)
+                      
                   }
                   function localFiler(newValue, oldValue) {
                       if (!options.customFilter) {
@@ -7303,6 +7324,7 @@ angular.module('ngQuantum.tabset', ['ngQuantum.services.helpers'])
                 elm.on('click', function (evt) {
                     evt.preventDefault();
                     evt.stopPropagation();
+                    console.log(pane)
                     if (pane.active) return;
 
                     scope.$apply(function () {
