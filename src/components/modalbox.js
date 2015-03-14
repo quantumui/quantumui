@@ -103,16 +103,16 @@ angular.module('ngQuantum.modalBox', ['ngQuantum.modal'])
                       function findTemplate() {
                           switch (config.boxType) {
                               case 'alert':
-                                  config.template = defaults.alertTemplate
+                                  config.template = config.alertTemplate || defaults.alertTemplate
                                   break;
                               case 'confirm':
-                                  config.template = defaults.confirmTemplate
+                                  config.template = config.confirmTemplate || defaults.confirmTemplate
                                   break;
                               case 'prompt':
-                                  config.template = defaults.promptTemplate
+                                  config.template = config.promptTemplate || defaults.promptTemplate
                                   break;
                               default:
-                                  config.template = defaults.alertTemplate
+                                  config.template = config.alertTemplate || defaults.alertTemplate
                                   break;
                           }
                       }
