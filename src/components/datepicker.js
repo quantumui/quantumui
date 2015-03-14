@@ -705,7 +705,7 @@ angular.module('ngQuantum.datepicker', [
                                       if (hr < options.minHour)
                                           dt.hour(options.minHour)
                                       if (hr > options.maxHour)
-                                          dt.hour(options.maxHour).mimute(0)
+                                          dt.hour(options.maxHour).minute(0)
                                   }
                                   scope.currentDate = dt;
                                   scope.selectedDay = scope.currentDate.month() + '-' + scope.currentDate.date();

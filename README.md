@@ -37,6 +37,9 @@ Read the [getting started page](http://quantumui.org/appdoc/documents/home/dashb
 
 Examples: <http://quantumui.org/appdoc/documents/quantumui/index/>.
 
+**Note** : There is in [icons.js](https://github.com/quantumui/quantumui/blob/master/config/icons.js) under the config folder.
+This file is include all icon configuration options for all components. If you use Bootstrap default **glyphicon** add this to your page Or If you want to use Fontawesome, Ionicons or any other icon package, you must customize this icon file.
+
 ## Features of OuantumUI 
 
 OuantumUI Core is a free and open-source Component set. The following table details the widgets and features available in QunatumUI Core.
