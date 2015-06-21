@@ -186,7 +186,7 @@ angular.module('ngQuantum.tabset', ['ngQuantum.services.helpers'])
                                 p.stored = false;
                             }
 
-                            controller.lastStoredIndex++
+                            controller.lastStoredIndex++;
                             (controller.panes.length == controller.lastStoredIndex) && (scope.showMore = false)
                         }
                     }
