@@ -13,7 +13,8 @@ var asideoptions = {
     collapsedScreenSize: 991,
     closedScreenSize: 767,
     position: 'fixed',   // can be fixed|relative|absolute
-    offCanvas: 'mobile', // can be all|desktop|touches or false
+    offCanvas: 'mobile', // can be all|desktop|touches or false,
+    offCanvasBody: 'body',
     container: 'self',
     theme: false,
     backDrop: false,
@@ -34,7 +35,7 @@ var asideoptions = {
                   var $aside = {}
                   var options = $aside.$options = angular.extend({}, defaults, config);
                   var scope = options.$scope || $rootScope.$new();
-                  var body = angular.element('body'), $container, applyBody = options.pinnable || options.collapsible;
+                  var body = angular.element(options.offCanvasBody), $container, applyBody = options.pinnable || options.collapsible;
                   var classes = ['aside-pinned', 'aside-collapsed', 'aside-opened', 'aside-closed'], backDrop;
                   
 
@@ -120,7 +121,10 @@ var asideoptions = {
                           element.removeClass(options.effect);
                       }
                       clearStyle();
-                      $aside.$isOpen = false;
+                      $timeout(function () {
+                          $aside.$isOpen = false;
+                      }, 0)
+                      
                       backDrop && backDrop.detach();
                   };
                   $aside.open = function () {
@@ -147,6 +151,10 @@ var asideoptions = {
                       $aside.togglePin($aside.$pinned || false)
                       $aside.toggleCollapse($aside.$collapsed || false);
                       backDrop && element.after(backDrop);
+                      $timeout(function () {
+                          $aside.$collapsed = false;
+                          $aside.$isOpen = true;
+                      }, 0)
                   };
                   $aside.togglePin = function (pin) {
                       if (!options.pinnable)
@@ -173,6 +181,14 @@ var asideoptions = {
                           applyBody && body.addClass(options.side + '-aside-pinned');
                           $aside.$pinned = true;
                       }
+                      if (!options.enlargeHover || options.enlargeHover == 'false')
+                          element.off('mouseenter mouseleave');
+                      else {
+                          element.off('mouseenter mouseleave')
+                          element.on('mouseenter', function () {
+                              $aside.toggleCollapse();
+                          })
+                      }
                   };
                   function refresh() {
                       element.addClass('aside')
@@ -191,14 +207,12 @@ var asideoptions = {
                       clearPosition(options.position)
                       clearOffCanvas(options.offCanvas)
                       checkSizes();
-                  }
-                  
-                  angular.element(window).on('resize', function () {
+                  };
+                  window.addResizeEvent(function () {
                       $timeout(function () {
                           var newVal = $window.innerWidth;
                           checkSizes(newVal);
                       }, 0)
-                      
                   })
                   function clearStyle() {
                       applyBody && body.removeClasses([options.side + '-aside-opened', options.side + '-aside-collapsed', options.side + '-aside-pinned']);
@@ -231,7 +245,6 @@ var asideoptions = {
                                 .on('click', function () {
                                     $aside ? $aside.close() : backDrop.remove();
                                 });
-                      
                   }
                   function changeOptions(key, value) {
                       switch(key){
@@ -262,10 +275,8 @@ var asideoptions = {
                   }
                   function applyOptions() {
                       element.addClass('aside-'+ options.side);
-                      if (options.topOffset)
-                          element.css('top', options.topOffset);
-                      if (options.bottomOffset)
-                          element.css('bottom', options.bottomOffset);
+                      element.css('top', options.topOffset && options.topOffset || 0);
+                      element.css('bottom', options.bottomOffset && options.bottomOffset || 0);
                       if (options.width)
                           element.css('width', options.width);
                       if (options.collapsible)
@@ -329,6 +340,17 @@ var asideoptions = {
                       element && element.off();
                       clearStyle();
                   });
+                  angular.element(document).ready(function () {
+                      setTimeout(function () {
+                          if (element.height() > window.innerHeight) {
+                              element.css('position', 'relative')
+                              setTimeout(function () {
+                                  element.css('position', '')
+                              }, 100)
+                          }
+                              
+                      }, 10)
+                  })
                   return $aside;
               }
               return Factory;
@@ -345,7 +367,7 @@ var asideoptions = {
                     id : attr.id || 'aside-' + scope.$id
                 }
                 angular.forEach(asideoptions, function (val, key) {
-                    if (angular.isDefined(attr[key]))
+                    if (angular.isDefined(attr[key]) && attr[key].indexOf('{{') < 0)
                         options[key] = $helpers.parseConstant(attr[key]);
                         
                 });
@@ -374,10 +396,12 @@ var asideoptions = {
                     var asideEl = attr.asideToggle ? angular.element(attr.asideToggle) : false;
                     if (asideEl.length) {
                         var aScope = asideEl.scope();
-                        if (aScope && aScope.$aside)
+                        if (aScope && aScope.$aside) {
                             $timeout(function () {
                                 aScope.$aside.toggle();
-                            },0)
+                            }, 0);
+                        }
+                            
                         
                     }
 

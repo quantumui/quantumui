@@ -2,6 +2,11 @@
  * QuantumUI Free v0.0.1 (http://quantumui.org)
  * Copyright 2014-2015 Mehmet Otkun, quantumui.org
  */
+
+/*!
+ * QuantumUI Free v0.0.1 (http://quantumui.org)
+ * Copyright 2014-2015 Mehmet Otkun, quantumui.org
+ */
 (function (window, angular, undefined) {
     'use strict';
     if (typeof jQuery != 'undefined')
@@ -74,7 +79,6 @@
 
         var iframe,
         elemdisplay = {
-
             HTML: "block",
             BODY: "block"
         };
@@ -213,10 +217,9 @@
         var nodeName = function (elem, name) {
             return elem.nodeName && elem.nodeName.toLowerCase() === name.toLowerCase();
         };
-        var dir = function (elem, dir) {
+        var dir = function (elem, node) {
             var matched = [];
-
-            while ((elem = elem[dir]) && elem.nodeType !== 9) {
+            while (elem && (elem = elem[node]) && elem.nodeType !== 9) {
                 if (elem.nodeType === 1) {
                     matched.push(elem);
                 }
@@ -346,6 +349,66 @@
             var elems = angular.element(selector.indexOf(':visible')[0]);
             return elems.is(":visible");
         };
+        function applyDimension(elem, dimension, show, time, callback) {
+            var dimProp = dimension === 'width' ? 'clientWidth' : 'clientHeight',
+                $elm = angular.element(elem),
+                size = $elm[dimension](),
+                hasStyle = angular.isDefined(elem.style[dimension]);
+            time = time && (angular.isNumber(time) ? time : isNaN(parseInt(time)) ? 600 : parseInt(time)) || 600;
+            var style = {
+                position: elem.style.position || '',
+                visibilty: elem.style.visiblity || '',
+                display: elem.style.display || '',
+                overflow: elem.style.overflow || '',
+            }
+            style[dimension] = elem.style[dimension];
+            if (show) {
+                $elm.css({ 'visibilty': 'hidden' });
+                $elm.css('display', 'block');
+                size = $elm[dimension]();
+                $elm.css(style);
+            }
+           
+            !size && (size = 2)
+            var unitSize = 10,
+                lastSize = show ? 0 : size;
+            var start = (new Date()).getTime();
+            $elm.css('overflow', 'hidden')
+            $elm[dimension](lastSize);
+            var i = 1;
+            var interval = setInterval(function () {
+                var now = (new Date()).getTime();
+                unitSize = (size / (time / ((now - start) / i) || 1));
+                $elm[dimension](lastSize);
+                lastSize = show ? (lastSize + unitSize) : lastSize - unitSize;
+                i++;
+                if ((now - start) >= time) {
+                    clearInterval(interval);
+                    interval = null;
+                    $elm.css(style);
+                    callback && callback();
+                }
+            }, 1);
+           
+            setTimeout(function () {
+                interval && clearInterval(interval);
+            }, time * 2)
+        }
+        function selectResult(elem, selector) {
+            if (elem.length == 1)
+                return elem[0].querySelectorAll(selector);
+            else {
+                var mathches = [];
+                forEach(elem, function (elm) {
+                    var nodes = angular.element(elm.querySelectorAll(selector));
+                    mathches.push.apply(mathches, nodes.slice());
+                    
+                })
+                return mathches;
+
+            }
+
+        }
         var jqLite = angular.element;
         angular.merge = function (first, second) {
             var len = second && +second.length || 0,
@@ -464,7 +527,7 @@
             }
             return this;
         };
-
+     
         jqLite.prototype.first = function () {
             return this.eq(0);
         };
@@ -504,25 +567,29 @@
             if (!context || (context.nodeType !== 1 && context.nodeType !== 9)  || !angular.isString(selector)) {
                 return [];
             }
+            var matches = [];
             if (selector.charAt(0) === '>')
                 selector = ':scope ' + selector;
             if (selector.indexOf(':visible') > -1) {
-                var elems = angular.element(context.querySelectorAll(selector.split(':visible')[0]))
-                var matches = [];
+                var elems = angular.element(selectResult(this, selector.split(':visible')[0]))
+                
                 forEach(elems, function (val, i) {
                     if (angular.element(val).is(':visible'))
                         matches.push(val);
                 })
-                if (matches.length) {
-                    if (matches.length == 1)
-                        return angular.element(matches[0])
-                    else {
-                        return this.pushStack(matches)
-                    }
-                }
-                return angular.element();
+                
+            } else {
+                matches =  selectResult(this, selector)
             }
-            return angular.element(context.querySelectorAll(selector));
+
+            if (matches.length) {
+                if (matches.length == 1)
+                    return angular.element(matches[0])
+                else {
+                    return this.pushStack(matches)
+                }
+            }
+            return angular.element();
         };
         jqLite.prototype.has = function (node) {
             if (angular.isString(node)) {
@@ -544,13 +611,7 @@
                 if (node)
                     matches.push(node);
             })
-            if (matches.length) {
-                if (matches.length == 1)
-                    return angular.element(matches[0])
-                else {
-                    return this.pushStack(matches)
-                }
-            }
+            return this.pushStack(matches)
         };
         jqLite.prototype.before = function (selector) {
             var that = this;
@@ -637,7 +698,7 @@
             };
         };
         jqLite.prototype.offsetParent = function () {
-            return getOffsetParent(this);
+            return angular.element(getOffsetParent(this));
         };
         jqLite.prototype.position = function () {
             return getPosition(this[0]);
@@ -714,7 +775,7 @@
         var _on = jqLite.prototype.on;
         jqLite.prototype.on = function (type, handler) {
             if (type.indexOf(' ') > -1 || type.indexOf('.') == -1)
-                return _on.call(this, type, handler)
+                return _on.call(this, type, handler);
             var namespaces = type.split('.'), nsEvents = window.namespaces = window.namespaces || {};
             type = namespaces.shift();
             namespaces.sort();
@@ -728,7 +789,8 @@
         jqLite.prototype.off = function (type, handler) {
             if (!type || type.indexOf(' ') > -1 || type.indexOf('.') == -1)
                 return _off.call(this, type, handler)
-            var that = this, namespaces = type.split('.'), nsEvents = window.namespaces = window.namespaces || {};
+            var that = this, namespaces = type.split('.'),
+                nsEvents = window.namespaces = window.namespaces || {};
             type = namespaces.shift();
             namespaces.sort();
             var prefix = namespaces.join("_");
@@ -747,7 +809,16 @@
             return _off.call(this, type, handler);
         };
         jqLite.prototype.parents = function () {
-            return dir(this[0], "parentNode");
+            return angular.element(dir(this[0], "parentNode"));
+        };
+        jqLite.prototype.siblings = function () {
+            var children = this.parent().children(), that = this;
+            var matches = [];
+            forEach(children, function (el) {
+                if (el != that[0])
+                    matches.push(el)
+            })
+            return angular.element(that[0]).pushStack(matches);
         };
         jqLite.prototype.get = function (num) {
             return num !== null ?
@@ -757,6 +828,18 @@
         jqLite.prototype.add = function (selector, context) {
             var that = this;
             return this.pushStack(getUnique((angular.merge(that[0], angular.element(selector, context)))));
+        };
+        jqLite.prototype.slideDown = function (time, callback) {
+            forEach(this, function (elem) {
+                applyDimension(elem, 'height', true, time, callback)
+            })
+            return this;
+        };
+        jqLite.prototype.slideUp = function (time, callback) {
+            forEach(this, function (elem) {
+                applyDimension(elem, 'height', false, time, callback)
+            })
+            return this;
         };
         var _jqLite = angular.element;
         function JQLite(element) {
@@ -779,14 +862,14 @@ if (!String.prototype.trim) {
     String.prototype.trim = function () {
         return this.replace(/^\s+|\s+$/g, '');
     };
-}
+};
 String.prototype.trimEnd = function (c) {
     var that = this.trim();
     if (c == null || c == "" || c.length > 1 || that.length < 2)
         return that;
-    var s = that.slice(that.length - 2, that.length - 1);
+    var s = that.slice(that.length - 1, that.length);
     if (s == c)
-        return that.slice(0, this.length - 2);
+        return that.slice(0, this.length - 1);
     else
         return that;
 };
@@ -796,36 +879,45 @@ String.prototype.trimStart = function (c) {
         return that;
     var s = that.slice(0, 1);
     if (s == c)
-        return that.slice(1, that.length - 1);
+        return that.slice(1, that.length);
     else
         return that;
 };
 String.prototype.capitaliseFirstLetter = function () {
     return this.charAt(0).toUpperCase() + this.slice(1);
-}
+};
 if (typeof String.prototype.endsWith !== 'function') {
     String.prototype.endsWith = function (suffix) {
         return this.indexOf(suffix, this.length - suffix.length) !== -1;
     };
-}
+};
 String.prototype.toTitleCase = function (str) {
     var str = this || '';
     return str.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
-}
+};
 String.prototype.replaceAll = function (find, replace) {
     var str = this || '';
     return str.replace(new RegExp(find, 'g'), replace);
-}
+};
 if (typeof String.prototype.startsWith != 'function') {
     String.prototype.startsWith = function (str) {
         return this.slice(0, str.length) == str;
     };
-}
+};
 if (typeof String.prototype.endsWith != 'function') {
     String.prototype.endsWith = function (str) {
         return this.slice(-str.length) == str;
     };
-}
+};
+window.addResizeEvent = function (callback) {
+    if (window.addEventListener) {
+        window.addEventListener('resize', callback, true);
+    }
+    else if (window.attachEvent) {
+        window.attachEvent('onresize', callback);
+    }
+};
+
 +function (window, angular, undefined) {
     'use strict';
     var  $$raf  =
@@ -942,11 +1034,12 @@ angular.module('ngQuantum.services.color', ['ngQuantum.services.helpers'])
                         values = match && parser.parse(match);
                     if (values) {
                         color.value = color.RGBtoHSB.apply(null, values);
-                        return false;
+                        
                     }
                 }
             }
         }
+        return color;
     }
     color.RGBtoHSB = function (r, g, b, a) {
         r /= 255;
@@ -1119,7 +1212,7 @@ angular.module('ngQuantum.services.helpers', [])
             fn.formatUrl = function (url, params) {
                 url = url.trimEnd('/')
                 for (var o in params) {
-                    url += '/' + params[o];
+                    params[o] &&(url += '/' + params[o]);
                 }
                 return url;
             }
@@ -1146,6 +1239,7 @@ angular.module('ngQuantum.services.helpers', [])
                     if (trigger === 'click') {
                         element.on('click', $master.toggle);
                         hasclick = true;
+                        
                     }
                     else if (trigger !== 'manual') {
                         element.on(trigger === 'hover' ? 'mouseenter' : 'focus', $master.enter);
@@ -1160,7 +1254,7 @@ angular.module('ngQuantum.services.helpers', [])
                 for (var i = array.length; i--;) {
                     var trigger = array[i];
                     if (trigger === 'click') {
-                        element.off('click', $master.toggle);
+                        element.off('click keyup', $master.toggle);
                     } else if (trigger !== 'manual') {
                         element.off(trigger === 'hover' ? 'mouseenter' : 'focus', $master.enter);
                         element.off(trigger === 'hover' ? 'mouseleave' : 'blur', $master.leave);
@@ -1168,6 +1262,50 @@ angular.module('ngQuantum.services.helpers', [])
                     }
                 }
             }
+            fn.stringParsers = [
+              {
+                  re: /rgba?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*(?:,\s*(\d+(?:\.\d+)?)\s*)?\)/,
+                  parse: function (execResult) {
+                      return [
+                        execResult[1],
+                        execResult[2],
+                        execResult[3],
+                        execResult[4]
+                      ];
+                  }
+              },
+              {
+                  re: /rgba?\(\s*(\d+(?:\.\d+)?)\%\s*,\s*(\d+(?:\.\d+)?)\%\s*,\s*(\d+(?:\.\d+)?)\%\s*(?:,\s*(\d+(?:\.\d+)?)\s*)?\)/,
+                  parse: function (execResult) {
+                      return [
+                        2.55 * execResult[1],
+                        2.55 * execResult[2],
+                        2.55 * execResult[3],
+                        execResult[4]
+                      ];
+                  }
+              },
+              {
+                  re: /#([a-fA-F0-9]{2})([a-fA-F0-9]{2})([a-fA-F0-9]{2})/,
+                  parse: function (execResult) {
+                      return [
+                        parseInt(execResult[1], 16),
+                        parseInt(execResult[2], 16),
+                        parseInt(execResult[3], 16)
+                      ];
+                  }
+              },
+              {
+                  re: /#([a-fA-F0-9])([a-fA-F0-9])([a-fA-F0-9])/,
+                  parse: function (execResult) {
+                      return [
+                        parseInt(execResult[1] + execResult[1], 16),
+                        parseInt(execResult[2] + execResult[2], 16),
+                        parseInt(execResult[3] + execResult[3], 16)
+                      ];
+                  }
+              }
+            ]
             fn.docHeight = function () {
                 var body = document.body,
                             html = document.documentElement;
@@ -1531,12 +1669,12 @@ angular.module('ngQuantum.services.placement', ['ngQuantum.services.helpers'])
                 
                 offset.top = offset.top + marginTop;
                 offset.left = offset.left + marginLeft;
+
                 if (options.insideFixed) {
                     $target.css(offset);
                 } else
                     $target.offset(offset);
-                
-                fn.ensurePosition($target, element)
+                fn.ensurePosition($target, element, options)
                 return options;
             }
             fn.verticalPlacement = function ($target, options) {
@@ -1565,15 +1703,15 @@ angular.module('ngQuantum.services.placement', ['ngQuantum.services.helpers'])
                 }
 
             }
-            fn.ensurePosition = function ($target, element) {
-                var offset = $target.offset(), ww = window.screen.width, dh = $helpers.docHeight(),
-                    tw = $target.width(), th = $target.height(), eh = element.height(), eo = element.offset(), classList = $target.attr('class');
+            fn.ensurePosition = function ($target, element, options) {
+                var offset = options.insideFixed ? $target.position() : $target.offset(), ww = window.screen.width, dh = $helpers.docHeight(),
+                    tw = $target.width(), th = $target.height(), eh = element.height(), eo = options.insideFixed ? element.position() : element.offset(), classList = $target.attr('class');
                 if (offset.left < 0) {
                     $target.css('left', 0);
                     $target.attr('class', classList.replace('right', 'left'));
                 }
                 else if (offset.left >  (ww - tw)) {
-                    $target.css('left', (ww - tw));
+                    $target.css('left', (element.width() - tw));
                     $target.attr('class', classList.replace('left', 'right'));
                 }
                 if (offset.top < 0) {
@@ -1740,7 +1878,7 @@ angular.module('ngQuantum.alert', ['ngQuantum.popMaster', 'ngQuantum.services.he
     .run(['$templateCache', function ($templateCache) {
         'use strict';
         $templateCache.put('alert/alert.tpl.html',
-          "<div class=\"alert alert-dismissable\" tabindex=\"-1\" ng-class=\"alertType\"><div class=\"alert-inner\"><div class=\"alert-bg\" ng-class=\"alertType\"></div><a href=\"#\" class=\"close\" ng-click=\"$hide()\"><i class=\"fic fu-cross\"></i></a> <strong class=\"alert-title\" ng-if=\"title\" ng-bind=\"title\"></strong><span  ng-if=\"title\" ng-bind-html=\"content\"></span><div ng-if=\"!title\" ng-bind-html=\"content\"></div></div></div>"
+          "<div class=\"alert alert-dismissable\" tabindex=\"-1\" ng-class=\"alertType\"><div class=\"alert-inner\"><div class=\"alert-bg\" ng-class=\"alertType\"></div><a role=\"button\" tabindex=\"0\" class=\"close\" ng-click=\"$hide()\"><i ng-class=\"$closeIcon\"></i></a> <strong class=\"alert-title\" ng-if=\"title\" ng-bind=\"title\"></strong><span  ng-if=\"title\" ng-bind-html=\"content\"></span><div ng-if=\"!title\" ng-bind-html=\"content\"></div></div></div>"
         );
 
     }])
@@ -1767,7 +1905,8 @@ angular.module('ngQuantum.alert', ['ngQuantum.popMaster', 'ngQuantum.services.he
             alertType: 'info',
             duration: 3000,
             autoDestroy: false,
-            onHide:false,
+            onHide: false,
+            closeIcon: 'fic fu-cross'
         };
         this.$get = ['$timeout', '$rootScope', '$popMaster', '$compile', '$helpers', '$sce', '$parse',
           function ($timeout, $rootScope, $popMaster, $compile, $helpers, $sce, $parse) {
@@ -1777,8 +1916,8 @@ angular.module('ngQuantum.alert', ['ngQuantum.popMaster', 'ngQuantum.services.he
                       config = {
                           content: config,
                           title: title,
-                          alertType: alertType,
-                          placement: placement
+                          alertType: alertType || defaults.alertType,
+                          placement: placement || defaults.placement
                       }
                   }
                   if (!config.$scope) {
@@ -1805,6 +1944,7 @@ angular.module('ngQuantum.alert', ['ngQuantum.popMaster', 'ngQuantum.services.he
                       options.onHide = $parse(attr.onHide);
                   var show = $alert.show;
                   $alert.show = function () {
+                      scope.$closeIcon = options.closeIcon;
                       options.alertType && (scope.alertType = 'alert-' + options.alertType)
                       container && container.show()
                       var promise = show();
@@ -1918,7 +2058,8 @@ var asideoptions = {
     collapsedScreenSize: 991,
     closedScreenSize: 767,
     position: 'fixed',   // can be fixed|relative|absolute
-    offCanvas: 'mobile', // can be all|desktop|touches or false
+    offCanvas: 'mobile', // can be all|desktop|touches or false,
+    offCanvasBody: 'body',
     container: 'self',
     theme: false,
     backDrop: false,
@@ -1939,7 +2080,7 @@ var asideoptions = {
                   var $aside = {}
                   var options = $aside.$options = angular.extend({}, defaults, config);
                   var scope = options.$scope || $rootScope.$new();
-                  var body = angular.element('body'), $container, applyBody = options.pinnable || options.collapsible;
+                  var body = angular.element(options.offCanvasBody), $container, applyBody = options.pinnable || options.collapsible;
                   var classes = ['aside-pinned', 'aside-collapsed', 'aside-opened', 'aside-closed'], backDrop;
                   
 
@@ -2025,7 +2166,10 @@ var asideoptions = {
                           element.removeClass(options.effect);
                       }
                       clearStyle();
-                      $aside.$isOpen = false;
+                      $timeout(function () {
+                          $aside.$isOpen = false;
+                      }, 0)
+                      
                       backDrop && backDrop.detach();
                   };
                   $aside.open = function () {
@@ -2052,6 +2196,10 @@ var asideoptions = {
                       $aside.togglePin($aside.$pinned || false)
                       $aside.toggleCollapse($aside.$collapsed || false);
                       backDrop && element.after(backDrop);
+                      $timeout(function () {
+                          $aside.$collapsed = false;
+                          $aside.$isOpen = true;
+                      }, 0)
                   };
                   $aside.togglePin = function (pin) {
                       if (!options.pinnable)
@@ -2078,6 +2226,14 @@ var asideoptions = {
                           applyBody && body.addClass(options.side + '-aside-pinned');
                           $aside.$pinned = true;
                       }
+                      if (!options.enlargeHover || options.enlargeHover == 'false')
+                          element.off('mouseenter mouseleave');
+                      else {
+                          element.off('mouseenter mouseleave')
+                          element.on('mouseenter', function () {
+                              $aside.toggleCollapse();
+                          })
+                      }
                   };
                   function refresh() {
                       element.addClass('aside')
@@ -2096,14 +2252,12 @@ var asideoptions = {
                       clearPosition(options.position)
                       clearOffCanvas(options.offCanvas)
                       checkSizes();
-                  }
-                  
-                  angular.element(window).on('resize', function () {
+                  };
+                  window.addResizeEvent(function () {
                       $timeout(function () {
                           var newVal = $window.innerWidth;
                           checkSizes(newVal);
                       }, 0)
-                      
                   })
                   function clearStyle() {
                       applyBody && body.removeClasses([options.side + '-aside-opened', options.side + '-aside-collapsed', options.side + '-aside-pinned']);
@@ -2136,7 +2290,6 @@ var asideoptions = {
                                 .on('click', function () {
                                     $aside ? $aside.close() : backDrop.remove();
                                 });
-                      
                   }
                   function changeOptions(key, value) {
                       switch(key){
@@ -2167,10 +2320,8 @@ var asideoptions = {
                   }
                   function applyOptions() {
                       element.addClass('aside-'+ options.side);
-                      if (options.topOffset)
-                          element.css('top', options.topOffset);
-                      if (options.bottomOffset)
-                          element.css('bottom', options.bottomOffset);
+                      element.css('top', options.topOffset && options.topOffset || 0);
+                      element.css('bottom', options.bottomOffset && options.bottomOffset || 0);
                       if (options.width)
                           element.css('width', options.width);
                       if (options.collapsible)
@@ -2234,6 +2385,17 @@ var asideoptions = {
                       element && element.off();
                       clearStyle();
                   });
+                  angular.element(document).ready(function () {
+                      setTimeout(function () {
+                          if (element.height() > window.innerHeight) {
+                              element.css('position', 'relative')
+                              setTimeout(function () {
+                                  element.css('position', '')
+                              }, 100)
+                          }
+                              
+                      }, 10)
+                  })
                   return $aside;
               }
               return Factory;
@@ -2250,7 +2412,7 @@ var asideoptions = {
                     id : attr.id || 'aside-' + scope.$id
                 }
                 angular.forEach(asideoptions, function (val, key) {
-                    if (angular.isDefined(attr[key]))
+                    if (angular.isDefined(attr[key]) && attr[key].indexOf('{{') < 0)
                         options[key] = $helpers.parseConstant(attr[key]);
                         
                 });
@@ -2279,10 +2441,12 @@ var asideoptions = {
                     var asideEl = attr.asideToggle ? angular.element(attr.asideToggle) : false;
                     if (asideEl.length) {
                         var aScope = asideEl.scope();
-                        if (aScope && aScope.$aside)
+                        if (aScope && aScope.$aside) {
                             $timeout(function () {
                                 aScope.$aside.toggle();
-                            },0)
+                            }, 0);
+                        }
+                            
                         
                     }
 
@@ -2360,7 +2524,7 @@ var asideoptions = {
                             falseValue = angular.isDefined(attr.ngFalseValue) ? $helpers.parseConstant(attr.ngFalseValue) : false;
                         }
                         else {
-                            trueValue = $helpers.parseConstant(attr.ngValue || attr.value);
+                            trueValue = attr.ngValue ? scope.$eval(attr.ngValue) : $helpers.parseConstant(attr.value);
                         }
 
                         if ($helpers.parseConstant(attr.showTick) == true) {
@@ -2374,14 +2538,13 @@ var asideoptions = {
                             !isActive && element.removeAttr('checked');
                             activeElement.toggleClass(options.activeClass, isActive);
                         });
-
-                        element.bind(options.toggleEvent, function () {
-                            if (!isInput) {
+                        if (!isInput) {
+                            element.bind(options.toggleEvent, function () {
                                 var viewValue = directive == 'radio' ? trueValue : controller.$modelValue ? $helpers.parseConstant(controller.$modelValue) == trueValue ? falseValue : trueValue : trueValue;
                                 controller.$setViewValue(viewValue);
                                 scope.$apply();
-                            }
-                        });
+                            });
+                        }
                     }
                 };
             }])
@@ -2453,7 +2616,11 @@ var asideoptions = {
                           $carousel.play()
                           hoverStop();
                       }
-
+                      $timeout(function () {
+                          if (parseInt($scope.$outerWidth) > $element.width()) {
+                              $scope.$innerHeight = ((parseInt($scope.$innerHeight) / parseInt($scope.$outerWidth)) * $element.width()) + 'px';
+                          }
+                      }, 800)
                   };
                   $carousel.select = function (index) {
                       var selectedItem = items[index];
@@ -2542,7 +2709,7 @@ var asideoptions = {
             require: '^nqCarousel',
             restrict: 'EA',
             replace: true,
-            template: '<div class="item" carousel-item-transclude=""></div>',
+            template: '<div class="item" carousel-item-transclude="" ng-swipe-left="$parent.$next()"  ng-swipe-right="$parent.$prev()"></div>',
             transclude: true,
             scope: {
                 active: '=?',
@@ -2669,20 +2836,24 @@ var asideoptions = {
             dimension: 'height',
             collapsed:true
         };
-        this.$get = ['$timeout',
-          function ($timeout) {
+        this.$get = ['$timeout', '$rootScope',
+          function ($timeout, $rootScope) {
               function Factory(target, element, config) {
                   var $collapse = {}, position, size, dimension, collapsed;
                   var options = $collapse.$options = angular.extend({}, defaults, config);
                   dimension = options.dimension;
                   $collapse.collapsed = options.collapsed;
                  target.addClass('collapse');
-                  !$collapse.collapsed && target.addClass('in')
+                 if (!$collapse.collapsed) {
+                     target.addClass('in');
+                     size = target[dimension]();
+                 }
                   function toggle() {
                       if ($collapse.collapsed) {
                           position = target[0].style.position || '';
                           target.css('position', 'absolute').show();
-                          size = target[dimension]();
+                          var dm = dimension == 'height' ? 'outerHeight' : 'outerWidth';
+                          size = target[dm]();
 
                           target.css('display', '')[dimension](0).css('position', position);
                           target.addClass('in collapsing');
@@ -2692,6 +2863,7 @@ var asideoptions = {
                                   target.removeClass('collapsing');
                                   $collapse.collapsed = false;
                                   options.onToggle && options.onToggle(false);
+                                  target[dimension]('');
                               });
                           }, 1)
 
@@ -2715,6 +2887,13 @@ var asideoptions = {
                       evt.stopPropagation();
                       toggle();
 
+                  });
+                  options.checkRouting && $rootScope.$on('$locationChangeStart', function (event, viewConfig) {
+                      if (!$collapse.collapsed) {
+                          $collapse.collapsed = false;
+                          toggle();
+                      }
+                      
                   });
                   $collapse.toggle = toggle;
                   return $collapse;
@@ -2776,6 +2955,7 @@ var asideoptions = {
                     var options = {
                         collapsed: collapsed,
                         dimension: dimension,
+                        checkRouting: tAttrs.checkRouting || tElm.hasClass('navbar-toggle')
                     }
                     var index = tAttrs.targetIndex ? parseInt(tAttrs.targetIndex) : 0,
                         collapse,
@@ -2972,28 +3152,30 @@ var asideoptions = {
                       $mouse.offDown(hueSlider);
                       $mouse.offDown(alpha)
                       $mouse.offDown(alphaSlider);
-                      $mouse.offMove($document);
-                      $mouse.offUp($document);
                   }
                   function hueMouse() {
                       $mouse.down(hue, slideHue)
                       $mouse.down(hueSlider, function (event) {
-                          $mouse.move($document, slideHue)
-                          $mouse.up($document, function (event) {
+                          $mouse.offMove($document, slideHue);
+                          $mouse.move($document, slideHue);
+                          var upHandler = function (event) {
                               $mouse.offMove($document, slideHue);
-                              $mouse.offUp($document);
-                          })
+                              $mouse.offUp($document, upHandler);
+                          };
+                          $mouse.up($document, upHandler)
                       })
 
                   }
                   function saturationMouse() {
                       $mouse.down(saturation, dragSaturation)
                       $mouse.down(satPoint, function (event) {
+                          $mouse.offMove($document, dragSaturation)
                           $mouse.move($document, dragSaturation);
-                          $mouse.up($document, function (event) {
+                          var upHandler = function (event) {
                               $mouse.offMove($document, dragSaturation)
-                              $mouse.offUp($document);
-                          })
+                              $mouse.offUp($document, upHandler);
+                          };
+                          $mouse.up($document, upHandler)
                       })
 
 
@@ -3001,12 +3183,14 @@ var asideoptions = {
                   function alphaMouse() {
                       $mouse.down(alpha, slideAlpha)
                       $mouse.down(alphaSlider, function (event) {
+                          $mouse.offMove($document, slideAlpha)
                           $mouse.move($document, slideAlpha);
-                          $mouse.up($document, function (event) {
+                          var upHandler = function (event) {
                               $mouse.offMove($document, slideAlpha)
                               alphaSlider.removeClass('titip-active');
-                              $mouse.offUp($document)
-                          })
+                              $mouse.offUp($document, upHandler)
+                          };
+                          $mouse.up($document, upHandler)
                       })
 
 
@@ -3180,8 +3364,8 @@ angular.module('ngQuantum.datepicker', [
             minDateFrom: false,
             maxDate: false,
             startDate: false,
-            minHour: 8,
-            maxHour: 22,
+            minHour: 0,
+            maxHour: 23,
             divideHour: 4,
             defaultTime: false,
             timesSet: [], //to do
@@ -3219,7 +3403,9 @@ angular.module('ngQuantum.datepicker', [
             inline: false,
             theme:'default',
             selectable: true,
+            readonly :  true,
             overseeingTarget: true,
+            modelType:'date',
             nextIcon: 'fic fu-angle-r',
             prevIcon: 'fic fu-angle-l',
             todayIcon: 'fic fu-restore',
@@ -3246,9 +3432,10 @@ angular.module('ngQuantum.datepicker', [
                       element.addClass('calendar-inline');
                       options.effect = false;
                       options.autoHide = false;
+                      options.readonly = false;
                   }
                   var $picker = new $popMaster(element, options);
-                  var scope = $picker.$scope; var $target, $header, $body, $footer, yearSelector, table, tbody;
+                  var scope = $picker.$scope; var $target, $header, $body, $footer, yearSelector, table, tbody, initialized, lastCacheKey, keyTarget;
 
                   scope.$options = options = $helpers.observeOptions(attr, options);
 
@@ -3291,12 +3478,16 @@ angular.module('ngQuantum.datepicker', [
                   $picker.init = function () {
                       optimize();
                       init();
-                      fireChange();
+                      if (!initialized) {
+                          initialized = true;
+                          buildScope();
+                      }
                       if (!options.allowWrite) {
                           element.on('keydown', function () {
                               return false;
                           })
                       }
+                      $target = $picker.$target;
                   }
                   var show = $picker.show;
                   $picker.show = function () {
@@ -3305,8 +3496,13 @@ angular.module('ngQuantum.datepicker', [
                       }
                       var promise = show();
                       promise && promise.then(function () {
-                          options.showYears && scrollYear();
+                          formatPicker();
+                          $target.focus();
                       })
+                      if (options.keyboard && $picker.$target) {
+                          angular.element(document).off('keydown', $picker.$onKeyDown);
+                          angular.element(document).on('keydown', $picker.$onKeyDown);
+                      }
                       return promise;
                   }
                   var hide = $picker.hide;
@@ -3320,8 +3516,11 @@ angular.module('ngQuantum.datepicker', [
                       promise && promise.then(function () {
                           if (scope.$timeViewActive && options.datepicker)
                               scope.$toggleTimepicker();
+                          element && element.focus();
                       })
-                    
+                      if (options.keyboard && $picker.$target) {
+                          angular.element(document).off('keydown', $picker.$onKeyDown);
+                      }
                       return promise;
                   }
                   var destroy = $picker.destroy;
@@ -3330,44 +3529,34 @@ angular.module('ngQuantum.datepicker', [
                       scope.$destroy();
                   }
                   $picker.next = function () {
-                      var shift = true;
-                      var dt = scope.currentDate.clone().add(1, 'month');
-                      if (scope.maxDate && dt.clone().startOf('month') > scope.maxDate) {
-                          shift = false;
-                      }
-                      shift && apply(function () {
-                          if (scope.maxDate && dt > scope.maxDate) {
-                              dt = scope.maxDate.clone();
-                              scope.selectedDay = dt.month() + '-' + dt.date();
-                          }
-                          if (options.disableWeekends) {
-                              while (options.disableWeekdays.indexOf(dt.day()) > -1)
-                                  dt.add(-1, 'day')
-                              scope.selectedDay = dt.month() + '-' + dt.date();
-                          }
-                          scope.currentDate = dt;
-                          fireChange('month')
-                          buildNew()
-                      });
+                      $picker.changeDate('up', 'month', 1)
                   }
                   $picker.before = function () {
-                      var shift = true;
-                      var dt = scope.currentDate.clone().add(-1, 'month');
-                      if (scope.minDate && dt.clone().endOf('month') < scope.minDate) {
-                          shift = false
-                      }
-                      shift && apply(function () {
+                      $picker.changeDate('down', 'month', 1)
+                  }
+                  $picker.changeDate = function (dir, type, val) {
+                      var v = !val ? 1 : angular.isNumber(val) ? val : window.isNaN(parseInt(val)) ? 1 : parseInt(val);
+                      v = dir == 'down' ? -v : v;
+                      type = type || 'day';
+                      var dt = scope.currentDate.clone().add(v, type);
+                      if (scope.minDate && dt.clone().endOf('month') < scope.minDate)
+                          return;
+                      if (scope.maxDate && dt.clone().startOf('month') > scope.maxDate)
+                          return;
+                      apply(function () {
                           if (scope.minDate && dt < scope.minDate) {
                               dt = scope.minDate.clone();
-                              scope.selectedDay = dt.month() + '-' + dt.date();
+                          }
+                         if (scope.maxDate && dt > scope.maxDate) {
+                              dt = scope.maxDate.clone();
                           }
                           if (options.disableWeekdays.length) {
                               while (options.disableWeekdays.indexOf(dt.day()) > -1)
                                   dt.add(1, 'day')
-                              scope.selectedDay = dt.month() + '-' + dt.date();
                           }
+                          scope.selectedDay = dt.month() + '-' + dt.date();
                           scope.currentDate = dt.clone();
-                          fireChange('month')
+                          fireChange(type)
                           buildNew()
                       });
                   }
@@ -3398,8 +3587,10 @@ angular.module('ngQuantum.datepicker', [
                   }
                   $picker.setTime = function (val) {
                       var date = scope.currentDate.clone();
-                      var h = parseInt(val.split(':')[0]) || 8
+                      var h = parseInt(val.split(':')[0]);
                       var m = parseInt(val.split(':')[1]) || 0;
+                      if (window.isNaN(h))
+                          h = options.minHour;
                       date.hour(h)
                       date.minute(m)
                       apply(function () {
@@ -3414,7 +3605,7 @@ angular.module('ngQuantum.datepicker', [
                           $picker.hide();
                   }
                   $picker.changeTime = function (dir, type, val) {
-                      var v = val ? parseInt(val) || 1 : 1;
+                      var v = !val ? 1 : angular.isNumber(val) ? val : window.isNaN(parseInt(val)) ? 1 : parseInt(val);
                       v = dir == 'down' ? -v : v;
                       var dt = scope.currentDate.clone().add(v, type),
                           dth = dt.hour();
@@ -3426,15 +3617,49 @@ angular.module('ngQuantum.datepicker', [
                       }
                   }
                   $picker.$onKeyDown = function (e) {
-                      console.log(e.keyCode)
-                      if (!/(37|38|39|40)/.test(e.keyCode))
-                          return;
-                      var code = e.keyCode, evt = e;
-
-
+                      if (!/(13|37|38|39|40)/.test(e.keyCode))
+                          return true;
+                      if (!e.isDefaultPrevented()) {
+                          
+                          var timeView = scope.$timeViewActive,
+                              dir, type;
+                          var code = e.keyCode, evt = e;
+                          if (!timeView) {
+                              e.preventDefault();
+                              switch (code) {
+                                  case 37:
+                                  case 38:
+                                      dir = 'down';
+                                      type = e.ctrlKey ? (code == 37 ? 'month' : 'year') : (code == 37 ? 'day' : 'week');
+                                      break;
+                                  case 39:
+                                  case 40:
+                                      dir = 'up'
+                                      type = e.ctrlKey ? (code == 39 ? 'month' : 'year') : (code == 39 ? 'day' : 'week');
+                                      break;
+                              }
+                              if (code == 13) {
+                                  if (e.altKey)
+                                      $picker.today();
+                                  else
+                                      renderModel();
+                              }
+                              else
+                                  dir && type && $picker.changeDate(dir, type, 1);
+                          } else if (code == 13) {
+                              if (options.timepicker && options.datepicker && e.ctrlKey)
+                                  scope.$toggleTimepicker();
+                              else if(e.target.tagName.toLowerCase() == 'a')
+                                  angular.element(e.target).triggerHandler('click')
+                          }
+                          
+                      }
+                      return true;
                   };
                   function buildFirst(disablenew) {
                       $target = $picker.$target;
+                      if (!$target)
+                          return;
                       getElements($target);
                       if (options.rangepicker)
                           $target.addClass('picker-datarange')
@@ -3456,7 +3681,6 @@ angular.module('ngQuantum.datepicker', [
                       
                   }
                   function buildNew() {
-                      
                       if (!$body) {
                           buildFirst(true);
                       }
@@ -3464,6 +3688,9 @@ angular.module('ngQuantum.datepicker', [
                       if (options.timepicker && !options.datepicker)
                           return;
                       var cachekey = cacheKey(scope.currentDate);
+                      if (lastCacheKey && cachekey == lastCacheKey)
+                          return;
+                      lastCacheKey = cachekey;
                       var data = $picker.caches[cachekey];
 
                       if (!data) {
@@ -3489,7 +3716,7 @@ angular.module('ngQuantum.datepicker', [
                       var wEnd = mEnd.clone().day(dow)
                       if (wStart > mStart)
                           wStart.add(-7, 'day')
-                      if (wEnd < mEnd)
+                      if (wEnd <= mEnd)
                           wEnd.add(7, 'day')
 
                       var diff = wEnd.diff(wStart, 'day')
@@ -3524,6 +3751,10 @@ angular.module('ngQuantum.datepicker', [
                       $body = target.find('.calendar-body');
                       $footer = target.find('.calendar-footer');
                   }
+                  function detectDate(dDate, defaultDate) {
+                      var value = angular.isString(dDate) ? moment(dDate, options.format) : angular.isDate(dDate) ? moment(dDate) : moment.isMoment(dDate) ? dDate.clone() : defaultDate;
+                      return moment.isMoment(value) ? value :moment()
+                  }
                   function optimize() {
                       if (!options.datepicker && !options.timepicker)
                           options.datepicker = true;
@@ -3536,18 +3767,18 @@ angular.module('ngQuantum.datepicker', [
                               scope.minDate = moment();
                           }
                           else
-                              scope.minDate = moment(options.minDate, options.format);
+                              scope.minDate = detectDate(options.minDate, moment())
                           options.minYear = scope.minDate.year();
                           scope.minDate.clearTime();
                       }
                       if (options.maxDate) {
-                          scope.maxDate = moment(options.maxDate, options.format);
+                          scope.maxDate = detectDate(options.maxDate, moment())
                           options.maxYear = scope.maxDate.year();
                           scope.maxDate.clearTime();
                       }
 
                       if (options.startDate) {
-                          scope.startDate = moment(options.startDate, options.format)
+                          scope.startDate = detectDate(options.startDate, moment())
                       }
                       else
                           scope.startDate = scope.minDate && moment() < scope.minDate ? scope.minDate.clone() : scope.maxDate && moment() > scope.maxDate ? scope.maxDate.clone() : moment();
@@ -3557,7 +3788,7 @@ angular.module('ngQuantum.datepicker', [
                           while (options.disableWeekdays.indexOf(scope.currentDate.day()) > -1)
                               scope.currentDate.add(-1, 'day');
                       if (options.timepicker) {
-                          options.minHour = angular.isNumber(options.minHour) && options.minHour || 8;
+                          options.minHour = angular.isNumber(options.minHour) && (options.minHour >= 0) ? options.minHour : 8;
                           options.maxHour = angular.isNumber(options.maxHour) && options.maxHour || 22;
                           options.divideHour = angular.isNumber(options.divideHour) && options.divideHour || 4;
                           (options.minHour < 0 || options.minHour > 23) && (options.minHour = 0)
@@ -3580,6 +3811,9 @@ angular.module('ngQuantum.datepicker', [
                       scope.selectedDay = scope.currentDate.month() + '-' + scope.currentDate.date();
                   }
                   function buildTable() {
+                      if (!$body) {
+                          buildFirst(true);
+                      }
                       if (!table) {
                           table = angular.element('<table/>').addClass('calendar-table');
                           var thead = angular.element('<thead/>').appendTo(table);
@@ -3656,11 +3890,10 @@ angular.module('ngQuantum.datepicker', [
                           var inner = angular.element('<div class="selector-inner"></div>').appendTo(yearSelector);
                           options.theme && yearSelector.attr('data-qo-theme', options.theme);
                           getYearArray();
-                          inner.append('<a id="year-{{year}}" ng-repeat="year in yearsArray" ng-click="$gotoYear(year, $event)" ng-class="{active:currentYear == year}"><span>{{year}}</span></a>');
+                          inner.append('<a role="button" tabindex="1" id="year-{{year}}" ng-repeat="year in yearsArray" ng-click="$gotoYear(year, $event)" ng-class="{active:currentYear == year}"><span>{{year}}</span></a>');
                           $picker.yearSelector = yearSelector;
                           $compile(yearSelector)(scope);
-
-
+                       
                       }
 
                   }
@@ -3671,7 +3904,7 @@ angular.module('ngQuantum.datepicker', [
                   }
                   function buildTimeSelector() {
                       if (options.timepicker) {
-                          var dpCont = angular.element('<div class="dp-container clearfix"></div>').appendTo($body),
+                          var dpCont = angular.element('<div role="presentation" tabindex="-1" class="dp-container clearfix"></div>').appendTo($body),
                           tpCont = angular.element('<div class="tp-container clearfix"></div>').appendTo($body),
                           tpSwicher = angular.element('<div class="tp-switcher" time-picker-switch="" data-time-icon="$options.timeIcon"  data-close-icon="$options.closeIcon"></div>').appendTo(tpCont),
                           tpTemp = timePickerTemplate().appendTo(tpCont);
@@ -3688,7 +3921,12 @@ angular.module('ngQuantum.datepicker', [
                                   dpCont.toggle();
                                   tpCont.toggleClass('tp-visible');
                                   scope.$timeViewActive = !scope.$timeViewActive;
-                                  (options.timeView == 'list') && scrollTime();
+                                  
+                                  if (scope.$timeViewActive) {
+                                      (options.timeView == 'list') && scrollTime();
+                                      dpCont.focus();
+                                  }
+                                      
                               });
                           }
                       }
@@ -3714,8 +3952,11 @@ angular.module('ngQuantum.datepicker', [
                                   var bar = $picker.timeListContainer.data('$scrollBar');
                                   var lval = yelm[0].offsetTop - 30;
 
-                                  bar && bar.scrollTo(lval)
+                                  bar && bar.scrollTo(lval);
+                                  yelm.first().focus();
                               }
+                              else
+                                  $picker.timeListContainer.find('a').first().focus()
                           }, 0)
                           
                       }
@@ -3735,8 +3976,7 @@ angular.module('ngQuantum.datepicker', [
                               scope.$broadcast('pickerTimeChanged');
                               break;
                           default:
-                              scope.$broadcast('pickerDateChanged');
-                              scope.$broadcast('pickerTimeChanged');
+                              scope.$broadcast('pickerDatetimeChanged');
                               break;
                       }
                       apply(function () {
@@ -3745,6 +3985,7 @@ angular.module('ngQuantum.datepicker', [
                   }
                   function optimizeTime() {
                       if (options.timeView == 'list') {
+                          options.format = options.format.replace(':ss', '').replace('ss', '');
                           var hr = scope.currentDate.hour();
                           if (hr < options.minHour)
                               scope.currentDate.hour(options.minHour)
@@ -3760,21 +4001,30 @@ angular.module('ngQuantum.datepicker', [
                   }
                   function timePickerTemplate() {
                       var timePicker = angular.element('<div class="cal-timepicker"></div>');
+                      var hh = options.format.indexOf('HH') > -1,
+                          mm = options.format.indexOf('mm') > -1,
+                          ss = options.format.indexOf('ss') > -1;
                       if (options.timeView != 'list') {
-                          var table = '<table class="tp-table"><tbody>'
-                                         + '<tr><td><button ng-class="\'btn-\' + $options.theme" type="button" class="btn tp-up" ng-click="$changeTime(\'up\',\'hour\')"><i ng-class="$options.upIcon"></i></button></td>'
-                                         + '<td class="tp-seperator"></td>'
-                                         + '<td><button ng-class="\'btn-\' + $options.theme" type="button" class="btn tp-up" ng-click="$changeTime(\'up\',\'minute\')"><i ng-class="$options.upIcon"></i></button></td>'
-                                         + '<td class="tp-seperator"></td>'
-                                         + '<td><button ng-class="\'btn-\' + $options.theme" type="button" class="btn tp-up" ng-click="$changeTime(\'up\',\'second\')"><i ng-class="$options.upIcon"></i></button></td></tr>'
-                                         + '<tr><td tp-bind-time="hour"></td><td class="tp-seperator">:</td><td tp-bind-time="minute"></td><td class="tp-seperator">:</td><td tp-bind-time="second"></td></tr>'
-                                         + '<tr><td><button ng-class="\'btn-\' + $options.theme" type="button" class="btn tp-down" ng-click="$changeTime(\'down\',\'hour\')"><i ng-class="$options.downIcon"></i></button></td>'
-                                         + '<td class="tp-seperator"></td>'
-                                         + '<td><button ng-class="\'btn-\' + $options.theme" type="button" class="btn tp-down" ng-click="$changeTime(\'down\',\'minute\')"><i ng-class="$options.downIcon"></i></button></td>'
-                                         + '<td class="tp-seperator"></td>'
-                                         + '<td><button ng-class="\'btn-\' + $options.theme" type="button" class="btn tp-down" ng-click="$changeTime(\'down\',\'second\')"><i ng-class="$options.downIcon"></i></button></td></tr>'
-                                     + '</tbody></table>';
-                          timePicker.append(table)
+                          var tableTime = '<table class="tp-table"><tbody><tr>';
+                          tableTime += hh ? '<td><button ng-class="\'btn-\' + $options.theme" type="button" class="btn tp-up" ng-click="$changeTime(\'up\',\'hour\')"><i ng-class="$options.upIcon"></i></button></td>' : ''
+                          tableTime += hh ? '<td class="tp-seperator"></td>':'';
+                          tableTime += mm ? '<td><button ng-class="\'btn-\' + $options.theme" type="button" class="btn tp-up" ng-click="$changeTime(\'up\',\'minute\')"><i ng-class="$options.upIcon"></i></button></td>':'';
+                          tableTime += mm ? '<td class="tp-seperator"></td>':'';
+                          tableTime += ss ? '<td><button ng-class="\'btn-\' + $options.theme" type="button" class="btn tp-up" ng-click="$changeTime(\'up\',\'second\')"><i ng-class="$options.upIcon"></i></button></td>':'';
+                          tableTime += '</tr><tr>';
+                          tableTime += hh ? '<td tp-bind-time="hour"></td>':'';
+                          tableTime += hh ? '<td class="tp-seperator">:</td>':'';
+                          tableTime += mm ? '<td tp-bind-time="minute"></td>':'';
+                          tableTime += mm ? '<td class="tp-seperator">:</td>':'';
+                          tableTime += ss ? '<td tp-bind-time="second"></td>':'';
+                          tableTime += '</tr><tr>';
+                          tableTime +=  hh ? '<td><button ng-class="\'btn-\' + $options.theme" type="button" class="btn tp-down" ng-click="$changeTime(\'down\',\'hour\')"><i ng-class="$options.downIcon"></i></button></td>':'';
+                          tableTime +=  hh ? '<td class="tp-seperator"></td>':'';
+                          tableTime +=  mm ? '<td><button ng-class="\'btn-\' + $options.theme" type="button" class="btn tp-down" ng-click="$changeTime(\'down\',\'minute\')"><i ng-class="$options.downIcon"></i></button></td>':'';
+                          tableTime +=  mm ? '<td class="tp-seperator"></td>':''
+                          tableTime +=  ss ? '<td><button ng-class="\'btn-\' + $options.theme" type="button" class="btn tp-down" ng-click="$changeTime(\'down\',\'second\')"><i ng-class="$options.downIcon"></i></button></td>':'';
+                          tableTime += '</tr></tbody></table>';
+                          timePicker.append(tableTime)
                       }
                       else {
                           var times = [];
@@ -3801,7 +4051,7 @@ angular.module('ngQuantum.datepicker', [
                               })
                           }
                           scope.timesList = times;
-                          var timeListContainer = angular.element('<div class="tp-time-list" nq-scroll="" data-qo-bar-size="slimmest" data-qo-placement-offset="0" data-qo-visible="true"><a class="tp-time" ng-repeat="time in timesList" tp-time-list-item="time"  ng-class="{active:$parent.currentTimeString == time}"></a></div>')
+                          var timeListContainer = angular.element('<div class="tp-time-list" nq-scroll="" data-qo-bar-size="slimmest" data-qo-placement-offset="0" data-qo-visible="true"><a class="tp-time" role="button" tabindex="1" ng-repeat="time in timesList" tp-time-list-item="time"  ng-class="{active:$parent.currentTimeString == time}"></a></div>')
                           options.theme && timeListContainer.attr('data-qo-theme', '$options.theme');
                           timePicker.append(timeListContainer)
                           $picker.timeListContainer = timeListContainer;
@@ -3813,132 +4063,172 @@ angular.module('ngQuantum.datepicker', [
                   }
                   function renderModel() {
                       if (scope.hasModel) {
-                          ngModel.$setViewValue(scope.currentDate.format(scope.format));
-
-                      }
-                  }
-
-                  if (attr && angular.isDefined(attr.ngModel)) {
-                      scope.hasModel = true;
-                      scope.$parent.$watch(attr.ngModel, function (newValue, oldValue) {
-                          if (newValue && !scope.modelSetted) {
-                              apply(function () {
-                                  var dt = moment(newValue, scope.format);
-                                  if (options.timepicker) {
-                                      var hr = dt.hour()
-                                      if (hr < options.minHour)
-                                          dt.hour(options.minHour)
-                                      if (hr > options.maxHour)
-                                          dt.hour(options.maxHour).minute(0)
-                                  }
-                                  scope.currentDate = dt;
-                                  scope.selectedDay = scope.currentDate.month() + '-' + scope.currentDate.date();
-                                  scope.modelSetted = true;
-                                  fireChange()
-                                  buildNew()
-                              })
-                          }
-                          ngModel.$render();
-                          apply(function () {
-                              scope.modelDate = scope.currentDate.clone().toDate();
-                          })
-                          if (options.autoHide && !options.timepicker)
-                              $picker.hide();
-                      })
-                  }
-                  if (attr) {
-                      angular.forEach(['onDateChange', 'onTimeChange', 'onChange'], function (key) {
-                          if (angular.isDefined(attr[key]))
-                              options[key] = $parse(attr[key]);
-                      })
-                  }
-                  if (options.minDateFrom) {
-                      var fromEl = angular.element(options.minDateFrom)
-                      if (fromEl.length) {
-                          var hasChage = false;
-                          var fromPicker = fromEl.data('$datepicker');
-                          var fromScope =fromPicker && fromPicker.$scope;
-                          fromScope && fromScope.$watch('modelDate', function (newValue, oldValue) {
-                              if (newValue) {
-                                  apply(function () {
-                                      var dt = moment(newValue);
-                                      scope.minDate = dt.clone().add(options.minRange, options.rangeType);
-                                      scope.currentDate = dt.clone().add(options.defaultRange, options.rangeTypee);
-                                      scope.selectedDay = scope.currentDate.month() + '-' + scope.currentDate.date();
-                                      $picker.caches = {};
-                                      options.minYear = scope.minDate.year();
-                                      if (options.maxRange) {
-                                          scope.maxDate = dt.clone().add(options.maxRange, options.rangeType);
-                                          options.maxYear = scope.maxDate.year();
-                                      }
-                                      getYearArray()
-                                      buildNew();
-                                      fireChange();
-                                      hasChage = true;
-                                  })
+                          $timeout(function () {
+                              if (options.modelType == 'date')
+                                  ngModel.$setViewValue(scope.currentDate.clone().toDate());
+                              else {
+                                  ngModel.$setViewValue(scope.currentDate.format(scope.format));
                               }
-
-                          })
-                          fromScope && fromScope.$on(options.prefixEvent + '.hide', function () {
-                              if (hasChage)
-                                  $picker.show();
-                              hasChage = false;
-                          });
+                              ngModel.$commitViewValue();
+                          }, 0)
                       }
                   }
-                  if (options.iconId) {
-                      var iconEl = angular.element(options.iconId)
-                      if (iconEl.length) {
-                          iconEl.on('click', function () {
-                              $picker.toggle();
-                          })
-                          scope.$on('$destroy', function () {
-                              iconEl.off('click')
-                          });
-                      }
-                  }
-                  scope.$watch('selectedIndex', function (newValue, oldValue) {
-                      if (newValue != oldValue) {
-                          var idx = newValue;
-                          if (idx >= scope.dayArray.length)
-                              idx = scope.dayArray.length - 1;
-                          var dt = scope.dayArray[idx];
-                          scope.selectedDay = dt.month + '-' + dt.day;
-                          var diff = dt.month - scope.currentDate.month();
-                          if (diff != 0) {
-                              if (diff > 0 && diff != 11 || diff == -11)
-                                  $picker.next();
-                              else if (diff < 0 || diff == 11)
-                                  $picker.before();
-                          }
-                          scope.currentDate.date(dt.day);
-                          scope.currentDate.month(dt.month);
-                          fireChange('date');
-                          renderModel();
-                      }
-                  })
-                  scope.$on('pickerTimeChanged', function (evt, val) {
-                      (options.timeView == 'list') && scrollTime();
-                      angular.forEach(['onTimeChange', 'onChange'], function (key) {
-                          if (angular.isDefined(options[key]))
-                              options[key](scope, { $currentDate: scope.currentDate.toDate() });
+                  function buildScope() {
+                      angular.forEach(['onDateChange', 'onTimeChange', 'onChange'], function (key) {
+                          if (angular.isDefined(options[key]) && !angular.isFunction(options[key]))
+                              options[key] = $parse(options[key]);
                       })
-                  })
-                  scope.$watch('currentDateObject.month', function (newval, oldval) {
-                      if (newval != oldval && oldval) {
-                          scope.selectedDay = scope.selectedDay.replace(oldval + '-', newval + '-');
+                      if (ngModel) {
+                          scope.hasModel = true;
+                          var oldRender = ngModel.$render;
+                          ngModel.$render = function (value) {
+                              if (options.modelType == 'date') {
+                                  var val = scope.currentDate.format(scope.format)
+                                  if (element[0].tagName.toLowerCase() === 'input') {
+                                      element.val(val);
+                                  } else
+                                      element.html(val);
+                              } else {
+                                  oldRender();
+                              }
+                          };
+                          
+                          scope.$parent.$watch(attr.ngModel, function (newValue, oldValue) {
+                              if (newValue) {
+                                  
+                                  apply(function () {
+                                      var dt;
+                                      if (angular.isDate(newValue)) {
+                                          options.modelType = 'date';
+                                          dt = moment(newValue)
+                                      } else
+                                          dt = angular.isString(newValue) ? moment(newValue, scope.format) : moment.isMoment(newValue) ? newValue : moment();
+
+                                      if (!dt.isValid())
+                                          throw 'Type Error: ' + attr.ngModel + ' is not a valid Date, moment or date string...';
+                                      if (options.timepicker) {
+                                          var hr = dt.hour()
+                                          if (hr < options.minHour)
+                                              dt.hour(options.minHour)
+                                          if (hr > options.maxHour)
+                                              dt.hour(options.maxHour).minute(0)
+                                      }
+                                      scope.currentDate = dt.clone();
+                                      scope.selectedDay = scope.currentDate.month() + '-' + scope.currentDate.date();
+                                      if (!scope.modelSetted) {
+                                          scope.modelSetted = true;
+                                          fireChange()
+                                          buildNew()
+                                      }
+                                      ngModel.$render();
+                                      scope.modelDate = scope.currentDate.clone().toDate();
+                                      if (options.autoHide && !options.timepicker)
+                                          $picker.hide();
+                                  });
+                                  
+                              }
+                          })
                       }
-                  })
-                  scope.$on('pickerDateChanged', function (evt, val) {
+                      
+                      if (options.minDateFrom) {
+                          var fromEl = angular.element(options.minDateFrom)
+                          if (fromEl.length) {
+                              var hasChage = false;
+                              var fromPicker = fromEl.data('$datepicker');
+                              var fromScope = fromPicker && fromPicker.$scope;
+                              fromScope && fromScope.$watch('modelDate', function (newValue, oldValue) {
+                                  if (newValue) {
+                                      apply(function () {
+                                          var dt = moment(newValue);
+                                          scope.minDate = dt.clone().add(options.minRange, options.rangeType);
+                                          scope.currentDate = dt.clone().add(options.defaultRange, options.rangeTypee);
+                                          scope.selectedDay = scope.currentDate.month() + '-' + scope.currentDate.date();
+                                          $picker.caches = {};
+                                          options.minYear = scope.minDate.year();
+                                          if (options.maxRange) {
+                                              scope.maxDate = dt.clone().add(options.maxRange, options.rangeType);
+                                              options.maxYear = scope.maxDate.year();
+                                          }
+                                          getYearArray()
+                                          buildNew();
+                                          fireChange();
+                                          hasChage = true;
+                                      })
+                                  }
+
+                              })
+                              fromScope && fromScope.$on(options.prefixEvent + '.hide', function () {
+                                  if (hasChage)
+                                      $picker.show();
+                                  hasChage = false;
+                              });
+                          }
+                      }
+                      if (options.iconId) {
+                          var iconEl = angular.element(options.iconId)
+                          if (iconEl.length) {
+                              iconEl.on('click', function () {
+                                  $picker.toggle();
+                              })
+                              scope.$on('$destroy', function () {
+                                  iconEl.off('click')
+                              });
+                          }
+                      }
+                      scope.$watch('selectedIndex', function (newValue, oldValue) {
+                          
+                          if (newValue != oldValue) {
+                              var idx = newValue;
+                              if (idx >= scope.dayArray.length)
+                                  idx = scope.dayArray.length - 1;
+                              var dt = scope.dayArray[idx];
+                              scope.selectedDay = dt.month + '-' + dt.day;
+                              var diff = dt.month - scope.currentDate.month();
+                              if (diff != 0) {
+                                  if (diff > 0 && diff != 11 || diff == -11)
+                                      $picker.next();
+                                  else if (diff < 0 || diff == 11)
+                                      $picker.before();
+                              }
+                              
+                              scope.currentDate.date(dt.day);
+                              scope.currentDate.month(dt.month);
+                              fireChange('date');
+                              renderModel();
+                          }
+                      })
+                      
+                      scope.$watch('currentDateObject.month', function (newval, oldval) {
+                          if (newval != oldval && oldval) {
+                              scope.selectedDay = scope.selectedDay.replace(oldval + '-', newval + '-');
+                          }
+                      })
+                      scope.$on('pickerTimeChanged', function (evt, val) {
+                          formatPicker();
+                          if (angular.isFunction(options.onTimeChange))
+                              options.onTimeChange(scope, { $currentDate: scope.currentDate.toDate() });
+                          if (angular.isFunction(options.onChange))
+                              options.onChange(scope, { $currentDate: scope.currentDate.toDate() });
+                      })
+                      scope.$on('pickerDatetimeChanged', function (evt, val) {
+                          formatPicker();
+                          if (angular.isFunction(options.onChange))
+                              options.onChange(scope, { $currentDate: scope.currentDate.toDate() });
+                      })
+                      scope.$on('pickerDateChanged', function (evt, val) {
+                          formatPicker();
+                          if (angular.isFunction(options.onDateChange))
+                              options.onDateChange(scope, { $currentDate: scope.currentDate.toDate() });
+                          if (angular.isFunction(options.onChange))
+                              options.onChange(scope, { $currentDate: scope.currentDate.toDate() });
+                      })
+                  }
+                  function formatPicker() {
+                      (options.timeView == 'list') && scrollTime();
                       scope.currentMonthTitle = scope.currentDate.format(options.headerFormat);
                       scope.currentYear = scope.currentDate.year();
                       options.showYears && scrollYear();
-                      angular.forEach(['onDateChange', 'onChange'], function (key) {
-                          if (angular.isDefined(options[key]))
-                              options[key](scope, { $currentDate: scope.currentDate.toDate() });
-                      })
-                  })
-                  
+                  }
                   function apply(fn) {
                       if (!scope.$$phase) {
                           scope.$apply(function () {
@@ -3963,7 +4253,8 @@ angular.module('ngQuantum.datepicker', [
                   var span = angular.element('<a href="#" class="tps-btn"></a>').append('<i class="' + scope.$eval(attr.timeIcon) + '"></i>').appendTo(element)
                   var time = angular.element('<span>Time</span>').appendTo(span)
                   scope.$on('pickerTimeChanged', function (evt, val) {
-                      time.html(scope.currentDate.format('HH:mm:ss'))
+                      var format = scope.$options.timeView == 'list' ? 'HH:mm' : 'HH:mm:ss';
+                      time.html(scope.currentDate.format(format))
                   })
                   element.on('click', function (evt) {
                       evt.preventDefault();
@@ -3979,7 +4270,7 @@ angular.module('ngQuantum.datepicker', [
                           scope.$toggleTimepicker();
                       });
 
-                  element.append('<a class="tp-close" title="Close"><i class="' + scope.$eval(attr.closeIcon) + '"></i></a>')
+                  element.append('<a class="tp-close" title="Close"><i class="' + scope.$eval(attr.closeIcon) + '"></i></a>');
                   scope.$on('$destroy', function () {
                       element.off('click')
                   });
@@ -4038,10 +4329,12 @@ angular.module('ngQuantum.datepicker', [
                   if (!element.hasClass('unselectable'))
                       element.on('click', function (evt) {
                           evt.preventDefault();
-                          scope.$apply(function () {
-                              scope.selectedIndex = index;
-
-                          })
+                          scope.$parent.$apply(function () {
+                              if (scope.selectedIndex != index)
+                                  scope.selectedIndex = index;
+                              else
+                                  scope.$hide();
+                          });
                       })
                   scope.$on('$destroy', function () {
                       element.off('click')
@@ -4072,6 +4365,9 @@ angular.module('ngQuantum.datepicker', [
                                   options.datepicker = false;
                               }
                                   
+                          }
+                          else if (mode == 'time') {
+                              options.datepicker = false;
                           }
                       }
                   }
@@ -4182,12 +4478,14 @@ angular.module('ngQuantum.dropdown', ['ngQuantum.popMaster'])
                           if(ew > tw)
                               $dropdown.$target.css('min-width', ew)
                       }
+                      element.parent().addClass('open')
                       return promise;
                   };
                   var hide = $dropdown.hide;
                   $dropdown.hide = function (callback) {
                       scope.lastIndex = -1;
                       angular.element(document).off('keydown.nqDropdown.api.data');
+                      element.parent().removeClass('open')
                      return hide(callback);
                   };
                   if (attr && angular.isDefined(options.directive)) {
@@ -4213,10 +4511,9 @@ angular.module('ngQuantum.dropdown', ['ngQuantum.popMaster'])
       function ($dropdown, templateHelper) {
           return {
               restrict: 'EA',
-              scope:true,
               link: function postLink(scope, element, attr, transclusion) {
                   var options = {
-                      $scope: scope
+                      $scope: scope.$new()
                   };
                   
                   options.uniqueId = attr.qoUniqueId || attr.id || options.$scope.$id;
@@ -4788,7 +5085,7 @@ angular.module('ngQuantum.modalBox', ['ngQuantum.modal'])
                 okText: 'OK',
                 cancelText: 'Cancel',
                 confirmText: 'Confirm',
-                template: false,
+                template:false,
                 showIcon: true,
                 promptModel: '$promptValue',
                 alertTemplate: 'modalbox/alertbox.tpl.html',
@@ -4898,21 +5195,21 @@ angular.module('ngQuantum.modalBox', ['ngQuantum.modal'])
               }
             ];
         })
-    .directive('nqModalBox', ['$modalBox', '$helpers',
+    .directive('nqModalBox', ['$modalBox','$helpers',
       function ($modalBox, $helpers) {
           return {
               restrict: 'EAC',
-              scope: true,
+              scope:true,
               link: function postLink(scope, element, attr, transclusion) {
                   var options = {
                       $scope: scope
                   };
                   angular.forEach(['boxType', 'promptLabel', 'promptModel', 'alertTemplate', 'confirmTemplate', 'promptTemplate',
                       'showIcon', 'okText', 'cancelText', 'confirmText'], function (key) {
-                          if (angular.isDefined(attr[key]))
-                              options[key] = $helpers.parseConstant(attr[key]);
+                      if (angular.isDefined(attr[key]))
+                          options[key] = $helpers.parseConstant(attr[key]);
 
-                      })
+                  })
                   options.uniqueId = attr.uniqueId || attr.id || scope.$id;
                   options.element = element;
                   var modalBox = {}
@@ -4924,12 +5221,12 @@ angular.module('ngQuantum.modalBox', ['ngQuantum.modal'])
                       options.htmlObject = true;
                       options.buildOnShow = false;
                       scope.content = content;
-                      modalBox = new $modalBox(options, attr);
+                      modalBox =new $modalBox(options, attr);
                   }
                   else {
                       options.element = element;
                       options.html = true;
-                      modalBox = new $modalBox(options, attr);
+                      modalBox =new $modalBox(options, attr);
 
                   }
                   scope.$on('$destroy', function () {
@@ -4991,6 +5288,7 @@ angular.module('ngQuantum.modalBox', ['ngQuantum.modal'])
                       if (!options.instanceName)
                           options.instanceName = options.typeClass
                       var originalOptions = $master.$originalOptions = angular.extend({}, options);
+                      isTouch && (options.keyboard = false);
                       angular.forEach(['hide', 'show', 'toggle'], function (value) {
                           scope['$' + value] = function () {
                               scope.$$postDigest(function () {
@@ -5052,6 +5350,9 @@ angular.module('ngQuantum.modalBox', ['ngQuantum.modal'])
                           }
                           else
                               $master.$promise = $q.when($master.init());
+
+                          if(element && options.readonly)
+                              element.attr('readonly', true)
                       }
 
                       $master.destroy = function () {
@@ -5108,6 +5409,8 @@ angular.module('ngQuantum.modalBox', ['ngQuantum.modal'])
                               after = null;
                           if (!$target || $target.length < 1)
                               build();
+                          else
+                              ensureFixedPlacement();
                           if (options.theme) {
                               $target.removeClass(lasttheme);
                               lasttheme = options.instanceName + '-' + options.theme;
@@ -5268,10 +5571,10 @@ angular.module('ngQuantum.modalBox', ['ngQuantum.modal'])
                           $target && $target.focus();
                       };
                       $master.clearExists = function () {
-                          var exists = angular.element('.' + options.typeClass + ":visible", angular.element('body'));
+                          var exists = angular.element('.' + options.typeClass);
                           angular.forEach(exists, function (key, value) {
                               var sc = angular.element(key).scope();
-                              sc && (sc.$id != scope.$id) && sc.$hide && sc.$hide();
+                              sc && (sc.$id != scope.$id) && sc.$isShown && sc.$hide();
 
                           })
                       };
@@ -5282,6 +5585,8 @@ angular.module('ngQuantum.modalBox', ['ngQuantum.modal'])
                           evt.which === 27 && element.blur();
                       };
                       $master.$onFocusElementMouseDown = function (evt) {
+                          if (options.isInput)
+                              return true;
                           evt.preventDefault();
                           evt.stopPropagation();
                           $master.$isShown ? element.blur() : element.focus();
@@ -5289,7 +5594,7 @@ angular.module('ngQuantum.modalBox', ['ngQuantum.modal'])
                       $master.$applyPlacement = function () {
                           if (options.inline)
                               return;
-                          if ($container)
+                          if ($container && options.container !== 'self')
                               $target.appendTo($container)
                           if (!options.preventReplace) {
                               $placement.applyPlacement($master.$toElement && $master.$toElement || $master.$currentElement && $master.$currentElement || element, $target, options)
@@ -5373,7 +5678,10 @@ angular.module('ngQuantum.modalBox', ['ngQuantum.modal'])
                           else {
                               $target.hide();
                               if ($container) {
-                                  $container.append($target)
+                                  if (/input|button/.test($container[0].tagName.toLowerCase())) {
+                                      $container.after($target)
+                                  } else
+                                      $container.append($target);
                               }
                               else
                                   element.after($target)
@@ -5397,7 +5705,7 @@ angular.module('ngQuantum.modalBox', ['ngQuantum.modal'])
                       }
                       function complateHide(callback) {
                           $master.$hoverShown = false;
-                          if (options.keyboard) {
+                          if (options.keyboard && !options.isInput) {
                               angular.element(document).off('keyup', $master.$onKeyUp);
                               angular.element(document).off('keyup', $master.$onFocusKeyUp);
                           }
@@ -5419,7 +5727,7 @@ angular.module('ngQuantum.modalBox', ['ngQuantum.modal'])
                       }
                       function complateShow(callback) {
                           $master.$hoverShown = true;
-                          if (options.keyboard) {
+                          if (options.keyboard && !options.isInput) {
                               if (options.trigger !== 'focus') {
                                   angular.element(document).on('keyup', $master.$onKeyUp);
                               } else {
@@ -5442,7 +5750,7 @@ angular.module('ngQuantum.modalBox', ['ngQuantum.modal'])
                                   options.insideFixed = true;
                                   return false;
                               }
-                                 
+                                
                               var $checkElements = $target.add($target.parents());
                               var isFixed = false;
                               var scaleW = angular.element(window).width() / 2;
@@ -5717,7 +6025,7 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
             showButtons: false,
             hideRail: false,
             padHorizontal: false,
-            allDiggest: false,
+            allDigest: false,
             step: 30,
             duration: 200,
             theme: false,
@@ -5773,26 +6081,30 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
                   $bar.destroy = function () {
                       element && element.off();
                       angular.element(document).off('.scrollbar');
-                      angular.element(document).off('.scrollbarkeyboard');
+                      angular.element(document).off('keydown', $bar.$onKeyDown);
                       scope.$destroy();
                       $bar = null;
                   }
                   $bar.$onKeyDown = function (e) {
                       if (!/(37|38|39|40)/.test(e.keyCode))
                           return;
-                      var code = e.keyCode, evt = e;
-                      switch (code) {
-                          case 37:
-                          case 38:
-                              evt.deltaY = 1
-                              break
-                          case 39:
-                          case 40:
-                              evt.deltaY = -1
-                              break;
+                      if (!e.isDefaultPrevented()) {
+                          e.preventDefault();
+                          var code = e.keyCode, evt = e;
+                          switch (code) {
+                              case 37:
+                              case 38:
+                                  evt.deltaY = 1
+                                  break
+                              case 39:
+                              case 40:
+                                  evt.deltaY = -1
+                                  break;
+                          }
+
+                          mouseWheel(evt);
                       }
                       
-                      mouseWheel(evt);
 
                   };
                   $bar.scrollStepTop = function (val) {
@@ -5835,6 +6147,14 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
                           }
                       }
                   }
+                  $bar.refresh = function (timeout) {
+                      timeout = timeout || 700;
+                      setTimeout(function () {
+                          findSizes();
+                          watchResult();
+                      }, timeout)
+                      
+                  };
                   function optimize() {
                       if (!/y|x|both/.test(options.axis))
                           options.axis = 'y';
@@ -5880,6 +6200,7 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
                   function buildTemplate() {
                       if ($bar && $bar.$templateReady)
                           return;
+                      $bar.$templateReady = true;
                       checkAdaptable();
                       $container.addClass('scrollable')
                       var pos = $container.css('position');
@@ -5976,6 +6297,7 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
                                   }
                               })
                               $x.thumb.on('mousedown', function (e) {
+                                  angular.element(document).off('.scrollbar')
                                   var last = $x.stepSize;
                                   if (e.which != 1)
                                       return true;
@@ -5989,25 +6311,20 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
                           }
                           
                       }
-                    !isTouch && angular.element(document).on('mouseup', function (evt) {
+                    !isTouch &&  angular.element('body').on('mouseup', function (evt) {
                           angular.element(document).off('.scrollbar')
                       });
                       
                       
                       $container.addClass('show-bar-button')
-                      $bar.$templateReady = true;
-
                   }
                   function buildEvents() {
                       if (!scope.useWebkit || isTouch) {
-                          if (options.allDiggest)
+                          if (options.allDigest)
                               scope.$watch(function (newVal, oldVal) {
-                                  if (element.is(':visible')) {
-                                      setTimeout(function () {
-                                          watchResult();
-                                      }, 0)
-                                  }
-
+                                  setTimeout(function () {
+                                      watchResult();
+                                  }, 0)
                               })
                           else {
                               var el = $container || element;
@@ -6034,13 +6351,13 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
                                   if (/x|both/.test(options.axis) && !scope._scrollWidth)
                                       watchResult();
                                   if (options.keyboard) {
-                                      angular.element(document).off('.scrollbarkeyboard');
+                                      angular.element(document).off('.scrollbarkeyboard', $bar.$onKeyDown);
                                       angular.element(document).on('keydown.scrollbarkeyboard', $bar.$onKeyDown);
                                   }
 
                               })
                               options.keyboard && element.on('mouseleave', function (e) {
-                                  angular.element(document).off('.scrollbarkeyboard');
+                                  angular.element(document).off('keydown', $bar.$onKeyDown);
                               })
                           }
                           else {
@@ -6102,60 +6419,61 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
                   }
                   
                   function watchResult() {
+                      if ($container && $container.height() < 0 || !$container && element && element.height() < 1)
+                          return;
+                      $y.bar && $y.bar.hide();
+                      $x.bar && $x.bar.hide();
                       var tag = element[0].tagName, width = 0, height = 0;
                       var pad = options.showButtons ? $size.buttonSize : $size.barSize;
                       if (/td|th|table/.test(tag.toLowerCase())) {
                           if ($container) {
-                              if (!$container.is(':visible'))
-                                  return;
                               height = $container[0].scrollHeight - pad;
                               width = $container[0].scrollWidth;
                           }
                           else {
-                              if (!element.is(':visible'))
-                                  return;
                               height = element[0].clientHeight - pad;
                               width = element[0].clientWidth;
                           }
                       }
                       else {
-                          if (!element.is(':visible'))
-                              return;
                           height = element[0].scrollHeight - pad;
                           width = element[0].scrollWidth;
                       }
-                      if (height > 0 && scope.maxHeight < height && $container && ($container[0].scrollHeight > $container[0].clientHeight)) {
-                          if (scope._scrollHeight) {
-                              if (Math.abs(scope._scrollHeight - height) >= 5) {
+                      if (/y|both/.test(options.axis)) {
+                          if (height > 0 && scope.maxHeight < height && $container && $container.outerHeight() >= scope.maxHeight && ($container[0].scrollHeight > $container[0].clientHeight)) {
                                   scope._scrollHeight = height, applyY(height);
-                              }
-
+                              $y.bar && $y.bar.css('visibilty', '').show();
+                              $y.bar.visible = true;
+                          } else {
+                              $container.scrollTop(0)
+                              $y.bar && $y.bar.css('visibilty', 'hidden');
+                              $y.bar.visible = false;
                           }
-                          else
-                              scope._scrollHeight = height, applyY(height);
-                          $y.bar && $y.bar.css('display', '');
-                      } else $y.bar && $y.bar.hide();
-                      if (width > 0 && scope.maxWidth < width && $container && ($container[0].scrollWidth > $container[0].clientWidth)) {
-                          if (scope._scrollWidth) {
-                              if (Math.abs(scope._scrollWidth - width) >= 5)
-                                  scope._scrollWidth = width, applyX(width);
+                          if (scope.scrollTop > 0 && $container.height() < height) {
+                              $container.scrollTop(scope.scrollTop);
                           }
-                          else
-                              scope._scrollWidth = width, applyX(width);
-                          $x.bar && $x.bar.css('display', '');
-                      } else $x.bar && $x.bar.hide();
-
-
-                      if (scope.scrollLeft > 0 && $container.width() < width) {
-                          $container.scrollLeft(scope.scrollLeft);
                       }
-                      if (scope.scrollTop > 0 && $container.height() < height) {
-                          $container.scrollTop(scope.scrollTop);
+                      if (/x|both/.test(options.axis)) {
+                          if (width > 0 && scope.maxWidth < width && $container.outerWidth() >= scope.maxWidth && $container && ($container[0].scrollWidth > $container[0].clientWidth)) {
+                                  scope._scrollWidth = width, applyX(width);
+                              $x.bar && $x.bar.css('visibilty', '').show();
+                              $x.bar.visible = true;
+                          } else {
+                              $container.scrollLeft(0)
+                              $x.bar && $x.bar.css('visibilty', 'hidden')
+                              $x.bar.visible = false;
+                          };
+
+
+                          if (scope.scrollLeft > 0 && $container.width() < width) {
+                              $container.scrollLeft(scope.scrollLeft);
+                          }
                       }
                   }
                   function mouseWheel(event) {
-                      
                       if (options.axis == 'y') {
+                          if (!$y.bar.visible)
+                              return true;
                           if (!scope._scrollHeight)
                               watchResult();
                           if (!$y.maxOffset)
@@ -6169,6 +6487,8 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
                           wheelTop(event)
                       }
                       else if (options.axis == 'x') {
+                          if (!$x.bar.visible)
+                              return true;
                           if (!$x.maxOffset)
                               return true;
                           if (scope.scrollLeft >= $x.maxOffset && event.deltaY < 0)
@@ -6247,7 +6567,7 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
                       return result;
                   }
                   function barSizes(axis, newsize, elsize) {
-                      var $a = axis;
+                      var $a = axis, oldStepRange = ($a.stepSize && $a.thumbStep) && ($a.stepSize / $a.thumbStep);
                       var s = elsize,
                       bs = s - (2 * options.barOffset),
                        ts = s * s / newsize;
@@ -6261,7 +6581,8 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
                       var mts = $a.trackSize - ts;
                       $a.maxThumbOffset = mts;
                       $a.thumbStep = (($a.trackSize - ts) / ($a.maxOffset / options.step))
-                      $a.stepSize = 0;
+                      $a.stepSize = oldStepRange ? (oldStepRange * $a.thumbStep) : 0;
+                      $a.stepSize > $a.maxThumbOffset && ($a.stepSize = $a.maxThumbOffset);
                       return $a;
                   }
                   function checkAdaptable() {
@@ -6313,11 +6634,15 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
                           cont.css('max-width', $size.width)
                   }
                   function applyY(newval) {
-                      newval = $container[0].scrollHeight;
+                      newval = newval || $container[0].scrollHeight;
+                      
+                      var maxtop = $container[0].scrollHeight - $container.outerHeight();
+                      if (maxtop < scope.scrollTop)
+                          scope.scrollTop = maxtop;
                       if (newval && /y|both/.test(options.axis)) {
                           var h = $container.outerHeight(true);
                           $y = barSizes($y, newval, h);
-                          if ($bar || !$bar.$templateReady)
+                          if (!$bar || !$bar.$templateReady)
                               buildTemplate();
                           $y.bar.css({
                               top: (scope.scrollTop || 0) + options.barOffset + 'px',
@@ -6325,7 +6650,8 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
                               height: $y.barSize + 'px'
                           })
                           $y.thumb.css({
-                              height: $y.thumbSize + 'px'
+                              height: $y.thumbSize + 'px',
+                              top: $y.stepSize + 'px'
                           })
                           $y.track.css({
                               height: $y.trackSize + 6 + 'px'
@@ -6333,10 +6659,14 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
                       }
                   }
                   function applyX(newval) {
-                      newval = $container[0].scrollWidht;
+                      newval = newval || $container[0].scrollWidth;
+                      var maxleft = $container[0].scrollWidth - $container.outerWidth();
+                      if (maxleft < scope.scrollLeft)
+                          scope.scrollTop = maxleft;
                       if (newval && /x|both/.test(options.axis)) {
-                          var w = $container.outerWidth()
+                          var w = $container.outerWidth(true)
                           $x = barSizes($x, newval, w);
+                          
                           if (!$bar.$templateReady)
                               buildTemplate();
                           $x.bar.css({
@@ -6345,7 +6675,8 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
                               width: $x.barSize + 'px'
                           })
                           $x.thumb.css({
-                              width: $x.thumbSize + 'px'
+                              width: $x.thumbSize + 'px',
+                              left: $x.stepSize + 'px'
                           })
                           $x.track.css({
                               width: $x.trackSize + 6 + 'px'
@@ -6356,19 +6687,19 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
                       $bar.destroy();
 
                   })
-                  window.resize = function () {
+                  var windowResize = function () {
                       $timeout(function () {
-                          findSizes();
-                          if (scope._scrollHeight) {
-                              applyY(scope._scrollHeight);
-                          }
-                          else {
-                              watchResult();
-                          }
-                          scope._scrollWidth && applyX(scope._scrollWidth)
-                      }, 0)
-
+                          $bar.refresh(200)
+                      }, 100)
                   };
+                  
+                  window.addResizeEvent(windowResize)
+                  angular.element(document).ready(function () {
+                      setTimeout(function () {
+                          windowResize();
+                      }, 200)
+                      
+                  })
                   $bar.init();
                   return $bar;
               };
@@ -6381,12 +6712,11 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
               restrict: 'AC',
               isolate: false,
               link: function postLink(scope, element, attr) {
-                  var options = {};
-                  options.$scope = scope;
-                  var bar;
                   setTimeout(function () {
-                      bar = $scrollbar(element, options, attr)
-                  }, 0)
+                      var bar = $scrollbar(element, { $scope: scope }, attr)
+                      if (attr.barModel)
+                          scope[attr.barModel] = bar;
+                  }, 10)
               }
           };
       }])
@@ -6418,7 +6748,7 @@ var selectApp = angular.module('ngQuantum.select', [
             template: 'select/select.tpl.html',
             groupTemplate: 'select/selectgroup.tpl.html',
             trigger: 'click',
-            fireEmit: true,
+            fireEmit: false,
             lazyAjax:true,
             container: 'body',
             displayReflow: false,
@@ -6607,9 +6937,9 @@ var selectApp = angular.module('ngQuantum.select', [
                       if (options.grouped)
                           scope.$groupMatches = $filter('groupOption')(scope.$matches);
                       scope.$noResultFound = !scope.$matches.length;
-
                       if (isTagsInput, isfilter) {
                           scope.$noResultFound = !(($filter('filter')(scope.$matches, function (val) { return val.filtered != true })).length)
+
                           scope.$noResultFound ? $select.hide() : $select.show();
                       }
                   };
@@ -6696,7 +7026,9 @@ var selectApp = angular.module('ngQuantum.select', [
                       $target.focus();
                       var index = scope.$lastIndex > -1 ? scope.$lastIndex : -1;
                       if (index == -1) {
-                          index = angular.element($target.find('.selected')[0]).closest('.select-option').index();
+                          var elSelected = angular.element($target.find('.selected')[0]),
+                              sIndex = elSelected.length && elSelected.scope().$index;
+                          index = angular.isDefined(sIndex) ? sIndex : elSelected.hasClass('select-option') ? elSelected.parent().index() : elSelected.closest('.select-option').index();
                       }
                       index >= $items.length && (index = 0)
                       if (e.keyCode == 38 && index > 0) index--                  // up
@@ -6715,30 +7047,52 @@ var selectApp = angular.module('ngQuantum.select', [
 
                   var _show = $select.show;
                   $select.show = function () {
-                      _show();
+                      var promise = _show();
                       if (options.multiple) {
                           $select.$target.addClass('select-multiple');
                       }
-                      setTimeout(function () {
-                          $select.$target.on(isTouch ? 'touchstart' : 'mousedown', $select.$onMouseDown);
-
-                      });
                       if (options.keyboard && $select.$target) {
                           angular.element(document).off('keydown', $select.$onKeyDown);
                           angular.element(document).on('keydown', $select.$onKeyDown);
                       }
 
                       $select.$target.css('min-width', element.outerWidth(true));
+                      promise && promise.then(function () {
+                          if (options.filterable) {
+                              if (options.directive != 'nqTagsInput')
+                                  scope.filterModel = { label: '' };
+                              setTimeout(function () {
+                                  searchInput.focus();
+                              }, 0);
+                          }
+                          if (scrollbar) {
+                              scrollbar.scrollTo('.selected', null, 60);
+                          }
+                          $select.$target.on(isTouch ? 'touchstart' : 'mousedown', $select.$onMouseDown);
+                      })
                   };
                   var _hide = $select.hide;
                   $select.hide = function () {
                       $select.$target.off(isTouch ? 'touchstart' : 'mousedown', $select.$onMouseDown);
                       if (options.keyboard && $select.$target)
                           angular.element(document).off('keydown', $select.$onKeyDown);
-                     !options.inline && _hide();
+                     
                       if (options.directive != 'nqTagsInput')
                           searchInput.val('');
                       scope.$lastIndex = -1;
+                      if (options.inline)
+                          return $q.when('');
+
+
+                      var promise = _hide() || $q.when('');
+                      promise.then(function () {
+                          if (options.directive != 'nqTagsInput') {
+                              scope.filterModel = { label: '' };
+                              setTimeout(function () {
+                                  searchInput.blur();
+                              }, 0);
+                          }
+                      })
                   };
 
                   $select.render = function () {
@@ -6816,27 +7170,6 @@ var selectApp = angular.module('ngQuantum.select', [
                           }
 
                       });
-                  scope.$on(options.prefixEvent + '.show', function () {
-                      if (options.filterable) {
-                          if (options.directive != 'nqTagsInput')
-                              scope.filterModel = { label: '' };
-                          setTimeout(function () {
-                              searchInput.focus();
-                          }, 0);
-                      }
-                      if (scrollbar) {
-                          scrollbar.scrollTo('.selected', null, 60);
-                      }
-                  });
-                  scope.$on(options.prefixEvent + '.hide', function () {
-                      if (options.directive != 'nqTagsInput') {
-                          scope.filterModel = { label: '' };
-                          setTimeout(function () {
-                              searchInput.blur();
-                          }, 0);
-                      }
-
-                  });
                   if (attr) {
                       angular.forEach(['urlParams'], function (key) {
                           attr[key] && attr.$observe(key, function (newValue, oldValue) {
@@ -6870,12 +7203,13 @@ var selectApp = angular.module('ngQuantum.select', [
                   }
                   if (angular.isDefined(attr.ngChange)) {
                       scope.$parent.$watch(function () { return controller.$modelValue }, function (newValue, oldValue) {
-                          scope.$parent.$eval(attr.ngChange)
+                          scope.$parent.$eval(attr.ngChange);
                       });
                   }
                   function renderController() {
                       $select.renderComplated = true;
                       var selected, index;
+                      clearSelected();
                       if (options.displayType == 'input') {
                           if (controller.$modelValue)
                               renderSelected();
@@ -6962,6 +7296,7 @@ var selectApp = angular.module('ngQuantum.select', [
                                        li.remove()
                                        scope.$apply(function () {
                                            item.selected = false;
+                                           item.filtered = false;
                                        })
                                    });
                       return li.append(angular.element('<a></a>').append(item.label).append(closer))
@@ -7070,6 +7405,11 @@ var selectApp = angular.module('ngQuantum.select', [
                           if (angular.isArray(controller.$modelValue))
                               controller.$setValidity("min-required", controller.$modelValue.length >= options.minRequired);
                       }
+                  }
+                  function clearSelected() {
+                      angular.forEach($select.optionData, function (item) {
+                          item.selected = false;
+                      })
                   }
                   return $select;
               }
@@ -7353,7 +7693,7 @@ angular.module('ngQuantum.slider', ['ngQuantum.services.mouse', 'ngQuantum.servi
     this.$get = ['$rootScope', '$document', '$mouse', '$parse',
       function ($rootScope, $document, $mouse, $parse) {
           function Factory(element, config) {
-              var $slider = {}, template, track, selection, thumb, thumb2, sizes;
+              var $slider = {}, template, track, selection, thumb, thumb2, sizes, body = angular.element('body');
               
               var options = angular.extend({}, defaults, config);
               if (defaults.formatValue) {
@@ -7461,13 +7801,13 @@ angular.module('ngQuantum.slider', ['ngQuantum.services.mouse', 'ngQuantum.servi
                   $mouse.down(thumb, function (event) {
                       $slider.eventNo = 1;
                       $mouse.move($document, slideThumb);
-                      $mouse.up($document, documentUp)
+                      $mouse.up(body, documentUp)
                   })
                   thumb2 &&
                   $mouse.down(thumb2, function (event) {
                       $slider.eventNo = 2;
                       $mouse.move($document, slideThumb)
-                      $mouse.up($document, documentUp)
+                      $mouse.up(body, documentUp)
                   })
                   
               }
@@ -7475,8 +7815,8 @@ angular.module('ngQuantum.slider', ['ngQuantum.services.mouse', 'ngQuantum.servi
                   $mouse.offDown(track)
                   $mouse.offDown(thumb);
                   thumb2 && $mouse.offDown(thumb2);
-                  $mouse.offMove($document);
-                  $mouse.offUp($document)
+                  $mouse.offMove($document, slideThumb);
+                  $mouse.offUp(body, documentUp)
               }
               function documentUp(event) {
                   $mouse.offMove($document, slideThumb)
@@ -7485,10 +7825,12 @@ angular.module('ngQuantum.slider', ['ngQuantum.services.mouse', 'ngQuantum.servi
                       thumb2 && thumb2.removeClass('titip-active');
                   }
                   angular.element('body').removeClass('unselectable');
-                  $mouse.offUp($document);
+                  $mouse.offUp(body, documentUp);
                   
               }
               function slideThumb(event) {
+                  event.preventDefault();
+                  event.stopPropagation();
                   angular.element('body').addClass('unselectable')
                   if (!sizes)
                       findSizes();
@@ -7783,7 +8125,7 @@ angular.module('ngQuantum.switchButton', ['ngQuantum.services.helpers'])
                 angular.isDefined(attr.ngFalseValue) && (trueValue = attr.ngFalseValue);
 
 
-                scope.$watch(attr.ngModel, function (newVal, oldVal) {
+                scope.$parent.$watch(attr.ngModel, function (newVal, oldVal) {
                     if (newVal == trueValue && !scope.$checked) {
                         scope.$checked = true;
                     }
@@ -7830,7 +8172,7 @@ angular.module('ngQuantum.tabset', ['ngQuantum.services.helpers'])
                  '<div class="tab-container {{theme}}">'
                    + '<ul class="nav {{navClasses}}" nav-placement="{{placement}}">'
                    + '<li ng-repeat="pane in panes | orderBy:$paneindex" ng-class="{active: pane.active, disabled: pane.disabled}">'
-                       + '<a href="return false;" tab-heading-transclude="pane">{{pane.heading}}</a>'
+                       + '<a role="button" tabindex="0" tab-heading-transclude="pane">{{pane.heading}}</a>'
                    + '</li>'
                    + '</ul>'
                    + '<div class="tab-content clearfix" ng-transclude></div>'
@@ -7840,13 +8182,13 @@ angular.module('ngQuantum.tabset', ['ngQuantum.services.helpers'])
                 '<div class="tab-container {{theme}}">'
                  + '<ul class="nav {{navClasses}}" nav-placement="{{placement}}">'
                  + '<li ng-repeat="pane in panes" ng-show="!pane.stored"  ng-class="{active: pane.active, disabled: pane.disabled}">'
-                     + '<a href="return false;" tab-heading-transclude="pane">{{pane.heading}}</a>'
+                     + '<a role="button" tabindex="0" tab-heading-transclude="pane">{{pane.heading}}</a>'
                  + '</li>'
                  + '<li ng-show="showMore">'
-                    + '<a href="return false;" nq-dropdown="" class="dropdown-toggle" data-placement="{{ddPlacement}}">More</a>'
+                    + '<a role="button" tabindex="0" nq-dropdown="" class="dropdown-toggle" data-placement="{{ddPlacement}}">More</a>'
                      + '<ul class="dropdown-menu">'
                          + '<li ng-repeat="pane in panes | filter:{stored:true}" ng-class="{active: pane.active, disabled: pane.disabled}">'
-                              + '<a href="return false;" ng-click="pane.select()" ng-bind-html="pane.htmlString"></a>'
+                              + '<a role="button" tabindex="0" ng-click="pane.select()" ng-bind-html="pane.htmlString"></a>'
                          + '</li>'
                      + '</ul>'
                  + '</li>'
@@ -8010,7 +8352,7 @@ angular.module('ngQuantum.tabset', ['ngQuantum.services.helpers'])
                                 p.stored = false;
                             }
 
-                            controller.lastStoredIndex++
+                            controller.lastStoredIndex++;
                             (controller.panes.length == controller.lastStoredIndex) && (scope.showMore = false)
                         }
                     }
@@ -8190,7 +8532,7 @@ angular.module('ngQuantum.tooltip', ['ngQuantum.popMaster'])
         this.$get = [
           '$sce',
           '$rootScope',
-          '$popMaster','$helpers',
+          '$popMaster', '$helpers',
           function ($sce, $rootScope, $popMaster, $helpers) {
               var defaults = this.defaults = {
                   title: false,
@@ -8208,7 +8550,7 @@ angular.module('ngQuantum.tooltip', ['ngQuantum.popMaster'])
                   var $tooltip = {};
                   config = $helpers.parseOptions(attr, config);
                   var options = config = angular.extend({}, defaults, config);
-                  
+
                   $tooltip = new $popMaster(element, options);
                   var scope = $tooltip.$scope
                   options = $tooltip.$options = $helpers.observeOptions(attr, $tooltip.$options);
@@ -8240,8 +8582,10 @@ angular.module('ngQuantum.tooltip', ['ngQuantum.popMaster'])
               restrict: 'EAC',
               link: function postLink(scope, element, attr, transclusion) {
                   var options = {
-                      $scope : scope.$new()
+                      $scope: scope.$new()
                   };
+                  if (element[0].tagName.toLowerCase() == 'input')
+                      options.isInput = true;
                   var tooltip = $tooltip(element, options, attr);
                   scope.$on('$destroy', function () {
                       options.$scope.$destroy();

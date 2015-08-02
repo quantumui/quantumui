@@ -63,7 +63,7 @@ angular.module('ngQuantum.switchButton', ['ngQuantum.services.helpers'])
                 angular.isDefined(attr.ngFalseValue) && (trueValue = attr.ngFalseValue);
 
 
-                scope.$watch(attr.ngModel, function (newVal, oldVal) {
+                scope.$parent.$watch(attr.ngModel, function (newVal, oldVal) {
                     if (newVal == trueValue && !scope.$checked) {
                         scope.$checked = true;
                     }

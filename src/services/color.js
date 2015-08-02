@@ -18,11 +18,12 @@ angular.module('ngQuantum.services.color', ['ngQuantum.services.helpers'])
                         values = match && parser.parse(match);
                     if (values) {
                         color.value = color.RGBtoHSB.apply(null, values);
-                        return false;
+                        
                     }
                 }
             }
         }
+        return color;
     }
     color.RGBtoHSB = function (r, g, b, a) {
         r /= 255;

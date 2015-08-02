@@ -90,12 +90,14 @@ angular.module('ngQuantum.dropdown', ['ngQuantum.popMaster'])
                           if(ew > tw)
                               $dropdown.$target.css('min-width', ew)
                       }
+                      element.parent().addClass('open')
                       return promise;
                   };
                   var hide = $dropdown.hide;
                   $dropdown.hide = function (callback) {
                       scope.lastIndex = -1;
                       angular.element(document).off('keydown.nqDropdown.api.data');
+                      element.parent().removeClass('open')
                      return hide(callback);
                   };
                   if (attr && angular.isDefined(options.directive)) {
@@ -121,10 +123,9 @@ angular.module('ngQuantum.dropdown', ['ngQuantum.popMaster'])
       function ($dropdown, templateHelper) {
           return {
               restrict: 'EA',
-              scope:true,
               link: function postLink(scope, element, attr, transclusion) {
                   var options = {
-                      $scope: scope
+                      $scope: scope.$new()
                   };
                   
                   options.uniqueId = attr.qoUniqueId || attr.id || options.$scope.$id;

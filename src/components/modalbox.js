@@ -14,7 +14,7 @@ angular.module('ngQuantum.modalBox', ['ngQuantum.modal'])
                 okText: 'OK',
                 cancelText: 'Cancel',
                 confirmText: 'Confirm',
-                template: false,
+                template:false,
                 showIcon: true,
                 promptModel: '$promptValue',
                 alertTemplate: 'modalbox/alertbox.tpl.html',
@@ -124,21 +124,21 @@ angular.module('ngQuantum.modalBox', ['ngQuantum.modal'])
               }
             ];
         })
-    .directive('nqModalBox', ['$modalBox', '$helpers',
+    .directive('nqModalBox', ['$modalBox','$helpers',
       function ($modalBox, $helpers) {
           return {
               restrict: 'EAC',
-              scope: true,
+              scope:true,
               link: function postLink(scope, element, attr, transclusion) {
                   var options = {
                       $scope: scope
                   };
                   angular.forEach(['boxType', 'promptLabel', 'promptModel', 'alertTemplate', 'confirmTemplate', 'promptTemplate',
                       'showIcon', 'okText', 'cancelText', 'confirmText'], function (key) {
-                          if (angular.isDefined(attr[key]))
-                              options[key] = $helpers.parseConstant(attr[key]);
+                      if (angular.isDefined(attr[key]))
+                          options[key] = $helpers.parseConstant(attr[key]);
 
-                      })
+                  })
                   options.uniqueId = attr.uniqueId || attr.id || scope.$id;
                   options.element = element;
                   var modalBox = {}
@@ -150,12 +150,12 @@ angular.module('ngQuantum.modalBox', ['ngQuantum.modal'])
                       options.htmlObject = true;
                       options.buildOnShow = false;
                       scope.content = content;
-                      modalBox = new $modalBox(options, attr);
+                      modalBox =new $modalBox(options, attr);
                   }
                   else {
                       options.element = element;
                       options.html = true;
-                      modalBox = new $modalBox(options, attr);
+                      modalBox =new $modalBox(options, attr);
 
                   }
                   scope.$on('$destroy', function () {

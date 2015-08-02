@@ -1,0 +1,39 @@
+
+
+// support multiple shadow effect
+
+.box-shadow(@shadow,@shadow2:X, @shadow3:X, @shadow4:X,@shadow5:X) {
+  @shadow-prop: ~`"@{arguments}".replace(/[\[\]]|\,\sX/g, '')`;
+  -webkit-box-shadow: @shadow-prop; // iOS <4.3 & Android <4.1
+          box-shadow: @shadow-prop;
+}
+
+
+.translateX(@x) {
+  -webkit-transform: translateX(@x);
+      -ms-transform: translateX(@x); // IE9 only
+       -o-transform: translateX(@x);
+          transform: translateX(@x);
+}
+.translateY(@y) {
+  -webkit-transform: translateY(@y);
+      -ms-transform: translateY(@y); // IE9 only
+       -o-transform: translateY(@y);
+          transform: translateY(@y);
+}
+// Transform
+.transform(@transform) {
+  -webkit-transform: @transform;
+     -moz-transform: @transform;
+      -ms-transform: @transform; // IE9 only
+          transform: @transform;
+}
+
+// multiple Transitions
+
+.transition(@transition, @transition2:X, @transition3:X) {
+    @transition-prop: ~`"@{arguments}".replace(/[\[\]]|\,\sX/g, '')`;
+  -webkit-transition: @transition-prop;
+       -o-transition: @transition-prop;
+          transition: @transition-prop;
+}

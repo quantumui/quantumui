@@ -50,7 +50,7 @@
 
 .select-toggle {
   text-align:left;
-  padding-right:35px;
+  padding-right:35px !important;
   position:relative;
 }
 .select-toggle:focus {
@@ -229,6 +229,9 @@
   .select-option:focus{
        background-color:@listbox-option-hover-bg;
        color:@listbox-option-hover-color;
+    }
+  .select-option:focus{
+       background-color:darken(@listbox-option-hover-bg, 6.5%);
     }
   .select-option.selected {
        background-color:@listbox-option-active-bg;

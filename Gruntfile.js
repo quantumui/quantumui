@@ -81,6 +81,18 @@ module.exports = function (grunt) {
                   'src/ngquantum.js',
                 ],
                 dest: 'dist/js/<%= pkg.name %>-nojq.js'
+            },
+            all: {
+                src: [
+                  'src/nojq/*.js',
+                  'src/core/*.js',
+                  'src/services/*.js',
+                  'src/components/*.js',
+                  'src/pageable/*.js',
+                  'src/pageable.js',
+                  'src/ngquantum-all.js',
+                ],
+                dest: 'dist/js/<%= pkg.name %>-all.js'
             }
         },
 
@@ -100,6 +112,13 @@ module.exports = function (grunt) {
                 },
                 src: '<%= concat.nojq.dest %>',
                 dest: 'dist/js/<%= pkg.name %>-nojq.min.js'
+            },
+            all: {
+                options: {
+                    sourceMapName: 'dist/js/<%= pkg.name %>-all.min.js.map'
+                },
+                src: '<%= concat.all.dest %>',
+                dest: 'dist/js/<%= pkg.name %>-all.min.js'
             }
         },
 
@@ -114,6 +133,18 @@ module.exports = function (grunt) {
                 },
                 files: {
                     'dist/css/<%= pkg.name %>.css': 'less/<%= pkg.name %>.less'
+                }
+            },
+            compileBootstrap: {
+                options: {
+                    strictMath: true,
+                    sourceMap: true,
+                    outputSourceFiles: true,
+                    sourceMapURL: 'bootstrap-<%= pkg.name %>.css.map',
+                    sourceMapFilename: 'dist/css/bootstrap-<%= pkg.name %>.css.map'
+                },
+                files: {
+                    'dist/css/<%= pkg.name %>.css': 'less/bootstrap-<%= pkg.name %>.less'
                 }
             }
         },
@@ -134,7 +165,7 @@ module.exports = function (grunt) {
                 options: {
                     map: true
                 },
-                src: 'dist/css/<%= pkg.name %>.css'
+                src: ['dist/css/<%= pkg.name %>.css', 'dist/css/bootstrap-<%= pkg.name %>.css']
             }
         },
 
@@ -162,7 +193,8 @@ module.exports = function (grunt) {
             },
             core: {
                 files: {
-                    'dist/css/<%= pkg.name %>.min.css': 'dist/css/<%= pkg.name %>.css'
+                    'dist/css/<%= pkg.name %>.min.css': 'dist/css/<%= pkg.name %>.css',
+                    'dist/css/bootstrap-<%= pkg.name %>.min.css': 'dist/css/bootstrap-<%= pkg.name %>.css'
                 }
             }
         },
@@ -176,10 +208,9 @@ module.exports = function (grunt) {
                 files: {
                     src: [
                       'dist/css/addon/*.css',
-                      'dist/css/<%= pkg.name %>.css',
-                      'dist/css/<%= pkg.name %>.min.css',
-                      'dist/js/<%= pkg.name %>.min.js.map',
-                      'dist/js/<%= pkg.name %>nojq.min.js.map'
+                      'dist/css/<%= pkg.name %>*.css',
+                      'dist/js/<%= pkg.name %>*.js',
+                      'dist/js/<%= pkg.name %>*.map'
                     ]
                 }
             }
@@ -191,7 +222,8 @@ module.exports = function (grunt) {
             },
             dist: {
                 files: {
-                    'dist/css/<%= pkg.name %>.css': 'dist/css/<%= pkg.name %>.css'
+                    'dist/css/<%= pkg.name %>.css': 'dist/css/<%= pkg.name %>.css',
+                    'dist/css/bootstrap-<%= pkg.name %>.min.css': 'dist/css/bootstrap-<%= pkg.name %>.css'
                 }
             },
             assets: {

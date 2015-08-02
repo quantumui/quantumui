@@ -64,7 +64,11 @@
                           $carousel.play()
                           hoverStop();
                       }
-
+                      $timeout(function () {
+                          if (parseInt($scope.$outerWidth) > $element.width()) {
+                              $scope.$innerHeight = ((parseInt($scope.$innerHeight) / parseInt($scope.$outerWidth)) * $element.width()) + 'px';
+                          }
+                      }, 800)
                   };
                   $carousel.select = function (index) {
                       var selectedItem = items[index];
@@ -153,7 +157,7 @@
             require: '^nqCarousel',
             restrict: 'EA',
             replace: true,
-            template: '<div class="item" carousel-item-transclude=""></div>',
+            template: '<div class="item" carousel-item-transclude="" ng-swipe-left="$parent.$next()"  ng-swipe-right="$parent.$prev()"></div>',
             transclude: true,
             scope: {
                 active: '=?',

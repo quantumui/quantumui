@@ -6,20 +6,24 @@
             dimension: 'height',
             collapsed:true
         };
-        this.$get = ['$timeout',
-          function ($timeout) {
+        this.$get = ['$timeout', '$rootScope',
+          function ($timeout, $rootScope) {
               function Factory(target, element, config) {
                   var $collapse = {}, position, size, dimension, collapsed;
                   var options = $collapse.$options = angular.extend({}, defaults, config);
                   dimension = options.dimension;
                   $collapse.collapsed = options.collapsed;
                  target.addClass('collapse');
-                  !$collapse.collapsed && target.addClass('in')
+                 if (!$collapse.collapsed) {
+                     target.addClass('in');
+                     size = target[dimension]();
+                 }
                   function toggle() {
                       if ($collapse.collapsed) {
                           position = target[0].style.position || '';
                           target.css('position', 'absolute').show();
-                          size = target[dimension]();
+                          var dm = dimension == 'height' ? 'outerHeight' : 'outerWidth';
+                          size = target[dm]();
 
                           target.css('display', '')[dimension](0).css('position', position);
                           target.addClass('in collapsing');
@@ -29,6 +33,7 @@
                                   target.removeClass('collapsing');
                                   $collapse.collapsed = false;
                                   options.onToggle && options.onToggle(false);
+                                  target[dimension]('');
                               });
                           }, 1)
 
@@ -52,6 +57,13 @@
                       evt.stopPropagation();
                       toggle();
 
+                  });
+                  options.checkRouting && $rootScope.$on('$locationChangeStart', function (event, viewConfig) {
+                      if (!$collapse.collapsed) {
+                          $collapse.collapsed = false;
+                          toggle();
+                      }
+                      
                   });
                   $collapse.toggle = toggle;
                   return $collapse;
@@ -113,6 +125,7 @@
                     var options = {
                         collapsed: collapsed,
                         dimension: dimension,
+                        checkRouting: tAttrs.checkRouting || tElm.hasClass('navbar-toggle')
                     }
                     var index = tAttrs.targetIndex ? parseInt(tAttrs.targetIndex) : 0,
                         collapse,

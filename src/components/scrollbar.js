@@ -13,7 +13,7 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
             showButtons: false,
             hideRail: false,
             padHorizontal: false,
-            allDiggest: false,
+            allDigest: false,
             step: 30,
             duration: 200,
             theme: false,
@@ -69,26 +69,30 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
                   $bar.destroy = function () {
                       element && element.off();
                       angular.element(document).off('.scrollbar');
-                      angular.element(document).off('.scrollbarkeyboard');
+                      angular.element(document).off('keydown', $bar.$onKeyDown);
                       scope.$destroy();
                       $bar = null;
                   }
                   $bar.$onKeyDown = function (e) {
                       if (!/(37|38|39|40)/.test(e.keyCode))
                           return;
-                      var code = e.keyCode, evt = e;
-                      switch (code) {
-                          case 37:
-                          case 38:
-                              evt.deltaY = 1
-                              break
-                          case 39:
-                          case 40:
-                              evt.deltaY = -1
-                              break;
+                      if (!e.isDefaultPrevented()) {
+                          e.preventDefault();
+                          var code = e.keyCode, evt = e;
+                          switch (code) {
+                              case 37:
+                              case 38:
+                                  evt.deltaY = 1
+                                  break
+                              case 39:
+                              case 40:
+                                  evt.deltaY = -1
+                                  break;
+                          }
+
+                          mouseWheel(evt);
                       }
                       
-                      mouseWheel(evt);
 
                   };
                   $bar.scrollStepTop = function (val) {
@@ -131,6 +135,14 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
                           }
                       }
                   }
+                  $bar.refresh = function (timeout) {
+                      timeout = timeout || 700;
+                      setTimeout(function () {
+                          findSizes();
+                          watchResult();
+                      }, timeout)
+                      
+                  };
                   function optimize() {
                       if (!/y|x|both/.test(options.axis))
                           options.axis = 'y';
@@ -176,6 +188,7 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
                   function buildTemplate() {
                       if ($bar && $bar.$templateReady)
                           return;
+                      $bar.$templateReady = true;
                       checkAdaptable();
                       $container.addClass('scrollable')
                       var pos = $container.css('position');
@@ -272,6 +285,7 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
                                   }
                               })
                               $x.thumb.on('mousedown', function (e) {
+                                  angular.element(document).off('.scrollbar')
                                   var last = $x.stepSize;
                                   if (e.which != 1)
                                       return true;
@@ -285,25 +299,20 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
                           }
                           
                       }
-                    !isTouch && angular.element(document).on('mouseup', function (evt) {
+                    !isTouch &&  angular.element('body').on('mouseup', function (evt) {
                           angular.element(document).off('.scrollbar')
                       });
                       
                       
                       $container.addClass('show-bar-button')
-                      $bar.$templateReady = true;
-
                   }
                   function buildEvents() {
                       if (!scope.useWebkit || isTouch) {
-                          if (options.allDiggest)
+                          if (options.allDigest)
                               scope.$watch(function (newVal, oldVal) {
-                                  if (element.is(':visible')) {
-                                      setTimeout(function () {
-                                          watchResult();
-                                      }, 0)
-                                  }
-
+                                  setTimeout(function () {
+                                      watchResult();
+                                  }, 0)
                               })
                           else {
                               var el = $container || element;
@@ -330,13 +339,13 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
                                   if (/x|both/.test(options.axis) && !scope._scrollWidth)
                                       watchResult();
                                   if (options.keyboard) {
-                                      angular.element(document).off('.scrollbarkeyboard');
+                                      angular.element(document).off('.scrollbarkeyboard', $bar.$onKeyDown);
                                       angular.element(document).on('keydown.scrollbarkeyboard', $bar.$onKeyDown);
                                   }
 
                               })
                               options.keyboard && element.on('mouseleave', function (e) {
-                                  angular.element(document).off('.scrollbarkeyboard');
+                                  angular.element(document).off('keydown', $bar.$onKeyDown);
                               })
                           }
                           else {
@@ -398,60 +407,61 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
                   }
                   
                   function watchResult() {
+                      if ($container && $container.height() < 0 || !$container && element && element.height() < 1)
+                          return;
+                      $y.bar && $y.bar.hide();
+                      $x.bar && $x.bar.hide();
                       var tag = element[0].tagName, width = 0, height = 0;
                       var pad = options.showButtons ? $size.buttonSize : $size.barSize;
                       if (/td|th|table/.test(tag.toLowerCase())) {
                           if ($container) {
-                              if (!$container.is(':visible'))
-                                  return;
                               height = $container[0].scrollHeight - pad;
                               width = $container[0].scrollWidth;
                           }
                           else {
-                              if (!element.is(':visible'))
-                                  return;
                               height = element[0].clientHeight - pad;
                               width = element[0].clientWidth;
                           }
                       }
                       else {
-                          if (!element.is(':visible'))
-                              return;
                           height = element[0].scrollHeight - pad;
                           width = element[0].scrollWidth;
                       }
-                      if (height > 0 && scope.maxHeight < height && $container && ($container[0].scrollHeight > $container[0].clientHeight)) {
-                          if (scope._scrollHeight) {
-                              if (Math.abs(scope._scrollHeight - height) >= 5) {
+                      if (/y|both/.test(options.axis)) {
+                          if (height > 0 && scope.maxHeight < height && $container && $container.outerHeight() >= scope.maxHeight && ($container[0].scrollHeight > $container[0].clientHeight)) {
                                   scope._scrollHeight = height, applyY(height);
-                              }
-
+                              $y.bar && $y.bar.css('visibilty', '').show();
+                              $y.bar.visible = true;
+                          } else {
+                              $container.scrollTop(0)
+                              $y.bar && $y.bar.css('visibilty', 'hidden');
+                              $y.bar.visible = false;
                           }
-                          else
-                              scope._scrollHeight = height, applyY(height);
-                          $y.bar && $y.bar.css('display', '');
-                      } else $y.bar && $y.bar.hide();
-                      if (width > 0 && scope.maxWidth < width && $container && ($container[0].scrollWidth > $container[0].clientWidth)) {
-                          if (scope._scrollWidth) {
-                              if (Math.abs(scope._scrollWidth - width) >= 5)
-                                  scope._scrollWidth = width, applyX(width);
+                          if (scope.scrollTop > 0 && $container.height() < height) {
+                              $container.scrollTop(scope.scrollTop);
                           }
-                          else
-                              scope._scrollWidth = width, applyX(width);
-                          $x.bar && $x.bar.css('display', '');
-                      } else $x.bar && $x.bar.hide();
-
-
-                      if (scope.scrollLeft > 0 && $container.width() < width) {
-                          $container.scrollLeft(scope.scrollLeft);
                       }
-                      if (scope.scrollTop > 0 && $container.height() < height) {
-                          $container.scrollTop(scope.scrollTop);
+                      if (/x|both/.test(options.axis)) {
+                          if (width > 0 && scope.maxWidth < width && $container.outerWidth() >= scope.maxWidth && $container && ($container[0].scrollWidth > $container[0].clientWidth)) {
+                                  scope._scrollWidth = width, applyX(width);
+                              $x.bar && $x.bar.css('visibilty', '').show();
+                              $x.bar.visible = true;
+                          } else {
+                              $container.scrollLeft(0)
+                              $x.bar && $x.bar.css('visibilty', 'hidden')
+                              $x.bar.visible = false;
+                          };
+
+
+                          if (scope.scrollLeft > 0 && $container.width() < width) {
+                              $container.scrollLeft(scope.scrollLeft);
+                          }
                       }
                   }
                   function mouseWheel(event) {
-                      
                       if (options.axis == 'y') {
+                          if (!$y.bar.visible)
+                              return true;
                           if (!scope._scrollHeight)
                               watchResult();
                           if (!$y.maxOffset)
@@ -465,6 +475,8 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
                           wheelTop(event)
                       }
                       else if (options.axis == 'x') {
+                          if (!$x.bar.visible)
+                              return true;
                           if (!$x.maxOffset)
                               return true;
                           if (scope.scrollLeft >= $x.maxOffset && event.deltaY < 0)
@@ -543,7 +555,7 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
                       return result;
                   }
                   function barSizes(axis, newsize, elsize) {
-                      var $a = axis;
+                      var $a = axis, oldStepRange = ($a.stepSize && $a.thumbStep) && ($a.stepSize / $a.thumbStep);
                       var s = elsize,
                       bs = s - (2 * options.barOffset),
                        ts = s * s / newsize;
@@ -557,7 +569,8 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
                       var mts = $a.trackSize - ts;
                       $a.maxThumbOffset = mts;
                       $a.thumbStep = (($a.trackSize - ts) / ($a.maxOffset / options.step))
-                      $a.stepSize = 0;
+                      $a.stepSize = oldStepRange ? (oldStepRange * $a.thumbStep) : 0;
+                      $a.stepSize > $a.maxThumbOffset && ($a.stepSize = $a.maxThumbOffset);
                       return $a;
                   }
                   function checkAdaptable() {
@@ -609,11 +622,15 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
                           cont.css('max-width', $size.width)
                   }
                   function applyY(newval) {
-                      newval = $container[0].scrollHeight;
+                      newval = newval || $container[0].scrollHeight;
+                      
+                      var maxtop = $container[0].scrollHeight - $container.outerHeight();
+                      if (maxtop < scope.scrollTop)
+                          scope.scrollTop = maxtop;
                       if (newval && /y|both/.test(options.axis)) {
                           var h = $container.outerHeight(true);
                           $y = barSizes($y, newval, h);
-                          if ($bar || !$bar.$templateReady)
+                          if (!$bar || !$bar.$templateReady)
                               buildTemplate();
                           $y.bar.css({
                               top: (scope.scrollTop || 0) + options.barOffset + 'px',
@@ -621,7 +638,8 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
                               height: $y.barSize + 'px'
                           })
                           $y.thumb.css({
-                              height: $y.thumbSize + 'px'
+                              height: $y.thumbSize + 'px',
+                              top: $y.stepSize + 'px'
                           })
                           $y.track.css({
                               height: $y.trackSize + 6 + 'px'
@@ -629,10 +647,14 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
                       }
                   }
                   function applyX(newval) {
-                      newval = $container[0].scrollWidht;
+                      newval = newval || $container[0].scrollWidth;
+                      var maxleft = $container[0].scrollWidth - $container.outerWidth();
+                      if (maxleft < scope.scrollLeft)
+                          scope.scrollTop = maxleft;
                       if (newval && /x|both/.test(options.axis)) {
-                          var w = $container.outerWidth()
+                          var w = $container.outerWidth(true)
                           $x = barSizes($x, newval, w);
+                          
                           if (!$bar.$templateReady)
                               buildTemplate();
                           $x.bar.css({
@@ -641,7 +663,8 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
                               width: $x.barSize + 'px'
                           })
                           $x.thumb.css({
-                              width: $x.thumbSize + 'px'
+                              width: $x.thumbSize + 'px',
+                              left: $x.stepSize + 'px'
                           })
                           $x.track.css({
                               width: $x.trackSize + 6 + 'px'
@@ -652,19 +675,19 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
                       $bar.destroy();
 
                   })
-                  window.resize = function () {
+                  var windowResize = function () {
                       $timeout(function () {
-                          findSizes();
-                          if (scope._scrollHeight) {
-                              applyY(scope._scrollHeight);
-                          }
-                          else {
-                              watchResult();
-                          }
-                          scope._scrollWidth && applyX(scope._scrollWidth)
-                      }, 0)
-
+                          $bar.refresh(200)
+                      }, 100)
                   };
+                  
+                  window.addResizeEvent(windowResize)
+                  angular.element(document).ready(function () {
+                      setTimeout(function () {
+                          windowResize();
+                      }, 200)
+                      
+                  })
                   $bar.init();
                   return $bar;
               };
@@ -677,12 +700,11 @@ angular.module('ngQuantum.scrollbar', ['ngQuantum.services.helpers', 'ngQuantum.
               restrict: 'AC',
               isolate: false,
               link: function postLink(scope, element, attr) {
-                  var options = {};
-                  options.$scope = scope;
-                  var bar;
                   setTimeout(function () {
-                      bar = $scrollbar(element, options, attr)
-                  }, 0)
+                      var bar = $scrollbar(element, { $scope: scope }, attr)
+                      if (attr.barModel)
+                          scope[attr.barModel] = bar;
+                  }, 10)
               }
           };
       }])

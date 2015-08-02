@@ -1,13 +1,13 @@
 {
   "name": "quantumui",
   "description": "The most powerful ANGULARJS and Bootstrap CSS based UI components make developer life easy.",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "keywords": [
+    "quantumui",
     "angular",
-    "less",
     "angularui",
     "component",
-    "admin",
+    "less",
     "front-end",
     "framework",
     "web"

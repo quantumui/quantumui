@@ -12,7 +12,7 @@ angular.module('ngQuantum.tooltip', ['ngQuantum.popMaster'])
         this.$get = [
           '$sce',
           '$rootScope',
-          '$popMaster','$helpers',
+          '$popMaster', '$helpers',
           function ($sce, $rootScope, $popMaster, $helpers) {
               var defaults = this.defaults = {
                   title: false,
@@ -30,7 +30,7 @@ angular.module('ngQuantum.tooltip', ['ngQuantum.popMaster'])
                   var $tooltip = {};
                   config = $helpers.parseOptions(attr, config);
                   var options = config = angular.extend({}, defaults, config);
-                  
+
                   $tooltip = new $popMaster(element, options);
                   var scope = $tooltip.$scope
                   options = $tooltip.$options = $helpers.observeOptions(attr, $tooltip.$options);
@@ -62,8 +62,10 @@ angular.module('ngQuantum.tooltip', ['ngQuantum.popMaster'])
               restrict: 'EAC',
               link: function postLink(scope, element, attr, transclusion) {
                   var options = {
-                      $scope : scope.$new()
+                      $scope: scope.$new()
                   };
+                  if (element[0].tagName.toLowerCase() == 'input')
+                      options.isInput = true;
                   var tooltip = $tooltip(element, options, attr);
                   scope.$on('$destroy', function () {
                       options.$scope.$destroy();

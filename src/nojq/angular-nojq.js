@@ -70,7 +70,6 @@
 
         var iframe,
         elemdisplay = {
-
             HTML: "block",
             BODY: "block"
         };
@@ -209,10 +208,9 @@
         var nodeName = function (elem, name) {
             return elem.nodeName && elem.nodeName.toLowerCase() === name.toLowerCase();
         };
-        var dir = function (elem, dir) {
+        var dir = function (elem, node) {
             var matched = [];
-
-            while ((elem = elem[dir]) && elem.nodeType !== 9) {
+            while (elem && (elem = elem[node]) && elem.nodeType !== 9) {
                 if (elem.nodeType === 1) {
                     matched.push(elem);
                 }
@@ -342,6 +340,66 @@
             var elems = angular.element(selector.indexOf(':visible')[0]);
             return elems.is(":visible");
         };
+        function applyDimension(elem, dimension, show, time, callback) {
+            var dimProp = dimension === 'width' ? 'clientWidth' : 'clientHeight',
+                $elm = angular.element(elem),
+                size = $elm[dimension](),
+                hasStyle = angular.isDefined(elem.style[dimension]);
+            time = time && (angular.isNumber(time) ? time : isNaN(parseInt(time)) ? 600 : parseInt(time)) || 600;
+            var style = {
+                position: elem.style.position || '',
+                visibilty: elem.style.visiblity || '',
+                display: elem.style.display || '',
+                overflow: elem.style.overflow || '',
+            }
+            style[dimension] = elem.style[dimension];
+            if (show) {
+                $elm.css({ 'visibilty': 'hidden' });
+                $elm.css('display', 'block');
+                size = $elm[dimension]();
+                $elm.css(style);
+            }
+           
+            !size && (size = 2)
+            var unitSize = 10,
+                lastSize = show ? 0 : size;
+            var start = (new Date()).getTime();
+            $elm.css('overflow', 'hidden')
+            $elm[dimension](lastSize);
+            var i = 1;
+            var interval = setInterval(function () {
+                var now = (new Date()).getTime();
+                unitSize = (size / (time / ((now - start) / i) || 1));
+                $elm[dimension](lastSize);
+                lastSize = show ? (lastSize + unitSize) : lastSize - unitSize;
+                i++;
+                if ((now - start) >= time) {
+                    clearInterval(interval);
+                    interval = null;
+                    $elm.css(style);
+                    callback && callback();
+                }
+            }, 1);
+           
+            setTimeout(function () {
+                interval && clearInterval(interval);
+            }, time * 2)
+        }
+        function selectResult(elem, selector) {
+            if (elem.length == 1)
+                return elem[0].querySelectorAll(selector);
+            else {
+                var mathches = [];
+                forEach(elem, function (elm) {
+                    var nodes = angular.element(elm.querySelectorAll(selector));
+                    mathches.push.apply(mathches, nodes.slice());
+                    
+                })
+                return mathches;
+
+            }
+
+        }
         var jqLite = angular.element;
         angular.merge = function (first, second) {
             var len = second && +second.length || 0,
@@ -460,7 +518,7 @@
             }
             return this;
         };
-
+     
         jqLite.prototype.first = function () {
             return this.eq(0);
         };
@@ -500,25 +558,29 @@
             if (!context || (context.nodeType !== 1 && context.nodeType !== 9)  || !angular.isString(selector)) {
                 return [];
             }
+            var matches = [];
             if (selector.charAt(0) === '>')
                 selector = ':scope ' + selector;
             if (selector.indexOf(':visible') > -1) {
-                var elems = angular.element(context.querySelectorAll(selector.split(':visible')[0]))
-                var matches = [];
+                var elems = angular.element(selectResult(this, selector.split(':visible')[0]))
+                
                 forEach(elems, function (val, i) {
                     if (angular.element(val).is(':visible'))
                         matches.push(val);
                 })
-                if (matches.length) {
-                    if (matches.length == 1)
-                        return angular.element(matches[0])
-                    else {
-                        return this.pushStack(matches)
-                    }
-                }
-                return angular.element();
+                
+            } else {
+                matches =  selectResult(this, selector)
             }
-            return angular.element(context.querySelectorAll(selector));
+
+            if (matches.length) {
+                if (matches.length == 1)
+                    return angular.element(matches[0])
+                else {
+                    return this.pushStack(matches)
+                }
+            }
+            return angular.element();
         };
         jqLite.prototype.has = function (node) {
             if (angular.isString(node)) {
@@ -540,13 +602,7 @@
                 if (node)
                     matches.push(node);
             })
-            if (matches.length) {
-                if (matches.length == 1)
-                    return angular.element(matches[0])
-                else {
-                    return this.pushStack(matches)
-                }
-            }
+            return this.pushStack(matches)
         };
         jqLite.prototype.before = function (selector) {
             var that = this;
@@ -633,7 +689,7 @@
             };
         };
         jqLite.prototype.offsetParent = function () {
-            return getOffsetParent(this);
+            return angular.element(getOffsetParent(this));
         };
         jqLite.prototype.position = function () {
             return getPosition(this[0]);
@@ -710,7 +766,7 @@
         var _on = jqLite.prototype.on;
         jqLite.prototype.on = function (type, handler) {
             if (type.indexOf(' ') > -1 || type.indexOf('.') == -1)
-                return _on.call(this, type, handler)
+                return _on.call(this, type, handler);
             var namespaces = type.split('.'), nsEvents = window.namespaces = window.namespaces || {};
             type = namespaces.shift();
             namespaces.sort();
@@ -724,7 +780,8 @@
         jqLite.prototype.off = function (type, handler) {
             if (!type || type.indexOf(' ') > -1 || type.indexOf('.') == -1)
                 return _off.call(this, type, handler)
-            var that = this, namespaces = type.split('.'), nsEvents = window.namespaces = window.namespaces || {};
+            var that = this, namespaces = type.split('.'),
+                nsEvents = window.namespaces = window.namespaces || {};
             type = namespaces.shift();
             namespaces.sort();
             var prefix = namespaces.join("_");
@@ -743,7 +800,16 @@
             return _off.call(this, type, handler);
         };
         jqLite.prototype.parents = function () {
-            return dir(this[0], "parentNode");
+            return angular.element(dir(this[0], "parentNode"));
+        };
+        jqLite.prototype.siblings = function () {
+            var children = this.parent().children(), that = this;
+            var matches = [];
+            forEach(children, function (el) {
+                if (el != that[0])
+                    matches.push(el)
+            })
+            return angular.element(that[0]).pushStack(matches);
         };
         jqLite.prototype.get = function (num) {
             return num !== null ?
@@ -753,6 +819,18 @@
         jqLite.prototype.add = function (selector, context) {
             var that = this;
             return this.pushStack(getUnique((angular.merge(that[0], angular.element(selector, context)))));
+        };
+        jqLite.prototype.slideDown = function (time, callback) {
+            forEach(this, function (elem) {
+                applyDimension(elem, 'height', true, time, callback)
+            })
+            return this;
+        };
+        jqLite.prototype.slideUp = function (time, callback) {
+            forEach(this, function (elem) {
+                applyDimension(elem, 'height', false, time, callback)
+            })
+            return this;
         };
         var _jqLite = angular.element;
         function JQLite(element) {

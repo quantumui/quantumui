@@ -67,7 +67,7 @@
                             falseValue = angular.isDefined(attr.ngFalseValue) ? $helpers.parseConstant(attr.ngFalseValue) : false;
                         }
                         else {
-                            trueValue = $helpers.parseConstant(attr.ngValue || attr.value);
+                            trueValue = attr.ngValue ? scope.$eval(attr.ngValue) : $helpers.parseConstant(attr.value);
                         }
 
                         if ($helpers.parseConstant(attr.showTick) == true) {
@@ -81,14 +81,13 @@
                             !isActive && element.removeAttr('checked');
                             activeElement.toggleClass(options.activeClass, isActive);
                         });
-
-                        element.bind(options.toggleEvent, function () {
-                            if (!isInput) {
+                        if (!isInput) {
+                            element.bind(options.toggleEvent, function () {
                                 var viewValue = directive == 'radio' ? trueValue : controller.$modelValue ? $helpers.parseConstant(controller.$modelValue) == trueValue ? falseValue : trueValue : trueValue;
                                 controller.$setViewValue(viewValue);
                                 scope.$apply();
-                            }
-                        });
+                            });
+                        }
                     }
                 };
             }])

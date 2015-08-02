@@ -1,0 +1,24 @@
+// Gradients
+
+#gradient {
+
+  // elipse gradient effect added
+
+  #gradient();
+  .elipse(@inner-color: #555; @outer-color: #333) {
+    background-image: -webkit-radial-gradient(center, ellipse cover, @inner-color, @outer-color);
+    background-image: radial-gradient(ellipse at center, @inner-color, @outer-color);
+    background-repeat: no-repeat;
+  }
+  .elipse-button(@inner-color: #555; @outer-color: #333) {
+    background-image: -webkit-radial-gradient(center, ellipse farthest-corner, @inner-color 0, @inner-color 50%, @outer-color 150%);
+    background-image: radial-gradient(ellipse farthest-corner at center, @inner-color 0, @inner-color 50%, @outer-color 150%);
+    background-repeat: no-repeat;
+  }
+  .elipse-button-hover(@inner-color: #555; @outer-color: #333) {
+    background-image: -webkit-radial-gradient(center, ellipse farthest-corner, @inner-color 0, @inner-color 60%, @outer-color 120%);
+    background-image: radial-gradient(ellipse farthest-corner at center, @inner-color 0, @inner-color 60%, @outer-color 120%);
+    background-repeat: no-repeat;
+  }
+ 
+}

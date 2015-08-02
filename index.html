@@ -7,109 +7,206 @@
     <meta name="viewport" content="width=device-width" />
 
 
-    <title>Home | angularui.net</title>
-    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+    <title>QuantumUI | quantumui.org</title>
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
     <link href="dist/css/addon/effect-light.min.css" rel="stylesheet" />
     <link href="dist/css/quantumui.min.css" rel="stylesheet" />
+    <style type="text/css">
+        h1 {
+            color: #8a8a8a;
+            font-size: 30px;
+        }
 
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+            h1 i {
+                color: #9a9a9a;
+                font-size: 24px;
+            }
+
+        h2.directive {
+            margin-top: 0;
+            font-size: 22px;
+        }
+
+        .color-box {
+            width: 16px;
+            height: 16px;
+            display: inline-block;
+        }
+
+        .bg-white {
+            background-color: #fff;
+        }
+        /**pageable icons*/
+        .fu-search:before,
+        .fu-arrow-left:before,
+        .fu-angle-l:before,
+        .fu-arrow-right:before,
+        .fu-angle-r:before {
+            font-family: 'Glyphicons Halflings';
+        }
+
+        .fu-search:before {
+            content: "\e003";
+        }
+
+        .fu-arrow-left:before {
+            content: "\e091";
+        }
+
+        .fu-arrow-right:before {
+            content: "\e092";
+        }
+
+        .fu-angle-l:before {
+            content: "\e257";
+        }
+
+        .fu-angle-r:before {
+            content: "\e258";
+        }
+
+        .text-block {
+            display: block;
+        }
+
+        .text-sm {
+            font-size: 0.9em;
+        }
+
+        .text-xs {
+            font-size: 0.7em;
+        }
+
+        .gray {
+            color: #aaa;
+        }
+
+        .navbar-toggle {
+            margin-right: 0;
+        }
+    </style>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
 </head>
 <body data-ng-controller="indexController as ctrl" style="height:100%; padding-top:55px;">
-    <div class="navbar navbar-default navbar-fixed-top" style="margin:0;">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#" style="padding:5px 15px;">
-                    <img src="images/angularui_logo.png" alt="AngularUI Logo" />
-                </a>
+    <header>
+        <div class="navbar navbar-inverse navbar-fixed-top" style="margin:0;">
+            <div class="container-fluid">
+                <div class="pull-left" style="height:50px; width:35px;" ng-hide="myLeftAside.$isOpen">
+                    <a href="#" class="titip-right" data-title="Toggle Aside" data-aside-toggle="#leftMenuAside" style="padding-top:15px; font-size:14px; color:#fff;">
+                        <i class="glyphicon glyphicon-menu-hamburger"></i>
+                    </a>
+                </div>
+                <div class="navbar-header-right">
 
-            </div>
-            <div class="pull-left" style="height:50px;">
-                <a href="#" class="titip-right" data-title="Toggle Aside" data-aside-toggle="#leftMenuAside" style="padding-top:15px;">
-                    <i class="glyphicon glyphicon-menu-hamburger"></i>
-                </a>
-            </div>
-            <div class="collapse navbar-collapse" style="padding-right:40px;">
-                <ul class="nav navbar-nav pull-right">
-                    <li>
-                        <a href="#" data-nq-dropdown="">
-                            Dropdown
-                            <span class="caret"></span>
-                        </a>
-                        <ul class="dropdown-menu" tabindex="-1" role="menu">
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#" data-nq-dropdown="" data-qo-show-arrow="true">
-                            Dropdown Container
-                            <span class="caret"></span>
-                        </a>
-                        <div class="dropdown-container" style="min-width:300px;">
-                            <div class="dc-header">
-                                <strong>Container Header</strong>
-                            </div>
-                            <div class="dc-body" style="max-height:250px; padding:0;">
-                                <div class="list-group">
-                                    <a href="#" class="list-group-item active">
-                                        <h4 class="list-group-item-heading">List group item heading</h4>
-                                        <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <h4 class="list-group-item-heading">List group item heading</h4>
-                                        <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                                    </a>
-                                    <a href="#" class="list-group-item">
-                                        <h4 class="list-group-item-heading">List group item heading</h4>
-                                        <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-                                    </a>
+                    <button type="button" class="navbar-toggle" data-nq-collapse="" data-target-id=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#" style="padding:5px 15px;">
+                        <img src="http://quantumui.org/data/logos/quantumui_logo_alt_40.png" alt="QuantumUI Logo" />
+                    </a>
+
+                </div>
+
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a role="button" tabindex="1" data-nq-dropdown="" data-qo-placement="bottom-right">
+                                Dropdown
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" tabindex="-1" role="menu">
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
+                                <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#" data-nq-dropdown="" data-qo-show-arrow="true">
+                                Dropdown Container
+                                <span class="caret"></span>
+                            </a>
+                            <div class="dropdown-container" style="min-width:300px;">
+                                <div class="dc-header">
+                                    <strong>Container Header</strong>
+                                </div>
+                                <div class="dc-body" style="max-height:250px; padding:0;">
+                                    <div class="list-group">
+                                        <a href="#" class="list-group-item active">
+                                            <h4 class="list-group-item-heading">List group item heading</h4>
+                                            <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                                        </a>
+                                        <a href="#" class="list-group-item">
+                                            <h4 class="list-group-item-heading">List group item heading</h4>
+                                            <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                                        </a>
+                                        <a href="#" class="list-group-item">
+                                            <h4 class="list-group-item-heading">List group item heading</h4>
+                                            <p class="list-group-item-text">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="dc-footer">
+                                    <strong>Container Footer</strong>
                                 </div>
                             </div>
-                            <div class="dc-footer">
-                                <strong>Container Footer</strong>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="#" data-aside-toggle="#tasksAside">
-                            Right Aside
-                        </a>
-                    </li>
-                    <li class="active">
-                        <a href="http://angularui.net">
-                            Go Online
-                        </a>
-                    </li>
-                </ul>
+                        </li>
+                        <li>
+                            <a href="#" data-aside-toggle="#tasksAside">
+                                Right Aside
+                            </a>
+                        </li>
+                        <li class="active">
+                            <a href="http://quantumui.org">
+                                Go Online
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
-    <div>
-        <div id="leftMenuAside" data-nq-aside="" class="aside aside-with-menu aside-default"
+    </header>
+
+    <div style="width:100%; overflow:hidden; margin-top:-5px;" ng-init="asideSettings={enlargeHover:true, offCanvas:'mobile'}">
+        <div id="leftMenuAside" data-nq-aside="myLeftAside" class="aside aside-with-menu"
              data-collapsible="true"
              data-top-offset="50px"
+             data-off-canvas="{{asideSettings.offCanvas}}"
              data-pinnable="true"
              data-opened="true"
              data-collapsed="true"
-             data-enlarge-hover="true"
+             data-enlarge-hover="{{asideSettings.enlargeHover}}"
              data-ng-swipe-left="$aside.toggleCollapse(true);"
              data-ng-swipe-right="$aside.toggleCollapse(false);">
             <div class="aside-header">
                 <div class="aside-buttons">
-                    <span ng-show="$aside.$collapsed" ng-click="$aside.toggleCollapse()"><i class="glyphicon glyphicon-arrow-right"></i></span>
-                    <span ng-hide="$aside.$collapsed" ng-click="$aside.toggleCollapse()"><i class="glyphicon glyphicon-arrow-left"></i></span>
-                    <span ng-hide="$aside.$collapsed" ng-click="$aside.close()"><i class="glyphicon glyphicon-remove"></i></span>
+                    <span ng-show="myLeftAside.$collapsed" ng-click="$aside.toggleCollapse()" class="titip-right" data-title="Collapse"><i class="glyphicon glyphicon-arrow-right"></i></span>
+                    <span ng-hide="myLeftAside.$collapsed" ng-click="$aside.toggleCollapse()" class="titip-right" data-title="Collapse"><i class="glyphicon glyphicon-arrow-left"></i></span>
+                    <span ng-hide="myLeftAside.$collapsed" ng-click="asideSettings.enlargeHover = !$aside.$pinned; $aside.togglePin();" class="titip-right" data-title="Toggle Pin"><i class="glyphicon glyphicon-pushpin"></i></span>
+                    <span ng-hide="myLeftAside.$collapsed" ng-click="$aside.close()" class="titip-right" data-title="Close"><i class="glyphicon glyphicon-remove"></i></span>
                 </div>
                 <span ng-hide="$aside.$collapsed" class="aside-title">Aside With Menu</span>
 
             </div>
-            <div class="aside-body">
+            <div class="aside-body" style="overflow-y:auto;">
+                <p style="padding:10px 20px; margin:0; white-space:nowrap; font-weight:bold; color:#fff; cursor:pointer;">
+                    <span ng-click="asideSettings.offCanvas = asideSettings.offCanvas == 'mobile' ? 'all': 'mobile'">
+                        <i class="glyphicon glyphicon-resize-horizontal"></i>
+                        <span ng-hide="$aside.$collapsed" class="menu-text">
+                            Toggle Off Canvas
+                        </span>
+                    </span>
+                </p>
                 <ul class="nav nav-stacked">
                     <li>
                         <a href="#">
@@ -136,9 +233,32 @@
                         </a>
                         <ul id="collapseExample" class="nav nav-stacked" ng-hide="$aside.$collapsed">
                             <li>
-                                <a href="#">
-                                    Sub Menu Collapse
+                                <a href="#" data-nq-collapse="" data-target-id="#collapseExample2">
+                                    <i class="glyphicon glyphicon-tasks"></i>
+                                    <span ng-hide="$aside.$collapsed" class="menu-text">Collapse Example 2</span>
                                 </a>
+                                <ul id="collapseExample2" class="nav nav-stacked" ng-hide="$aside.$collapsed" style="padding-left:15px;">
+                                    <li>
+                                        <a href="#" style="padding-left:35px;">
+                                            Sub Menu Collapse 2
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" style="padding-left:35px;">
+                                            Sub Menu Collapse 2
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" style="padding-left:35px;">
+                                            Sub Menu Collapse 2
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" style="padding-left:35px;">
+                                            Sub Menu Collapse 2
+                                        </a>
+                                    </li>
+                                </ul>
                             </li>
                             <li>
                                 <a href="#">
@@ -159,17 +279,17 @@
                     </li>
                 </ul>
             </div>
-            <div class="aside-footer">
-                <strong ng-hide="$aside.$collapsed">Aside Footer</strong>
+            <div class="aside-footer" style="padding-left:20px; line-height:35px;">
+                <strong class="text-muted" ng-hide="$aside.$collapsed">Aside Footer</strong>
             </div>
         </div>
         <div class="content-wrapper container-fluid">
-            <div class="jumbotron" style="background-color:transparent;">
+            <div class="jumbotron" style="margin-left: -50px; margin-right: -50px;">
                 <div class="container-fluid">
                     <p class="text-center">
-                        <img src="dist/images/angularui_logo.png" />
+                        <img src="http://quantumui.org/Data/logos/quantumui_logo_60.png" />
                     </p>
-                    <h1 class="text-center">
+                    <h1 class="text-center" style="font-size:38px;">
                         The most powerful ANGULARJS and Bootstrap CSS
                         based UI components make developer life easy
                     </h1>
@@ -182,13 +302,883 @@
                     <p class="text-center">
                         You can find lots of examples and detailed documentations on online pages. Please click button below.
                     </p>
-                    <p class="text-center" style="margin-top:50px;">
-                        <a href="http://angularui.net" class="btn btn-info btn-lg" style="margin-left:70px;">Go Demos & Documentation</a>
-                    </p>
+                    <div class="row" style="margin-top:50px;">
+                        <div class="col-sm-6 text-right">
+                            <a href="https://github.com/quantumui" class="btn btn-warning btn-lg text-center" style="width:270px;">Get Help</a>
+
+                        </div>
+                        <div class="col-sm-6">
+                            <a href="http://quantumui.org" class="btn btn-info btn-lg" style="width:270px;">Go Demos & Documentation</a>
+
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="container-fluid">
-                <h1>Hello QuantumUI</h1>
+                <div class="clearfix">
+                    <h1> <i class="glyphicon glyphicon-fire"></i> Pageable</h1>
+                    <hr />
+                    <div class="panel panel-default" data-nq-pageable="contactList" data-qo-alias="contactsTable" data-qo-pageable-model="contacts"
+                         data-qo-selectable="true" data-on-refresh="tableScroller.refresh();">
+                        <div class="panel-heading clearfix">
+                            <!--add nq-paging-sizes directive where you want and how many you want-->
+                            <div class="pull-right" data-nq-paging-sizes=""></div>
+                            <!--add nq-table-search directive where you want and how many you want-->
+                            <div class="pull-right" data-nq-table-search="" data-search-fields="firstname,lastname,profile.jobtitle" style="margin-right:20px;"></div>
+                            <h2 class="panel-title pull-left"><i class="fic glyphicon glyphicon-user"></i> Contacts</h2>
+                            <div class="pull-left" style="padding-left:15px;">
+                                <button type="button" class="btn btn-xs btn-info" ng-click="contactsTable.refresh()"><i class="fic glyphicon glyphicon-refresh"></i> Refresh</button>
+                            </div>
+                            <div class="pull-left" style="padding-left:15px;">
+                                <button type="button" class="btn btn-xs btn-primary" data-nq-show-insert=""><i class="fic glyphicon glyphicon-plus-sign"></i> Add New</button>
+                            </div>
+                            <div class="pull-left" style="padding-left:15px;">
+                                <button type="button" class="btn btn-xs btn-danger" ng-click="contactsTable.removeRows()"><i class="fic glyphicon glyphicon-remove-circle"></i> Remove</button>
+                            </div>
+                        </div>
+                        <div class="panel-body table-responsive" data-nq-scroll="" data-qo-max-height="350px" data-qo-bar-offset="40" data-bar-model="tableScroller" style="overflow:hidden;">
+                            <table class="table table-bordered table-hover bg-white">
+                                <!--nq-fix-table-scroll class would fix thead always visible at top of the table if you put the table into a scrollable container-->
+                                <thead class="nq-fix-table-scroll">
+                                    <tr>
+                                        <!--nq-column-sort directive would bind sorting handler to the element-->
+                                        <th colspan="2" data-nq-column-sort="firstname" data-use-template="true">User</th>
+                                        <th class="col-xs-2" data-nq-column-sort="profile.jobtitle" data-use-template="true">Job</th>
+                                        <th class="col-xs-3">Education</th>
+                                        <th class="col-xs-2">Other</th>
+                                        <th class="col-xs-1">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="flattened">
+                                    <!--pageable-repeat is required sub directive-->
+                                    <tr class="" data-pageable-repeat="contact in contacts track by contact.id">
+                                        <td class="width-48">
+                                            <img class="img-circle" data-fall-back-bg="" ng-src="http://quantumui.org/data/images/users/thumbs/{{contact.images.img32}}" />
+                                        </td>
+                                        <td>
+                                            <span class="text-block text-sm">
+                                                <strong>{{contact.firstname}} {{contact.lastname}}</strong>
+                                            </span>
+                                            <i class="text-xs gray">{{contact.email}}</i>
+                                        </td>
+                                        <td>
+                                            <span class="text-block text-xs">
+                                                <small>{{contact.profile.company}}</small>
+                                            </span>
+                                            <i class="text-xs gray">{{contact.profile.jobtitle}}</i>
+                                        </td>
+                                        <td>
+                                            <span class="text-block text-xs">
+                                                <small data-max-text-length="25">{{contact.profile.graduate}}</small>
+                                            </span>
+                                            <i data-max-text-length="30" data-use-tip="true" class="text-xs">{{contact.profile.school}}</i>
+                                        </td>
+                                        <td>
+                                            <span class="text-block text-sm">
+                                                <small>{{contact.profile.phones.work}}</small>
+                                            </span>
+                                            <span class="text-block">
+                                                <span class="label text-xs label-info">Eye</span> <i class="text-xs gray"> {{contact.profile.eyeColor}}</i>
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <a role="button" tabindex="0" ng-click="removeRow()" class="titip-left" data-title="Remove">
+                                                <i class="fic glyphicon glyphicon-remove"></i>
+                                            </a>
+                                            <a role="button" tabindex="0" data-nq-show-edit="" class="titip-left" data-title="Update">
+                                                <i class="fic glyphicon glyphicon-pencil"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot class="nq-fix-table-scroll">
+                                    <tr>
+                                        <th colspan="2">User</th>
+                                        <th class="col-xs-2">Job</th>
+                                        <th class="col-xs-3">Education</th>
+                                        <th class="col-xs-2">Other</th>
+                                        <th class="col-xs-1">Action</th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+
+                        <div class="panel-footer clearfix">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <!--add data-nq-pageable-results directive where you want and how many you want-->
+                                    <div data-nq-pageable-results=""></div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <!--add nq-pagination directive where you want and how many you want-->
+                                    <div data-nq-pagination="" class="pull-right no-margin"></div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!--here is nq-pageable-template for edit or new-->
+                        <div data-nq-pageable-template="" data-name="contactForm" ng-form="" data-alias="contact"
+                             data-on-change="panelTitle = contact.firstname + ' ' + contact.lastname" ng-submit="$save()"
+                             style="max-height:100%; overflow:hidden; overflow-y:auto;">
+                            <!--You are not able to load your content via ng-include. However, I think this way may be a best practice -->
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <a class="thumbnail" href="#">
+                                        <img class="img-rounded" ng-src="http://quantumui.org/data/images/users/thumbs/{{contact.images.img256}}" />
+                                    </a>
+                                    <div class="margin-t">
+                                        <ul class="nav nav-stacked nav-stripped nav-mixed">
+                                            <li>
+                                                <a href="#"><i class="fic glyphicon glyphicon-envelope"></i> Emails</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><i class="fic glyphicon glyphicon-calendar"></i> Meetings</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><i class="fic glyphicon glyphicon-phone"></i> Calls</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><i class="fic glyphicon glyphicon-comment"></i> Comments</a>
+                                            </li>
+                                            <li>
+                                                <a href="#"><i class="fic glyphicon glyphicon-picture"></i> Images</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="margin-t">
+                                        <button type="button" class="btn btn-primary btn-striped btn-icon"><i class="fic fu-facebook"></i> f</button>
+                                        <button type="button" class="btn btn-info btn-striped btn-icon"><i class="fic fu-twitter"></i> t</button>
+                                        <button type="button" class="btn btn-danger btn-striped btn-icon"><i class="fic fu-google"></i> g</button>
+                                        <button type="button" class="btn btn-inverse btn-striped btn-icon"><i class="fic fu-github"></i> gh</button>
+                                    </div>
+                                </div>
+                                <div class="col-sm-8">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label for="name">Name</label>
+                                                <input type="text" ng-model="contact.firstname" class="form-control" name="firstname" id="name" placeholder="first name" required min-length="3">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="surname"> Surname </label>
+                                                <input type="text" class="form-control" ng-model="contact.lastname" name="surname" id="surname" placeholder="surname" required min-length="3">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="email">Email address</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fic fu-envelope"></i></span>
+                                                    <input type="email" ng-model="contact.email" class="form-control" id="email" name="email" placeholder="Enter email" required>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group ">
+                                                <label for="notification">Notification Email</label>
+                                                <div class="input-group">
+                                                    <label class="input-group-addon">
+                                                        <input type="checkbox">
+                                                    </label>
+                                                    <input type="email" name="notification" ng-model="contact.notifyemail" id="notification" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="site">
+                                                    Web site
+                                                </label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fic fu-globe"></i></span>
+                                                    <input type="text" ng-model="contact.website" nq-validate="url" class="form-control" id="site" placeholder="Web Site">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="income">Annual Income</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">$</span>
+                                                    <input type="text" class="form-control" ng-model="contact.income" id="income" nq-validate="number" maxlength="8" placeholder="income">
+                                                    <span class="input-group-addon">.00</span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="birthdate">Birth Date</label>
+                                                <input name="birthdate" type="text" ng-model="contact.birthdate" class="form-control" nq-datepicker="" data-qo-format="DD-MM-YYYY" id="birthdate" data-qo-container="self" placeholder="birth date">
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="eyeColor"> Eye Color </label>
+                                                <input type="text" name="eyeColor" class="form-control" ng-model="contact.profile.eyeColor" id="eyeColor" placeholder="eye color">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="company">Company</label>
+                                                <input type="text" name="company" ng-model="contact.profile.company" id="company" class="form-control" maxlength="200" placeholder="company">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="jobtitle">Jobtitle</label>
+                                                <input type="text" name="jobtitle" ng-model="contact.profile.jobtitle" id="jobtitle" class="form-control" maxlength="200" placeholder="jobtitle">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="gender"> Gender</label>
+                                                <div class="input-group">
+                                                    <label class="radio-inline">
+                                                        <input ng-model="contact.gender" value="male" name="gender" type="radio" data-styled-box=""> Male
+                                                    </label>
+                                                    <label class="radio-inline">
+                                                        <input ng-model="contact.gender" value="female" name="gender" type="radio" data-styled-box=""> Female
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group ">
+                                                <label for="school">School</label>
+                                                <input type="text" name="school" ng-model="contact.profile.school" id="school" class="form-control" maxlength="300" placeholder="school">
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group  col-sm-4">
+                                                    <label for="degree">Degree</label>
+                                                    <input name="degree" type="text" ng-model="contact.profile.degree" class="form-control" id="degree" placeholder="degree">
+
+                                                </div>
+                                                <div class="form-group col-sm-8">
+                                                    <label for="graduate">Graduate</label>
+                                                    <input name="graduate" type="text" ng-model="contact.profile.graduate" class="form-control" id="graduate" placeholder="graduate">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="country">
+                                                    Country
+                                                </label>
+                                                <button nq-select="" ng-model="contact.profile.country" data-qo-container="false" data-qo-result-key="countriesOptions"
+                                                        class="btn btn-default form-control"
+                                                        ng-options="countr.name as countr.name for countr in countriesOptions"
+                                                        data-qo-url="/api/countries" data-qo-placeholder="country ng-optios..."></button>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="city">
+                                                    City
+                                                </label>
+                                                <ul nq-select="" data-qo-display-type="input" data-qo-container="false" data-qo-result-key="citiesArray" data-qo-model-is-label="true"
+                                                    ng-model="contact.profile.city" data-qo-placeholder="city" data-qo-url="/documents/data/cities.json">
+                                                    <li ng-repeat="city in citiesArray | orderBy:'state'" data-select-option=""
+                                                        data-option-value="city.city" data-option-label="city.city">
+                                                        <span style="display:block; white-space:nowrap">
+                                                            {{city.city}}, <small class="gray">{{city.state}}</small>
+                                                        </span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="form-group form-horizontal">
+                                                <label for="phones">Phones</label>
+                                                <div class="row form-group" ng-repeat="(key, phone) in contact.profile.phones">
+                                                    <label class="col-sm-4">{{key | uppercase }} :</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control input-sm" ng-model="phone" maxlength="16" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="address">Address</label>
+                                                <textarea rows="2" name="address" id="address" class="form-control" ng-model="contact.profile.address" maxlength="150"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr />
+                </div>
+                <div class="clearfix">
+                    <h1> <i class="glyphicon glyphicon-fire"></i> Buttons</h1>
+                    <hr />
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h2 class="directive"><code>nqCheckboxGroup</code></h2>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="btn-group" ng-model="buttons.checkboxes" ng-init="buttons.checkboxes.middle = true" nq-checkbox-group="">
+                                <label title="Left Button" class="btn btn-default"><input type="checkbox" checked="checked" value="left"> Left</label>
+                                <label title="Middle Button" class="btn btn-default"><input type="checkbox" value="middle"> Middle</label>
+                                <label title="Right Button" class="btn btn-default"><input type="checkbox" value="right"> Right</label>
+                            </div>
+                            <span>RESULT: <span>{{buttons.checkboxes}}</span></span>
+                        </div>
+
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h2 class="directive"><code>nqRadioGroup</code></h2>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="btn-group  btn-group-reset" ng-model="buttons.radio" ng-init="buttons.radio = 'middle'" data-nq-radio-group="">
+                                <label title="Left Button" class="btn btn-primary"><input type="radio" value="left">Left</label>
+                                <label title="Middle Button" class="btn btn-primary"><input type="radio" value="middle"> Middle</label>
+                                <label title="Right Button" class="btn btn-primary"><input type="radio" value="right"> Right</label>
+                            </div>
+                            <span>RESULT: <span>{{buttons.radio}}</span></span>
+                        </div>
+                        <hr />
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h2 class="directive"><code>nqLoadingButton</code></h2>
+                        </div>
+                        <div class="col-sm-8">
+                            <button type="button" class="btn btn-primary min-width-192" data-nq-loading-button="loadingButtonSucces()">Loading Button</button>
+                            <button type="button" class="btn btn-danger min-width-192" data-nq-loading-button="loadingButtonSucces()" data-loading-text="my loading text">Loading Text</button>
+                            <button type="button" class="btn btn-warning min-width-192" data-nq-loading-button="getError()">Get Error</button>
+                        </div>
+                        <hr />
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h2 class="directive"><code>nqToggleButton</code></h2>
+                        </div>
+                        <div class="col-sm-8">
+                            <button type="button" class="btn  btn-default min-width-192" ng-model="togglebutton" data-nq-toggle-button="">Toggle Me</button>
+                            <button type="button" data-show-tick="true" class="btn btn-info btn-stripped min-width-192" ng-model="ShowTick" data-nq-toggle-button="">
+                                <i ng-show="ShowTick" class="glyphicon glyphicon-ok"></i> Width Tick
+                            </button>
+                            <button type="button" data-show-tick="left" class="btn btn-success min-width-192" ng-model="TickLeft" data-nq-toggle-button="">
+                                Tick Left <i ng-show="TickLeft" class="glyphicon glyphicon-ok"></i>
+                            </button>
+                        </div>
+                        <hr />
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h2 class="directive"><code>nqSwitchButton</code></h2>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <input type="checkbox" ng-model="switchModel" data-nq-switch-button="" data-theme="info">
+                                </div>
+                                <div class="col-sm-3">
+                                    <input type="checkbox" ng-model="switchModel2" data-nq-switch-button="" data-theme="warning">
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="checkbox" data-label-text="Accept" data-true-label="YES" data-false-label="NO" data-ng-model="switchModel7" data-nq-switch-button="" data-theme="primary">
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                    </div>
+                </div>
+                <div class="clearfix">
+                    <h1> <i class="glyphicon glyphicon-fire"></i> Selects</h1>
+                    <hr />
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h2 class="directive"><code>nqSelect</code></h2>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="col-sm-6">
+                                <select name="staticSelectModel" data-nq-select="" data-qo-placeholder="static select options" data-ng-model="staticSelectModel">
+                                    <option>Yellow</option>
+                                    <option>Red</option>
+                                    <option>Aqua</option>
+                                    <option>Teal</option>
+                                    <option>Magenta</option>
+                                    <option>Orange</option>
+                                    <option>Blue</option>
+                                    <option>Chocolate</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-6">
+                                <ul data-nq-select="" data-ng-model="staticHtmlModel" data-qo-placeholder="your favorite color">
+                                    <li data-select-option="" data-option-label="yellow">
+                                        <span><span class="color-box" style="background-color:yellow;"></span> Yellow</span>
+                                    </li>
+                                    <li data-select-option="" data-option-label="red">
+                                        <span><span class="color-box" style=" background-color:red;"></span> Red</span>
+                                    </li>
+                                    <li data-select-option="" data-option-label="aqua">
+                                        <span><span class="color-box" style=" background-color:aqua;"></span> Aqua</span>
+                                    </li>
+                                    <li data-select-option="" data-option-label="teal">
+                                        <span><span class="color-box" style=" background-color:teal;"></span> Teal</span>
+                                    </li>
+                                    <li data-select-option="" data-option-label="magenta">
+                                        <span><span class="color-box" style=" background-color:magenta;"></span> Magenta</span>
+                                    </li>
+                                    <li data-select-option="" data-option-label="orange">
+                                        <span><span class="color-box" style=" background-color:orange;"></span> Orange</span>
+                                    </li>
+                                    <li data-select-option="" data-option-label="blue">
+                                        <span><span class="color-box" style=" background-color:blue;"></span> Blue</span>
+                                    </li>
+                                    <li data-select-option="" data-option-label="chocolate">
+                                        <span><span class="color-box" style=" background-color:chocolate;"></span> Chocolate</span>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h2 class="directive"><code>nqTagsInput</code></h2>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="col-sm-6">
+                                <input type="text" ng-model="tagsInputColor" data-nq-tags-input="" data-qo-placeholder="add colors...">
+                            </div>
+                            <div class="col-sm-6" data-ng-init="tagsInputInitModel=['Blue', 'Purple']">
+                                <input type="text" data-ng-model="tagsInputInitModel" data-nq-tags-input="" data-qo-placeholder="add colors...">
+                            </div>
+                        </div>
+                        <hr />
+                    </div>
+                    <hr />
+                </div>
+
+                <div class="clearfix">
+                    <h1> <i class="glyphicon glyphicon-fire"></i> POPS</h1>
+                    <hr />
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h2 class="directive"><code>nqAlert</code></h2>
+                        </div>
+                        <div class="col-sm-8">
+                            <button type="button" class="btn btn-primary" data-nq-alert="" data-qs-title="nq-alert directive" data-qs-content="this is a sample of nq-alert directive">
+                                Toggle Alert
+                            </button>
+                        </div>
+
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h2 class="directive"><code>nqTooltip</code></h2>
+                        </div>
+                        <div class="col-sm-8">
+                            <button type="button" class="btn btn-default" data-nq-tooltip="" data-qs-title="This is simle tooltip">Hover me</button>
+                            <button type="button" class="btn btn-info" data-qo-theme="info" data-nq-tooltip="" data-qo-placement="bottom" data-qs-title="Ad leggings keytar, brunch id art party dolor labore.">Bottom</button>
+                            <button type="button" class="btn btn-primary" data-qo-theme="primary" data-nq-tooltip="" data-qo-placement="left" data-qs-title="Ad leggings keytar, brunch id art party dolor labore. ">Left</button>
+                            <button type="button" class="btn btn-danger" data-nq-tooltip="" data-qo-placement="right" data-qs-title="Ad leggings keytar, brunch id art party dolor labore.">Right</button>
+                        </div>
+
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h2 class="directive"><code>nqDropdown</code></h2>
+                        </div>
+                        <div class="col-sm-8">
+                            <button type="button" data-nq-dropdown="" class="btn btn-primary" style="width:250px;">Open Menu</button>
+                            <ul class="dropdown-menu" tabindex="-1" role="menu">
+                                <li tabindex="-1" role="presentation"><a href="#" role="menuitem"><i class="fic glyphicon glyphicon-eye-open"></i> Action</a></li>
+                                <li tabindex="-1" role="presentation"><a href="#" role="menuitem"><i class="fic glyphicon glyphicon-time"></i> Action 2</a></li>
+                                <li tabindex="-1" role="presentation"><a href="#" role="menuitem"><i class="fic glyphicon glyphicon-hand-right"></i> Action 3</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h2 class="directive"><code>nqPopover</code></h2>
+                        </div>
+                        <div class="col-sm-8">
+                            <button type="button" data-nq-popover="" class="btn btn-primary">Open Popover</button>
+                            <div class="popover">
+                                <h3 class="popover-title">Popover Come After Button</h3>
+                                <div class="popover-content">
+                                    <p>Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                </div>
+
+                <div class="clearfix">
+                    <h1> <i class="glyphicon glyphicon-fire"></i> Modals</h1>
+                    <hr />
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h2 class="directive"><code>nqModal</code></h2>
+                        </div>
+                        <div class="col-sm-8">
+                            <button type="button" style="width:250px;" data-nq-modal="" class="btn btn-danger" data-qs-title="Simple Modal" data-qs-content="There are many possibilities for modals, menus, popups etc. to appear.
+                              <p> Sed posuere consectetur est at lobortis. Aenean eu leo quam.
+                               Pellentesque ornare sem lacinia quam venenatis vestibulum.&lt;/p>">
+                                Simple Modal
+                            </button>
+                        </div>
+
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h2 class="directive"><code>nqModalBox</code></h2>
+                        </div>
+                        <div class="col-sm-8">
+                            <button type="button" data-nq-modal-box="" class="btn btn-default"
+                                    data-qs-content="This is a simple alert informing visitors..
+                                              <p> This is a simple modal.
+                                              Do not trigger any function after OK.&lt;/p>">
+                                Simpe Alertbox
+                            </button>
+                            <button type="button" data-nq-modal-box="" data-box-type="confirm" class="btn btn-danger"
+                                    data-after-confirm="displayAlert('Confirmed', 'You are confirmed.', 'info')"
+                                    data-qs-content="This is a simple confirmation
+                                              <p> This is a simple modal.
+                                              Do not trigger any function after confirm or cancel.&lt;/p>">
+                                Simpe Confirmbox
+                            </button>
+                            <button type="button" data-nq-modal-box="" data-box-type="prompt" class="btn btn-success"
+                                    data-prompt-label="Your Age Please"
+                                    data-prompt-model="userAge"
+                                    data-after-confirm="displayAlert('Your age is', userAge, 'success')"
+                                    data-qs-content="This is a simple prompt
+                                              <p> This is a simple modal.
+                                              Do not trigger any function after confirm or cancel.&lt;/p>">
+                                Simpe Promptbox
+                            </button>
+                        </div>
+
+                    </div>
+                    <hr />
+                </div>
+                <div class="clearfix">
+                    <h1> <i class="glyphicon glyphicon-fire"></i> Tabs & Carousel</h1>
+                    <hr />
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h2 class="directive"><code>nqTabset</code></h2>
+                        </div>
+                        <div class="col-sm-8">
+                            <p>
+                                <button class="btn btn-default btn-sm" ng-click="demoTabset.panes[1].active = true">Select second tab</button>
+                                <button class="btn btn-default btn-sm" ng-click="demoTabset.panes[2].active = true">Select third tab</button>
+                            </p>
+                            <div data-nq-tabset="" data-tabset-model="demoTabset">
+                                <div data-nq-tab="" data-heading="Tab 1">
+                                    <h4>I am tab content 1</h4>
+                                    <div ng-bind-html="tabParagraph"></div>
+                                </div>
+                                <div data-nq-tab="" data-heading="Tab 2">
+                                    <h4>This is Tab 2 Content</h4>
+                                    <div ng-bind-html="tabParagraph">
+
+                                    </div>
+                                </div>
+                                <div data-nq-tab="" data-heading="Another Tab">
+                                    <h4>Yess! Another Tab Content</h4>
+                                    <div ng-bind-html="tabParagraph"></div>
+                                </div>
+                                <div data-nq-tab="" data-heading="Disabled" data-disabled="true">
+                                    <h4>Disabled Tab Content</h4>
+                                    <div ng-bind-html="tabParagraph"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h2 class="directive"><code>nqCarousel</code></h2>
+                        </div>
+                        <div class="col-sm-8">
+                            <div data-nq-carousel="" style="margin-left:0;">
+                                <div data-carousel-item="">
+                                    <h3 class="carousel-title">Crousel Title 1</h3>
+                                    <img src="http://quantumui.org/data/files/gallery/3d/1.jpg">
+                                    <div class="carousel-caption">
+                                        <h4>This is the cation of the carousel item 1</h4>
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                    </div>
+                                </div>
+                                <div data-carousel-item="">
+                                    <h3 class="carousel-title">Crousel Title 2</h3>
+                                    <img src="http://quantumui.org/data/files/gallery/3d/2.jpg">
+                                    <div class="carousel-caption">
+                                        <h4>This is the cation of the carousel item 2</h4>
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                    </div>
+                                </div>
+                                <div data-carousel-item="" class="hl-exthen">
+                                    <h3 class="carousel-title">Crousel Title 3</h3>
+                                    <img src="http://quantumui.org/data/files/gallery/3d/3.jpg">
+                                    <div class="carousel-caption">
+                                        <h4>This is the cation of the carousel item 3</h4>
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                    </div>
+                                </div>
+                                <div data-carousel-item="">
+                                    <h3 class="carousel-title">Crousel Title 4</h3>
+                                    <div class="carousel-caption">
+                                        <h4>This is the cation of the carousel item 4</h4>
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                    </div>
+                                    <img src="http://quantumui.org/data/files/gallery/3d/4.jpg">
+
+                                </div>
+                                <div data-carousel-item="">
+                                    <h3 class="carousel-title">Crousel Title 5</h3>
+                                    <img src="http://quantumui.org/data/files/gallery/3d/5.jpg">
+                                    <div class="carousel-caption">
+                                        <h4>This is the cation of the carousel item 5</h4>
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h2 class="directive"><code>nqCollapse</code></h2>
+                        </div>
+                        <div class="col-sm-8">
+                            <button type="button" class="btn btn-info" data-nq-collapse="" data-target-id="#collapseContentExample" data-collapsed="false">
+                                Collapse Content
+                            </button>
+                            <div id="collapseContentExample" class="clearfix" style="margin-top:10px;">
+                                <div class="well" style="background-color:#fff;">
+                                    <h3>Collapse Example Content</h3>
+                                    <blockquote>
+                                        Just add <code>nqCollapse</code> attribute directive to a container element and add child <code>carouselItem</code> directives.
+                                    </blockquote>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h2 class="directive"><code>nqAccordion</code></h2>
+                        </div>
+                        <div class="col-sm-8">
+                            <div id="accContentExample" class="clearfix" style="margin-top:10px;">
+                                <div class="panel-group" ng-model="accordionModel" data-nq-accordion="">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a role="button" tabindex="0">Collapsible Group Item 1</a>
+                                            </h4>
+                                        </div>
+                                        <div class="panel-collapse">
+                                            <div class="panel-body">
+                                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a role="button" tabindex="0">Collapsible Group Item 2</a>
+                                            </h4>
+                                        </div>
+                                        <div class="panel-collapse">
+                                            <div class="panel-body">
+                                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a role="button" tabindex="0">Collapsible Group Item 3</a>
+                                            </h4>
+                                        </div>
+                                        <div class="panel-collapse">
+                                            <div class="panel-body">
+                                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4 class="panel-title">
+                                                <a role="button" tabindex="0">Collapsible Group Item 4</a>
+                                            </h4>
+                                        </div>
+                                        <div class="panel-collapse">
+                                            <div class="panel-body">
+                                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <hr />
+                </div>
+                <div class="clearfix">
+                    <h1> <i class="glyphicon glyphicon-fire"></i> Picker</h1>
+                    <hr />
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h2 class="directive"><code>nqDatepicker</code></h2>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="row">
+                                <div class="col-sm-4" ng-init="changeValue = 5">
+                                    <input type="text" ng-model="commonDatepicker" class="form-control"
+                                           data-nq-datepicker="" placeholder="datepicker" />
+
+                                </div>
+                                <div class="col-sm-4">
+                                    <input type="text" ng-model="commonDatetimePicker" class="form-control"
+                                           data-nq-datepicker="" data-qo-mode="datetime" placeholder="datetime picker" />
+
+                                </div>
+                                <div class="col-sm-4">
+                                    <input type="text" ng-model="commonTimePicker" class="form-control" data-qo-format="HH-mm" qo-time-view="list"
+                                           data-nq-datepicker="" data-qo-mode="time" placeholder="time picker" />
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h2 class="directive"><code>nqColorPicker</code></h2>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><span class="color-pick" ng-style="{'background-color':colorModel2}"></span></span>
+                                        <input type="text" class="form-control" ng-model="colorModel3" ng-init="colorModel2='red'" data-nq-color-picker="" placeholder="select color" data-qo-placement="right">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" ng-model="colorModel3" ng-init="colorModel3='blue'" data-nq-color-picker="" placeholder="select color" data-qo-placement="left">
+                                        <span class="input-group-addon"><span class="color-pick" ng-style="{'background-color':colorModel3}"></span></span>
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" ng-model="colorModel6" data-nq-color-picker="" data-qo-palette="['balck','#AAA','#CCC','red','yellow', 'purple', 'pink', 'blue']" placeholder="custom palette">
+                                        <span class="input-group-addon"><span class="color-pick" ng-style="{'background-color':colorModel6}"></span></span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <hr />
+                    </div>
+                    <hr />
+                </div>
+
+                <div class="clearfix">
+                    <h1> <i class="glyphicon glyphicon-fire"></i> More</h1>
+                    <hr />
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h2 class="directive"><code>nqScroll</code></h2>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <h4>default</h4>
+                                    <div data-nq-scroll="" class="padded bg-base-lighter radius-md" style="max-height:150px;">
+                                        <p>
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eget urna sodales, vehicula sem vel, malesuada tortor. Quisque nec commodo quam. Curabitur fermentum dapibus iaculis. Aenean ipsum tortor, pharetra quis ante vitae, laoreet fermentum leo. Mauris interdum auctor faucibus. Ut pulvinar malesuada nulla ut tristique. Quisque interdum lobortis libero sodales dignissim. Fusce sed elit aliquam, sagittis erat eget, ullamcorper lacus.
+                                        </p>
+                                        <p class="hl-exthen">
+                                            Vivamus suscipit porta nisi sed aliquet. Nullam imperdiet laoreet dolor, nec ultricies sem vehicula lobortis. Curabitur diam odio, ultrices ac vestibulum eu, laoreet eu massa. Pellentesque et massa ante. Vestibulum feugiat enim quis tincidunt fermentum. Aliquam vehicula ligula in odio hendrerit varius sit amet ut augue. Sed malesuada congue commodo.
+                                        </p>
+                                        <p>
+                                            Proin vitae cursus arcu, nec dictum velit. Vivamus sed eros vitae quam feugiat accumsan. Duis at dapibus sem, quis iaculis ligula. Aenean et sapien facilisis, gravida eros id, varius mauris. Nunc pretium id augue non egestas. Nulla eget arcu ut ante congue ultrices. Integer ultricies adipiscing sapien, sed malesuada elit. Suspendisse pharetra rutrum ligula in lobortis. Donec id aliquet tortor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Donec sit amet egestas leo. Ut vitae diam vel odio commodo viverra sit amet in ipsum. Aenean luctus tincidunt risus vitae lobortis.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h4>left placement</h4>
+                                    <div data-nq-scroll="" data-qo-vertical-placement="left" class="padded bg-base-lighter radius-md" style="max-height:150px;">
+                                        <p>
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eget urna sodales, vehicula sem vel, malesuada tortor. Quisque nec commodo quam. Curabitur fermentum dapibus iaculis. Aenean ipsum tortor, pharetra quis ante vitae, laoreet fermentum leo. Mauris interdum auctor faucibus. Ut pulvinar malesuada nulla ut tristique. Quisque interdum lobortis libero sodales dignissim. Fusce sed elit aliquam, sagittis erat eget, ullamcorper lacus.
+                                        </p>
+                                        <p class="hl-exthen">
+                                            Vivamus suscipit porta nisi sed aliquet. Nullam imperdiet laoreet dolor, nec ultricies sem vehicula lobortis. Curabitur diam odio, ultrices ac vestibulum eu, laoreet eu massa. Pellentesque et massa ante. Vestibulum feugiat enim quis tincidunt fermentum. Aliquam vehicula ligula in odio hendrerit varius sit amet ut augue. Sed malesuada congue commodo.
+                                        </p>
+                                        <p>
+                                            Proin vitae cursus arcu, nec dictum velit. Vivamus sed eros vitae quam feugiat accumsan. Duis at dapibus sem, quis iaculis ligula. Aenean et sapien facilisis, gravida eros id, varius mauris. Nunc pretium id augue non egestas. Nulla eget arcu ut ante congue ultrices. Integer ultricies adipiscing sapien, sed malesuada elit. Suspendisse pharetra rutrum ligula in lobortis. Donec id aliquet tortor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Donec sit amet egestas leo. Ut vitae diam vel odio commodo viverra sit amet in ipsum. Aenean luctus tincidunt risus vitae lobortis.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <h4>horizontal</h4>
+                                    <div data-nq-scroll="" class="padded bg-base-lighter radius-md" data-qo-axis="x">
+                                        <div style="width:2000px;">
+                                            <span>
+                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc eget urna sodales, vehicula sem vel, malesuada tortor. Quisque nec commodo quam. Curabitur fermentum dapibus iaculis. Aenean ipsum tortor, pharetra quis ante vitae, laoreet fermentum leo. Mauris interdum auctor faucibus. Ut pulvinar malesuada nulla ut tristique. Quisque interdum lobortis libero sodales dignissim. Fusce sed elit aliquam, sagittis erat eget, ullamcorper lacus.
+                                            </span>
+                                            <span class="hl-exthen">
+                                                Vivamus suscipit porta nisi sed aliquet. Nullam imperdiet laoreet dolor, nec ultricies sem vehicula lobortis. Curabitur diam odio, ultrices ac vestibulum eu, laoreet eu massa. Pellentesque et massa ante. Vestibulum feugiat enim quis tincidunt fermentum. Aliquam vehicula ligula in odio hendrerit varius sit amet ut augue. Sed malesuada congue commodo.
+                                            </span>
+                                            <span>
+                                                Proin vitae cursus arcu, nec dictum velit. Vivamus sed eros vitae quam feugiat accumsan. Duis at dapibus sem, quis iaculis ligula. Aenean et sapien facilisis, gravida eros id, varius mauris. Nunc pretium id augue non egestas. Nulla eget arcu ut ante congue ultrices. Integer ultricies adipiscing sapien, sed malesuada elit. Suspendisse pharetra rutrum ligula in lobortis. Donec id aliquet tortor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Donec sit amet egestas leo. Ut vitae diam vel odio commodo viverra sit amet in ipsum. Aenean luctus tincidunt risus vitae lobortis.
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h2 class="directive"><code>nqSlider</code></h2>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="row">
+                                <div class="col-sm-4" data-ng-init="rangeSlider = 55">
+                                    <input type="range" data-ng-model="rangeSlider" data-nq-slider="">
+                                </div>
+                                <div class="col-sm-4" data-ng-init="rangeSliderDouble = [-5, 15]">
+                                    <input type="range" data-ng-model="rangeSliderDouble" data-nq-slider="" min="-20" max="20" data-double-thumb="true">
+                                </div>
+                                <div class="col-sm-4" data-ng-init="rangeSliderLabel = 45">
+                                    <input type="range" data-ng-model="rangeSliderLabel" data-nq-slider="" data-show-label="true" data-value-suffix="€">
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <hr />
+                    </div>
+                    <hr />
+
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <h2 class="directive"><code>$loading</code></h2>
+                        </div>
+                        <div class="col-sm-8">
+                            <button type="button" class="btn btn-default" ng-click="loading.show()">
+                                Show Loading
+                            </button>
+                            <button type="button" class="btn btn-danger" ng-click="loading.hide()">
+                                Hide Loading
+                            </button>
+                        </div>
+                        <hr />
+                    </div>
+                    <hr />
+                </div>
             </div>
         </div>
         <div id="tasksAside" class="aside" data-nq-aside="" data-width="260px" data-container="body"
@@ -337,16 +1327,59 @@
         </div>
     </div>
 
+    <footer style="background-color:#fefefe; padding:0 0 20px 0;">
+        <hr />
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <p class="color-base text-sm">
+                        <b>QuantumUI</b> core
+                        licensed under <a href="http://opensource.org/licenses/MIT"> The MIT Licence</a>
+                    </p>
+                    <p class="color-base text-sm">
+                        Documentation
+                        licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0.</a>
+                    </p>
+                </div>
+                <div class="col-sm-6">
+                    <p class="text-right">
+                        <a aria-label="Share on Facebook" onclick="window.open('https://www.facebook.com/sharer/sharer.php?u=http://quantumui.org', '', 'height=500, width=600')" class=" btn btn-info">
+                            Facebook
+                        </a>
+                        <a aria-label="Share on Twitter" onclick="window.open('https://twitter.com/share?text=&#64;quantumui%20-%20QuantumUI is the most powerful native ANGULARJS and Bootstrap CSS based UI components.', '', 'height=250, width=600')" class="btn btn-info">
+                            Twitter
+                        </a>
+                        <a aria-label="Share on Linkedin" onclick="window.open('http://www.linkedin.com/shareArticle?mini=true&amp;url=http://quantumui.org&amp;title=QuantumUI&amp;summary=QuantumUI is the most powerful native ANGULARJS and Bootstrap CSS based UI components make developer life easy.', '', 'height=625, width=500')" class="btn btn-info">
+                            Linkedin
+                        </a>
+                        <a aria-label="Share on G+" onclick="window.open('https://plus.google.com/share?url=http://quantumui.org', '', 'height=500, width=600')" rel="publisher" class="btn btn-info">
+                            GPlus
+                        </a>
+                        <a href="https://github.com/quantumui" target="_self" class="btn btn-info">
+                            Github
+                        </a>
+                    </p>
+                    <p class="text-right">
+                        <a href="mailto:info@quantumui.org" class="color-base text-xs">
+                            <i class="fic fu-envelope-alt"></i> Send Email
+                        </a>
 
+                    </p>
+                </div>
+            </div>
+            <p class="text-center color-base text-xs">
 
+                Copyright © 2015 QuantumUI. All rights reserved.
+            </p>
+        </div>
+    </footer>
 
 
     <script src="https://code.angularjs.org/1.3.13/angular.min.js"></script>
     <script src="https://code.angularjs.org/1.3.13/angular-sanitize.min.js"></script>
     <script src="https://code.angularjs.org/1.3.13/angular-animate.min.js"></script>
-
-    <script src="dist/js/quantumui-nojq.min.js"></script>
-
+    <script src="dist/js/quantumui-all.min.js"></script>
+    <script src="config/icons.js"></script>
 
     <script src="doc/js/app.js"></script>
     <script src="doc/js/indexController.js"></script>

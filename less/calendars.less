@@ -46,6 +46,7 @@
 .calendar-panel a,
 .calendar-header button{
     color:@cal-panel-color;
+    text-decoration:none;
 }
 .calendar-panel.picker-datetime {
 }
@@ -370,9 +371,14 @@ table.cal-header-table{
         display:block;
     }
     > a:hover span,
+    > a:focus span,
     > a.active  span{
         background-color:@cal-active-bg;
         color: @cal-active-color;
+    }
+    > a:focus span,
+    > a:hover span{
+        opacity:0.8;
     }
 }
 /*inline*/

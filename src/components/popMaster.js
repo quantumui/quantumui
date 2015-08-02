@@ -48,6 +48,7 @@
                       if (!options.instanceName)
                           options.instanceName = options.typeClass
                       var originalOptions = $master.$originalOptions = angular.extend({}, options);
+                      isTouch && (options.keyboard = false);
                       angular.forEach(['hide', 'show', 'toggle'], function (value) {
                           scope['$' + value] = function () {
                               scope.$$postDigest(function () {
@@ -109,6 +110,9 @@
                           }
                           else
                               $master.$promise = $q.when($master.init());
+
+                          if(element && options.readonly)
+                              element.attr('readonly', true)
                       }
 
                       $master.destroy = function () {
@@ -165,6 +169,8 @@
                               after = null;
                           if (!$target || $target.length < 1)
                               build();
+                          else
+                              ensureFixedPlacement();
                           if (options.theme) {
                               $target.removeClass(lasttheme);
                               lasttheme = options.instanceName + '-' + options.theme;
@@ -325,10 +331,10 @@
                           $target && $target.focus();
                       };
                       $master.clearExists = function () {
-                          var exists = angular.element('.' + options.typeClass + ":visible", angular.element('body'));
+                          var exists = angular.element('.' + options.typeClass);
                           angular.forEach(exists, function (key, value) {
                               var sc = angular.element(key).scope();
-                              sc && (sc.$id != scope.$id) && sc.$hide && sc.$hide();
+                              sc && (sc.$id != scope.$id) && sc.$isShown && sc.$hide();
 
                           })
                       };
@@ -339,6 +345,8 @@
                           evt.which === 27 && element.blur();
                       };
                       $master.$onFocusElementMouseDown = function (evt) {
+                          if (options.isInput)
+                              return true;
                           evt.preventDefault();
                           evt.stopPropagation();
                           $master.$isShown ? element.blur() : element.focus();
@@ -346,7 +354,7 @@
                       $master.$applyPlacement = function () {
                           if (options.inline)
                               return;
-                          if ($container)
+                          if ($container && options.container !== 'self')
                               $target.appendTo($container)
                           if (!options.preventReplace) {
                               $placement.applyPlacement($master.$toElement && $master.$toElement || $master.$currentElement && $master.$currentElement || element, $target, options)
@@ -430,7 +438,10 @@
                           else {
                               $target.hide();
                               if ($container) {
-                                  $container.append($target)
+                                  if (/input|button/.test($container[0].tagName.toLowerCase())) {
+                                      $container.after($target)
+                                  } else
+                                      $container.append($target);
                               }
                               else
                                   element.after($target)
@@ -454,7 +465,7 @@
                       }
                       function complateHide(callback) {
                           $master.$hoverShown = false;
-                          if (options.keyboard) {
+                          if (options.keyboard && !options.isInput) {
                               angular.element(document).off('keyup', $master.$onKeyUp);
                               angular.element(document).off('keyup', $master.$onFocusKeyUp);
                           }
@@ -476,7 +487,7 @@
                       }
                       function complateShow(callback) {
                           $master.$hoverShown = true;
-                          if (options.keyboard) {
+                          if (options.keyboard && !options.isInput) {
                               if (options.trigger !== 'focus') {
                                   angular.element(document).on('keyup', $master.$onKeyUp);
                               } else {
@@ -499,7 +510,7 @@
                                   options.insideFixed = true;
                                   return false;
                               }
-                                 
+                                
                               var $checkElements = $target.add($target.parents());
                               var isFixed = false;
                               var scaleW = angular.element(window).width() / 2;

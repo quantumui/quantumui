@@ -4,41 +4,48 @@ angular.module('ngQuantum').config(
      '$colorPickerProvider',
      '$loadingProvider',
      '$modalProvider',
+     '$modalBoxProvider',
      '$selectProvider',
-      function ($datepickerProvider, $loadingButtonProvider, $colorPickerProvider, $loadingProvider, $modalProvider, $selectProvider) {
+     '$alertProvider',
+      function ($datepickerProvider, $loadingButtonProvider, $colorPickerProvider, $loadingProvider, $modalProvider, $modalBoxProvider, $selectProvider, $alertProvider) {
           var dpdef = $datepickerProvider.defaults,
               lbdef = $loadingButtonProvider.defaults,
               cpdef = $colorPickerProvider.defaults,
               ldef = $loadingProvider.defaults,
               mdef = $modalProvider.defaults,
-              sdef = $selectProvider.defaults
+              mbdef = $modalBoxProvider.defaults,
+              sdef = $selectProvider.defaults,
+              adef = $alertProvider.defaults;
           //datepicker icons
-          dpdef.todayIcon = 'glyphicon glyphicon-refresh';
-          dpdef.nextIcon = 'glyphicon glyphicon-chevron-right';
-          dpdef.prevIcon = 'glyphicon glyphicon-chevron-left';
-          dpdef.timeIcon = 'glyphicon glyphicon-time';
-          dpdef.closeIcon =  'glyphicon glyphicon-remove';
-          dpdef.downIcon =  'glyphicon glyphicon-chevron-down';
-          dpdef.upIcon = 'glyphicon glyphicon-chevron-up';
+          dpdef.todayIcon = 'fic glyphicon glyphicon-refresh';
+          dpdef.nextIcon = 'fic glyphicon glyphicon-chevron-right';
+          dpdef.prevIcon = 'fic glyphicon glyphicon-chevron-left';
+          dpdef.timeIcon = 'fic glyphicon glyphicon-time';
+          dpdef.closeIcon = 'fic glyphicon glyphicon-remove';
+          dpdef.downIcon = 'fic glyphicon glyphicon-chevron-down';
+          dpdef.upIcon = 'fic glyphicon glyphicon-chevron-up';
 
           //loadingButton icons
-          lbdef.spinner = '<i class="glyphicon glyphicon-repeat spin"></i> '; //any html accepted
-          lbdef.successIcon = '<i class="glyphicon fu-check  flash"></i>'; //any html accepted
-          lbdef.errorIcon = '<i class="glyphicon glyphicon-ok flash red"></i> '; //any html accepted
-          lbdef.timeoutIcon = '<i class="glyphicon glyphicon-bell"></i> '; //any html accepted
+          lbdef.spinner = '<i class="fic glyphicon glyphicon-repeat spin"></i> '; //any html accepted
+          lbdef.successIcon = '<i class="fic glyphicon fu-check  flash"></i>'; //any html accepted
+          lbdef.errorIcon = '<i class="fic glyphicon glyphicon-ok flash red"></i> '; //any html accepted
+          lbdef.timeoutIcon = '<i class="fic glyphicon glyphicon-bell"></i> '; //any html accepted
 
           //colorpicker icons
-          cpdef.iconDown = 'glyphicon glyphicon-menu-down';
-          cpdef.iconUp = 'glyphicon glyphicon-menu-up';
+          cpdef.iconDown = 'fic glyphicon glyphicon-menu-down';
+          cpdef.iconUp = 'fic glyphicon glyphicon-menu-up';
+          adef.closeIcon = 'fic glyphicon glyphicon-remove';
 
           //loading service icons
-          ldef.spinnerIcon = '<i class="glyphicon glyphicon-repeat spin-icon spin"></i>'; //any html accepted
+          ldef.spinnerIcon = '<i class="fic glyphicon glyphicon-repeat spin-icon spin"></i>'; //any html accepted
 
           //modal icons
-          mdef.closeIcon = '<i class="glyphicon glyphicon-remove"></i>'; //any html accepted
+          mdef.closeIcon = '<i class="fic glyphicon glyphicon-remove"></i>'; //any html accepted
 
           //select icons
-          sdef.clearIcon = '<i class="glyphicon glyphicon-remove"></i>'; //any html accepted
-          sdef.spinner = '<i class="glyphicon glyphicon-repeat spin"></i>'; //any html accepted
+          sdef.clearIcon = '<i class="fic clear-icon glyphicon glyphicon-remove"></i>'; //any html accepted
+          sdef.spinner = '<i class="fic glyphicon glyphicon-repeat spin"></i>'; //any html accepted
+
+          mbdef.effect = 'from-top';
 
     }])

@@ -26,7 +26,7 @@ angular.module('ngQuantum.slider', ['ngQuantum.services.mouse', 'ngQuantum.servi
     this.$get = ['$rootScope', '$document', '$mouse', '$parse',
       function ($rootScope, $document, $mouse, $parse) {
           function Factory(element, config) {
-              var $slider = {}, template, track, selection, thumb, thumb2, sizes;
+              var $slider = {}, template, track, selection, thumb, thumb2, sizes, body = angular.element('body');
               
               var options = angular.extend({}, defaults, config);
               if (defaults.formatValue) {
@@ -134,13 +134,13 @@ angular.module('ngQuantum.slider', ['ngQuantum.services.mouse', 'ngQuantum.servi
                   $mouse.down(thumb, function (event) {
                       $slider.eventNo = 1;
                       $mouse.move($document, slideThumb);
-                      $mouse.up($document, documentUp)
+                      $mouse.up(body, documentUp)
                   })
                   thumb2 &&
                   $mouse.down(thumb2, function (event) {
                       $slider.eventNo = 2;
                       $mouse.move($document, slideThumb)
-                      $mouse.up($document, documentUp)
+                      $mouse.up(body, documentUp)
                   })
                   
               }
@@ -148,8 +148,8 @@ angular.module('ngQuantum.slider', ['ngQuantum.services.mouse', 'ngQuantum.servi
                   $mouse.offDown(track)
                   $mouse.offDown(thumb);
                   thumb2 && $mouse.offDown(thumb2);
-                  $mouse.offMove($document);
-                  $mouse.offUp($document)
+                  $mouse.offMove($document, slideThumb);
+                  $mouse.offUp(body, documentUp)
               }
               function documentUp(event) {
                   $mouse.offMove($document, slideThumb)
@@ -158,10 +158,12 @@ angular.module('ngQuantum.slider', ['ngQuantum.services.mouse', 'ngQuantum.servi
                       thumb2 && thumb2.removeClass('titip-active');
                   }
                   angular.element('body').removeClass('unselectable');
-                  $mouse.offUp($document);
+                  $mouse.offUp(body, documentUp);
                   
               }
               function slideThumb(event) {
+                  event.preventDefault();
+                  event.stopPropagation();
                   angular.element('body').addClass('unselectable')
                   if (!sizes)
                       findSizes();

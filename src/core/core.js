@@ -2,14 +2,14 @@ if (!String.prototype.trim) {
     String.prototype.trim = function () {
         return this.replace(/^\s+|\s+$/g, '');
     };
-}
+};
 String.prototype.trimEnd = function (c) {
     var that = this.trim();
     if (c == null || c == "" || c.length > 1 || that.length < 2)
         return that;
-    var s = that.slice(that.length - 2, that.length - 1);
+    var s = that.slice(that.length - 1, that.length);
     if (s == c)
-        return that.slice(0, this.length - 2);
+        return that.slice(0, this.length - 1);
     else
         return that;
 };
@@ -19,36 +19,45 @@ String.prototype.trimStart = function (c) {
         return that;
     var s = that.slice(0, 1);
     if (s == c)
-        return that.slice(1, that.length - 1);
+        return that.slice(1, that.length);
     else
         return that;
 };
 String.prototype.capitaliseFirstLetter = function () {
     return this.charAt(0).toUpperCase() + this.slice(1);
-}
+};
 if (typeof String.prototype.endsWith !== 'function') {
     String.prototype.endsWith = function (suffix) {
         return this.indexOf(suffix, this.length - suffix.length) !== -1;
     };
-}
+};
 String.prototype.toTitleCase = function (str) {
     var str = this || '';
     return str.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
-}
+};
 String.prototype.replaceAll = function (find, replace) {
     var str = this || '';
     return str.replace(new RegExp(find, 'g'), replace);
-}
+};
 if (typeof String.prototype.startsWith != 'function') {
     String.prototype.startsWith = function (str) {
         return this.slice(0, str.length) == str;
     };
-}
+};
 if (typeof String.prototype.endsWith != 'function') {
     String.prototype.endsWith = function (str) {
         return this.slice(-str.length) == str;
     };
-}
+};
+window.addResizeEvent = function (callback) {
+    if (window.addEventListener) {
+        window.addEventListener('resize', callback, true);
+    }
+    else if (window.attachEvent) {
+        window.attachEvent('onresize', callback);
+    }
+};
+
 +function (window, angular, undefined) {
     'use strict';
     var  $$raf  =

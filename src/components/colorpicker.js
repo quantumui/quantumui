@@ -173,28 +173,30 @@
                       $mouse.offDown(hueSlider);
                       $mouse.offDown(alpha)
                       $mouse.offDown(alphaSlider);
-                      $mouse.offMove($document);
-                      $mouse.offUp($document);
                   }
                   function hueMouse() {
                       $mouse.down(hue, slideHue)
                       $mouse.down(hueSlider, function (event) {
-                          $mouse.move($document, slideHue)
-                          $mouse.up($document, function (event) {
+                          $mouse.offMove($document, slideHue);
+                          $mouse.move($document, slideHue);
+                          var upHandler = function (event) {
                               $mouse.offMove($document, slideHue);
-                              $mouse.offUp($document);
-                          })
+                              $mouse.offUp($document, upHandler);
+                          };
+                          $mouse.up($document, upHandler)
                       })
 
                   }
                   function saturationMouse() {
                       $mouse.down(saturation, dragSaturation)
                       $mouse.down(satPoint, function (event) {
+                          $mouse.offMove($document, dragSaturation)
                           $mouse.move($document, dragSaturation);
-                          $mouse.up($document, function (event) {
+                          var upHandler = function (event) {
                               $mouse.offMove($document, dragSaturation)
-                              $mouse.offUp($document);
-                          })
+                              $mouse.offUp($document, upHandler);
+                          };
+                          $mouse.up($document, upHandler)
                       })
 
 
@@ -202,12 +204,14 @@
                   function alphaMouse() {
                       $mouse.down(alpha, slideAlpha)
                       $mouse.down(alphaSlider, function (event) {
+                          $mouse.offMove($document, slideAlpha)
                           $mouse.move($document, slideAlpha);
-                          $mouse.up($document, function (event) {
+                          var upHandler = function (event) {
                               $mouse.offMove($document, slideAlpha)
                               alphaSlider.removeClass('titip-active');
-                              $mouse.offUp($document)
-                          })
+                              $mouse.offUp($document, upHandler)
+                          };
+                          $mouse.up($document, upHandler)
                       })
 
 

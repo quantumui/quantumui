@@ -3,7 +3,7 @@ angular.module('ngQuantum.alert', ['ngQuantum.popMaster', 'ngQuantum.services.he
     .run(['$templateCache', function ($templateCache) {
         'use strict';
         $templateCache.put('alert/alert.tpl.html',
-          "<div class=\"alert alert-dismissable\" tabindex=\"-1\" ng-class=\"alertType\"><div class=\"alert-inner\"><div class=\"alert-bg\" ng-class=\"alertType\"></div><a href=\"#\" class=\"close\" ng-click=\"$hide()\"><i class=\"fic fu-cross\"></i></a> <strong class=\"alert-title\" ng-if=\"title\" ng-bind=\"title\"></strong><span  ng-if=\"title\" ng-bind-html=\"content\"></span><div ng-if=\"!title\" ng-bind-html=\"content\"></div></div></div>"
+          "<div class=\"alert alert-dismissable\" tabindex=\"-1\" ng-class=\"alertType\"><div class=\"alert-inner\"><div class=\"alert-bg\" ng-class=\"alertType\"></div><a role=\"button\" tabindex=\"0\" class=\"close\" ng-click=\"$hide()\"><i ng-class=\"$closeIcon\"></i></a> <strong class=\"alert-title\" ng-if=\"title\" ng-bind=\"title\"></strong><span  ng-if=\"title\" ng-bind-html=\"content\"></span><div ng-if=\"!title\" ng-bind-html=\"content\"></div></div></div>"
         );
 
     }])
@@ -30,7 +30,8 @@ angular.module('ngQuantum.alert', ['ngQuantum.popMaster', 'ngQuantum.services.he
             alertType: 'info',
             duration: 3000,
             autoDestroy: false,
-            onHide:false,
+            onHide: false,
+            closeIcon: 'fic fu-cross'
         };
         this.$get = ['$timeout', '$rootScope', '$popMaster', '$compile', '$helpers', '$sce', '$parse',
           function ($timeout, $rootScope, $popMaster, $compile, $helpers, $sce, $parse) {
@@ -40,8 +41,8 @@ angular.module('ngQuantum.alert', ['ngQuantum.popMaster', 'ngQuantum.services.he
                       config = {
                           content: config,
                           title: title,
-                          alertType: alertType,
-                          placement: placement
+                          alertType: alertType || defaults.alertType,
+                          placement: placement || defaults.placement
                       }
                   }
                   if (!config.$scope) {
@@ -68,6 +69,7 @@ angular.module('ngQuantum.alert', ['ngQuantum.popMaster', 'ngQuantum.services.he
                       options.onHide = $parse(attr.onHide);
                   var show = $alert.show;
                   $alert.show = function () {
+                      scope.$closeIcon = options.closeIcon;
                       options.alertType && (scope.alertType = 'alert-' + options.alertType)
                       container && container.show()
                       var promise = show();

@@ -10,76 +10,102 @@
 
 @import "../../bower_components/bootstrap/less/variables.less";
 
-
-//==Inverse Colors
-//
-//## skin colors for use across QuantumUI.
-@skin-base:                 darken(@gray-lighter, 20%);
-@skin-base-dark:            darken(@skin-base, 10%);
-@skin-base-darker:          darken(@skin-base, 20%);
-@skin-base-light:           lighten(@skin-base, 15%);
-@skin-base-lighter:         lighten(@skin-base, 25%);
-@skin-base-active:          #da3282;
-@skin-base-accent:          #ff000a;
-
-
-@skin-inverse:                 @gray;
-@skin-inverse-dark:            @gray-dark;
-@skin-inverse-darker:          @gray-darker;
-@skin-inverse-light:           lighten(spin(@skin-inverse, 5%), 10%);
-@skin-inverse-lighter:         lighten(spin(@skin-inverse, 5%), 20%);
-
-@brand-primary-darker:         darken(@brand-primary, 15%);
-@brand-primary-dark:           darken(@brand-primary, 7.5%);
-@brand-primary-light:          lighten(@brand-primary, 18%);
-@brand-primary-lighter:        lighten(@brand-primary, 38%);
-
-@brand-info-darker:            darken(@brand-info, 15%);
-@brand-info-dark:              darken(@brand-info, 7.5%);
-@brand-info-light:             lighten(@brand-info, 18%);
-@brand-info-lighter:           lighten(@brand-info, 33%);
-
-@brand-success-darker:         darken(@brand-success, 15%);
-@brand-success-dark:           darken(@brand-success, 7.5%);
-@brand-success-light:          lighten(@brand-success, 18%);
-@brand-success-lighter:        lighten(@brand-success, 40%);
-
-@brand-warning-darker:         darken(@brand-warning, 15%);
-@brand-warning-dark:           darken(@brand-warning, 7.5%);
-@brand-warning-light:          lighten(@brand-warning, 11%);
-@brand-warning-lighter:        lighten(@brand-warning, 20%);
-
-
-@brand-danger-darker:         darken(@brand-danger, 15%);
-@brand-danger-dark:           darken(@brand-danger, 7.5%);
-@brand-danger-light:          lighten(@brand-danger, 18%);
-@brand-danger-lighter:        lighten(@brand-danger, 33%);
-
-
-
-//== Iconography
-//
-//## Specify custom location and filename of the included Glyphicons icon font. Useful for those including Bootstrap via Bower.
-
 //** Load fonts from this directory.
-@icon-font-path:          "../fonts/";
-//** File name for all font files.
-@icon-font-name:          "glyphicons-halflings-regular";
-//** Element ID within SVG icon file.
-@icon-font-svg-id:        "glyphicons_halflingsregular";
+@icon-font-path:          "../../bower_components/bootstrap/fonts/";
+
+//== Colors
+//
+//## Skin and brand colors for use across QuantumUI Bootstrap Skin.
+
+@skin-base-color:                  @gray-light;
+@skin-base-accent:                 lighten(@brand-info, 10%);
+@skin-base-active:                 darken(@brand-warning, 10%);
+
+
+@skin-base-50:             tint(shade(@skin-base-color, -48.5%), 97%);
+@skin-base-100:            tint(shade(@skin-base-color, -40%), 88%);
+@skin-base-200:            tint(shade(@skin-base-color, -30%), 60%);
+@skin-base-300:            tint(shade(@skin-base-color, -20%), 40%);
+@skin-base-400:            tint(shade(@skin-base-color, -10%), 20%);
+@skin-base-500:            @skin-base-color;
+@skin-base-600:            shade(tint(@skin-base-color, -7.5%), 15%);
+@skin-base-700:            shade(tint(@skin-base-color, -15%), 30%);
+@skin-base-800:            shade(tint(@skin-base-color, -22.5%), 45%);
+@skin-base-900:            shade(tint(@skin-base-color, -33.5%), 67%);
+@skin-base-1000:           shade(tint(@skin-base-color, -40%), 80%);
+
+
+@skin-accent-50:           tint(shade(@skin-base-accent, -41.5%), 92%);
+@skin-accent-100:          tint(shade(@skin-base-accent, -35%), 74%);
+@skin-accent-200:          tint(shade(@skin-base-accent, -27%), 54%);
+@skin-accent-300:          tint(shade(@skin-base-accent, -14%), 28%);
+@skin-accent-400:          @skin-base-accent;
+@skin-accent-700:          shade(tint(@skin-base-accent, -15%), 30%);
+
+@skin-active-50:           tint(shade(@skin-base-active, -47.5%), 95%);
+@skin-active-100:          tint(shade(@skin-base-active, -40%), 80%);
+@skin-active-200:          tint(shade(@skin-base-active, -27%), 54%);
+@skin-active-300:          tint(shade(@skin-base-active, -14%), 28%);
+@skin-active-400:          @skin-base-active;
+@skin-active-700:          shade(tint(@skin-base-active, -15%), 30%);
+
+@white:                   #fff;
+@white-lighter:           darken(@white, 0.6%);
+@white-light:             darken(@white, 1.8%);
+@white-dark:              darken(@white, 3.3%);
+@white-darker:            darken(@white, 5.8%);
+
+
+//==Brand Shades
+//
+//## Brand colors for use across QuantumUI.
+
+@brand-primary-darker:         shade(tint(@brand-primary, -19%), 38%);
+@brand-primary-dark:           shade(tint(@brand-primary, -9%), 18%);
+@brand-primary-light:          tint(shade(@brand-primary, -9%), 18%);
+@brand-primary-lighter:        tint(shade(@brand-primary, -19%), 38%);
+
+@brand-info-darker:            shade(tint(@brand-info, -7.5%), 15%);
+@brand-info-dark:              shade(tint(@brand-info, -3.75%), 7.5%);
+@brand-info-light:             tint(shade(@brand-info, -9%), 18%);
+@brand-info-lighter:           tint(shade(@brand-info, -19%), 38%);
+
+@brand-success-darker:         shade(tint(@brand-success, -7.5%), 15%);
+@brand-success-dark:           shade(tint(@brand-success, -3.75%), 7.5%);
+@brand-success-light:          tint(shade(@brand-success, -9%), 18%);
+@brand-success-lighter:        tint(shade(@brand-success, -18%), 38%);
+
+@brand-warning-darker:         shade(tint(@brand-warning, -7.5%), 15%);
+@brand-warning-dark:           shade(tint(@brand-warning, -3.75%), 7.5%);
+@brand-warning-light:          tint(shade(@brand-warning, -9%), 18%);
+@brand-warning-lighter:        tint(shade(@brand-warning, -19%), 38%);
+
+
+@brand-danger-darker:         shade(tint(@brand-danger, -7.5%), 15%);
+@brand-danger-dark:           shade(tint(@brand-danger, -3.75%), 7.5%);
+@brand-danger-light:          tint(shade(@brand-danger, -9%), 18%);
+@brand-danger-lighter:        tint(shade(@brand-danger, -19%), 38%);
+//== Scaffolding
+//
+//## Settings for some of the most global styles.
+
+
+@font-size-largest:       21px;
+@font-size-smallest:      ceil((@font-size-base * 0.7)); // ~10px
 
 
 
+//== Components
+//
+//## Define common padding and border radius sizes and more. Values based on 14px text and 1.428 line-height (~20px to start).
 
 
+@line-height-largest:       1.18;
 
-//** Global color for active items (e.g., navs or dropdowns).
-@component-active-color:    @skin-base-active;
-//** Global background color for active items (e.g., navs or dropdowns).
-@component-active-bg:       @brand-primary;
+@border-radius-largest:     8px;
 
 //** component font family.
-@component-font-family:        'glyphicons-halflings-regular';
+@component-font-family:        'Glyphicons Halflings';
 @angle-icon:                   '\e259';
 @angle-up-icon:                '\e260';
 @tick-icon:                    '\e013';
@@ -88,28 +114,40 @@
 @warning-icon:                 '\e101';
 
 
-//** Carets increase slightly in size for larger components.
 @caret-width-large:         5px;
 
 
+
+
+
+//== Dropdowns
+//
+//## Dropdown menu container and contents.
+
+@dropdown-min-width:             160px;
+@dropdown-box-shadow:            0 6px 12px fade(@skin-base-700, 2%);
+@dropdown-caret-color:           @skin-base-800;
+
 //** Background for the dropdown container.
-@dropdown-container-bg:                    @skin-base-light;
+@dropdown-container-bg:                    @skin-base-100;
 
-@dropdown-container-box-shadow:            0 5px 10px fade(@skin-inverse, 1.75%);
+@dropdown-container-box-shadow:            0 5px 10px fade(@skin-base-700, 2%);
 
-@dropdown-container-box-shadow-top:        0 -5px 10px fade(@skin-inverse, 1.75%);
+@dropdown-container-box-shadow-top:        0 -5px 10px fade(@skin-base-700, 2%);
 //** Dropdown container `border-color`.
-@dropdown-container-border:                darken(@dropdown-container-bg, 5.5%);
+@dropdown-container-border:                shade(@dropdown-container-bg, 5.5%);
 
-@dropdown-container-fallback-border:       darken(@dropdown-container-bg, 5.5%);
+@dropdown-container-fallback-border:       shade(@dropdown-container-bg, 5.5%);
 
 @dropdown-container-min-width:             170px;
 //** Dropdown container `max-width`.
 @dropdown-container-max-width:             360px;
 @dropdown-container-header-padding:        5px 7px;
 @dropdown-container-footer-padding:        5px 7px;
-@dropdown-container-header-color:          @skin-inverse-dark;
-@dropdown-container-footer-color:          @skin-inverse-dark;
+@dropdown-container-header-color:          @skin-base-800;
+@dropdown-container-footer-color:          @skin-base-800;
+
+
 
 //-- Z-index master list
 //
@@ -125,7 +163,11 @@
 
 
 
-//== Modals extend
+//== Tabs
+@nav-tabs-font-size:                        (@font-size-base - 1px);
+
+
+//== Modalbox
 //
 //##
 
@@ -134,15 +176,23 @@
 @modal-box-md:                    450px;
 @modal-box-sm:                    250px;
 
-//== Tabs
-@nav-tabs-font-size:            (@font-size-base - 1px);
+//== Carousel
+//
+//##
+
+@carousel-indicator-thumb-color:             @skin-base-800;
+@carousel-indicator-thumb-bg:                @skin-base-200;
+@carousel-indicator-thumb-border-color:      @skin-base-300;
+
+@carousel-caption-color:                     #fff;
+@carousel-caption-bg:                        @skin-base-700;
 
 //== Scrollbar
 //
 //##
 
 //** general scrollbar size.
-@scrollbar-image-path:       "../images/scrollbar";
+@scrollbar-image-path:       "../../images/scrollbar";
 @scrollbar-size:              8px; 
 //** page scrollbar size.
 @scrollbar-page-size:         12px; 
@@ -150,22 +200,22 @@
 @scrollbar-offset:            5px;
 
 @scrollbar-color:             #fff;
-@scrollbar-bg-color:          fade(@skin-base-light, 30%); 
-@scrollbar-button-bg-color:   fade(@skin-base-light, 50%);
-@scrollbar-hover-bg-color:    fade(@skin-base-light, 65%); 
-@scrollbar-border-color:      lighten(@skin-base-light, 35%); 
+@scrollbar-bg-color:          fade(@skin-base-300, 30%); 
+@scrollbar-button-bg-color:   fade(@skin-base-300, 50%);
+@scrollbar-hover-bg-color:    fade(@skin-base-300, 65%); 
+@scrollbar-border-color:      lighten(@skin-base-300, 35%); 
 
 @scrollbar-track-border-radius:    6px; 
 @scrollbar-track-box-shadow:       inset 0 0 6px rgba(0,0,0,0.3);
 
 @scrollbar-thumb-opacity:          0.9;
-@scrollbar-thumb-bg-color:         lighten(@skin-inverse, 10%);
+@scrollbar-thumb-bg-color:         @skin-base-600;
 @scrollbar-thumb-border-radius:    6px; 
 @scrollbar-thumb-box-shadow:       inset 3px 3px 9px rgba(255, 255, 255, 0.3), inset -3px -3px 9px rgba(255, 255, 255, 0.3);
 @scrollbar-thumb-box-shadow-hover: inset 3px 3px 9px rgba(0, 0, 0, 0.2), inset -3px -3px 9px rgba(0, 0, 0, 0.2);
 @scrollbar-thumb-filter-image:     radial-gradient(ellipse at center, rgba(255,255,255,0.2) 40%, rgba(0,0,0,0.1) 100%);
 
-@scrollbar-corner-bg-color:          lighten(@skin-base, 20%); 
+@scrollbar-corner-bg-color:          @skin-base-100;
 @scrollbar-corner-border-color:      @scrollbar-corner-bg-color;
 
 //** quantum scrollbar settings
@@ -176,7 +226,6 @@
 @scrollbar-button-size:            @scrollbar-size;
 @scrollbar-button-border-width:    4px;
 @scrollbar-button-border-color:    rgba(255, 255, 255, 0.8);
-
 
 @scrollbar-info-bg                    : @brand-info-lighter;
 @scrollbar-info-color                 : @brand-info-lighter;
@@ -194,7 +243,6 @@
 @scrollbar-success-color              : @brand-success-lighter;
 @scrollbar-success-thumb-bg           : @brand-success;
 
-
 //== with-arrow Utils
 //
 //##
@@ -210,9 +258,9 @@
 //
 //##
 @titip-tringle-width:               8px;
-@titip-bg:                          @skin-inverse-dark;
-@titip-border-color:                @skin-inverse-darker;
-@titip-color:                       @skin-base-lighter;
+@titip-bg:                          @skin-base-600;
+@titip-border-color:                @skin-base-700;
+@titip-color:                       @skin-base-100;
 @titip-padding:                     6px 9px 7px;
 @titip-font-size:                   13px;
 @titip-line-height:                 13px;
@@ -223,11 +271,11 @@
 //
 //##
 @range-height:                      6px;
-@range-bg:                          @skin-base-lighter;
-@range-selection-bg:                @skin-base;
-@range-thumb-border:                @skin-inverse;
-@range-ticks-color:                 @skin-inverse-darker;
-@range-ticks-border-color:          @skin-base-light;
+@range-bg:                          @skin-base-50;
+@range-selection-bg:                @skin-base-400;
+@range-thumb-border:                @skin-base-500;
+@range-ticks-color:                 @skin-base-800;
+@range-ticks-border-color:          @skin-base-100;
 @range-values-font-size:            11px;
 @range-thumb-width:                 10px;
 @range-thumb-height:                20px;
@@ -274,11 +322,11 @@
 //##
 @cal-panel-bg:                      #fff;
 @cal-panel-z-index:                 @listbox-z-index;
-@cal-panel-border-color:            @skin-base-light;
-@cal-panel-color:                   @skin-inverse-dark;
+@cal-panel-border-color:            @skin-base-100;
+@cal-panel-color:                   @skin-base-900;
 @cal-active-bg:                     @skin-base-active;
 @cal-active-color:                  #fff;
-@cal-hover-bg:                      @skin-inverse;
+@cal-hover-bg:                      @skin-base-700;
 @cal-hover-color:                   #fff;
 @cal-panel-padding:                 3px;
 @cal-panel-radius:                  @border-radius-base;
@@ -286,7 +334,7 @@
 @cal-panel-font:                    "Trebuchet MS", "Lucida Sans Unicode", "Lucida Sans", Arial, Helvetica, sans-serif;
 
 //cal-table
-@cal-table-bg:                      @skin-base-lighter;
+@cal-table-bg:                      @skin-base-50;
 @cal-table-color:                   @cal-panel-color;
 @cal-table-border-color:            @cal-panel-border-color;
 @cal-table-header-size:             25px;
@@ -298,9 +346,9 @@
 //== aside
 //
 //##
-@aside-bg:                          @skin-inverse-dark;
+@aside-bg:                          @skin-base-700;
 @aside-overlay-bg:                  #fff;
-@aside-color:                       @skin-inverse-lighter;
+@aside-color:                       @skin-base-400;
 @aside-width:                       220px;
 @aside-collapsed-width:             60px;
 @aside-font:                       "Trebuchet MS", "Lucida Sans Unicode", "Lucida Sans", Arial, Helvetica, sans-serif;
@@ -308,13 +356,14 @@
 @aside-footer-height:               35px;
 @aside-transition-duration:         0.2s;
 /*aside menu*/
-@aside-menu-color:                  @skin-inverse-lighter;
+@aside-menu-color:                  @skin-base-400;
 @aside-menu-link-height:            40px;
 
-@aside-default-bg:                          @skin-base-lighter;
-@aside-default-overlay-bg:                  @skin-base-darker;
-@aside-default-color:                       @skin-inverse-darker;
-@aside-default-menu-color:                  @skin-inverse-darker;
+@aside-default-bg:                          @skin-base-100;
+@aside-default-overlay-bg:                  @skin-base-600;
+@aside-default-color:                       @skin-base-1000;
+@aside-default-menu-color:                  @skin-base-1000;
+
 
 
 //== listbox(select)
@@ -322,14 +371,15 @@
 //##
 @listbox-max-height:                 180px;
 @listbox-max-width:                  350px;
-@listbox-color:                      @skin-inverse-darker;
+@listbox-color:                      @skin-base-800;
 @listbox-bg:                         #fff;
-@listbox-border-color:               @skin-base-light;
+@listbox-border-color:               @skin-base-100;
 @listbox-font-size:                  (@font-size-base - 1px);
 @listbox-border-radius:              @border-radius-base;
 @listbox-z-index:                    @zindex-dropdown;
-@listbox-option-hover-bg:            @skin-base-light;
-@listbox-option-hover-color:         @skin-inverse-dark;
+@listbox-option-hover-bg:            @skin-accent-100;
+@listbox-option-hover-color:         @skin-accent-700;
 @listbox-option-active-bg:           @skin-base-active;
 @listbox-option-active-color:        #fff;
-@listbox-highlight-color:            @skin-base-accent;
+@listbox-highlight-color:            @skin-base-active;
+

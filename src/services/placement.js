@@ -30,12 +30,12 @@ angular.module('ngQuantum.services.placement', ['ngQuantum.services.helpers'])
                 
                 offset.top = offset.top + marginTop;
                 offset.left = offset.left + marginLeft;
+
                 if (options.insideFixed) {
                     $target.css(offset);
                 } else
                     $target.offset(offset);
-                
-                fn.ensurePosition($target, element)
+                fn.ensurePosition($target, element, options)
                 return options;
             }
             fn.verticalPlacement = function ($target, options) {
@@ -64,15 +64,15 @@ angular.module('ngQuantum.services.placement', ['ngQuantum.services.helpers'])
                 }
 
             }
-            fn.ensurePosition = function ($target, element) {
-                var offset = $target.offset(), ww = window.screen.width, dh = $helpers.docHeight(),
-                    tw = $target.width(), th = $target.height(), eh = element.height(), eo = element.offset(), classList = $target.attr('class');
+            fn.ensurePosition = function ($target, element, options) {
+                var offset = options.insideFixed ? $target.position() : $target.offset(), ww = window.screen.width, dh = $helpers.docHeight(),
+                    tw = $target.width(), th = $target.height(), eh = element.height(), eo = options.insideFixed ? element.position() : element.offset(), classList = $target.attr('class');
                 if (offset.left < 0) {
                     $target.css('left', 0);
                     $target.attr('class', classList.replace('right', 'left'));
                 }
                 else if (offset.left >  (ww - tw)) {
-                    $target.css('left', (ww - tw));
+                    $target.css('left', (element.width() - tw));
                     $target.attr('class', classList.replace('left', 'right'));
                 }
                 if (offset.top < 0) {

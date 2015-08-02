@@ -46,7 +46,9 @@ OuantumUI Core is a free and open-source Component set. The following table deta
 
 
 | Feature | Core |
-| ------- | :----: |
+| -------------------------- | :-------------: |
+| **Bottons** |
+| Pageable | No |
 | **Bottons** |
 | CheckboxGroup | Yes |
 | RadioGroup | Yes |
@@ -87,11 +89,20 @@ quantumui/
 │   |   ├── quantumui.css
 │   |   ├── quantumui.min.css
 │   |   ├── quantumui.css.map
-|   ├── iamges/
+│   |   ├── bootstrap-quantumui.css *//include bootstrap.css*
+│   |   ├── bootstrap-quantumui.min.css *//include bootstrap.css*
+│   |   ├── bootstrap-quantumui.css.map *//include bootstrap.css*
+|   ├── images/
 |   ├── js/
-│   |   ├── quantumui.js
-│   |   └── quantumui.min.js
-│   |   └── quantumui.min.js.map
+│   |   ├── quantumui.js  *//exclude angular.nojq and pageable*
+│   |   └── quantumui.min.js *//exclude angular.nojq  and pageable*
+│   |   └── quantumui.min.js.map *//exclude angular.nojq  and pageable*
+│   |   └── quantumui-nojq.js *//include angular.nojq  **exclude pageable***
+│   |   └── quantumui-nojq.js *//include angular.nojq  **exclude pageable***
+│   |   └── quantumui-nojq.js.map *//include angular.nojq  **exclude pageable***
+│   |   └── quantumui-all.min.js
+│   |   └── quantumui-all.min.js
+│   |   └── quantumui-all.min.js.map
 ├── docs/
 |   └── js/
 |        ├── app.js
@@ -110,7 +121,14 @@ quantumui/
 QuantumUI's is full documented with lots of examples on online page, <http://quantumui.org/appdoc/documents/quantumui/index/>.
 
 
+## Temporary CDN
 
+Below source are just for demos like **Plunker** or **JSBin.** Don't use in your projects
+
+```
+http//cdn.quantumui.org/v.1.0/quantumui.min.css
+http//cdn.quantumui.org/v.1.0/quantumui-all.min.js
+```
 
 ## Authors
 
@@ -122,7 +140,13 @@ QuantumUI's is full documented with lots of examples on online page, <http://qua
 + <https://github.com/quantumui>
 + <https://github.com/mehmetotkun>
 
+## Contributing
 
+Contribute to QuantumUI, <http://quantumui.org/ui/contributecode/>.
+
+## Support
+
+There are some several social platforms you can get help or share your experience, <http://quantumui.org/ui/community/>.
 
 ## Copyright and license
 
@@ -138,7 +162,7 @@ Twitter: <https://twitter.com/quantumui>
 
 Facebook: <https://www.facebook.com/quantumui>
 
-Google+: <https://plus.google.com/u/0/b/116727412287168023986/dashboard/overview>
+Google+: <https://plus.google.com/u/0/communities/113269892759760815339>
 
 LinkedIn: <https://www.linkedin.com/company/angularui>
 
