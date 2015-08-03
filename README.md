@@ -125,9 +125,11 @@ QuantumUI's is full documented with lots of examples on online page, <http://qua
 
 Below source are just for demos like **Plunker** or **JSBin.** Don't use in your projects
 
+This is a [plunker](http://embed.plnkr.co/uMKBlkHArfV0CwdJF5lH/preview) example of Temporary CDN usage
+
 ```
-http//cdn.quantumui.org/v.1.0/quantumui.min.css
-http//cdn.quantumui.org/v.1.0/quantumui-all.min.js
+http//cdn.quantumui.org/v1.0.0/quantumui.min.css
+http//cdn.quantumui.org/v1.0.0/quantumui-all.min.js
 ```
 
 ## Authors
