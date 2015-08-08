@@ -1,0 +1,160 @@
+//
+// Modals extends
+// --------------------------------------------------
+
+
+// Container that the modal scrolls within
+.modal {
+   .pop,
+   .tooltip,
+   .dropdown-menu,
+   .dropdown-container,
+   .popover,
+   .alert {
+        z-index: ceil(($zindex-modal + 10));
+    }
+   .modal {
+        z-index: ceil(($zindex-modal + 1));
+    }
+   .modal .modal-dialog {
+      margin-right: 20px;
+    }
+    .modal .modal .modal-dialog {
+      margin-left: 20px;
+    }
+    .modal .modal .modal .modal-dialog {
+      margin: 0 auto;
+    }
+    .modal .modal .modal .modal .modal-dialog {
+      margin: 50px 10% 30px auto;
+    }
+}
+
+.modal-content > .close {
+  position:absolute;
+  top:7px;
+  right:7px;
+}
+
+.modal-fix-height{
+    > .modal-dialog,
+    > .modal-dialog > .modal-content,
+    > .modal-dialog > .modal-content > .modal-body {
+        height:100%;
+    }
+    .modal-dialog > .modal-content > .modal-footer {
+        position:absolute;
+        bottom:0;
+    }
+    > .modal-dialog {
+        @include calc(height, "100% - 20px");
+    }
+}
+.modal.screen-mode {
+   > .modal-dialog {
+        max-width:90% !important;
+        width:90% !important;
+        top:0 !important;
+        height:100%;
+        bottom:0;
+        left:0;
+        margin:0 !important;
+        right:10%;
+        border-left:3px solid transparent;
+    }
+   > .modal-dialog > .modal-content{
+       border-width:0;
+       border-radius:0;
+       bottom:0;
+       height:100%;
+    }
+   > .modal-dialog .modal-body {
+        height: 100% !important;
+   }
+   > .modal-dialog .modal-body-inner {
+        height: 100% !important;
+        max-height: 100% !important;
+        padding:5px;
+    }
+   > .modal-dialog .modal-footer {
+        background-color:inherit;
+        position:absolute;
+        bottom:0;
+        max-height:90px;
+        width:100%;
+    }
+   &.right > .modal-dialog {
+      left:10%;
+      right:0;
+      border-left-width:0;
+      border-right:3px solid transparent;
+    }
+   &.top > .modal-dialog,
+   &.bottom > .modal-dialog {
+       max-width:99% !important;
+       width:99% !important;
+       left:0.5% !important;
+       right:0.5% !important;
+       border-left-width:0;
+       height:90%;
+    }
+   &.top > .modal-dialog{
+       border-top:3px solid transparent;
+    }
+   &.bottom > .modal-dialog{
+       top:10% !important;
+       position:absolute;
+       border-bottom:3px solid transparent;
+    }
+}
+
+// Scale up the modal
+@media (min-width: $screen-sm-min) {
+  .modal-fix-height{
+        > .modal-dialog {
+          @include calc(width, "100% - 60px");
+        }
+   }
+   .modalbox .modal-dialog {
+       width: $modal-box-md;
+   }
+   .modalbox.modal-sm  .modal-dialog {
+       width: $modal-box-sm;
+   }
+}
+
+@media (min-width: $screen-md-min) {
+  .modalbox.modal-lg  .modal-dialog {
+       width: $modal-box-lg;
+   }
+}
+
+.modalbox  {
+    .modal-body-inner:before {
+      font-family:$component-font-family;
+      content:$info-icon;
+      font-size:5em;
+      display:inline-block;
+      float:left;
+      margin-right:10px;
+      margin-top:-0.3em;
+      color:$modal-content-fallback-border-color;
+    }
+    &.modal-danger .modal-body-inner:before {
+      content:$danger-icon;
+      color:$brand-danger;
+    }
+    &.modal-warning .modal-body-inner:before {
+      content:$warning-icon;
+      color:$brand-warning;
+    }
+    &.no-icon .modal-body-inner:before {
+      content:'';
+    }
+    .modal-footer {
+        padding:7px 15px;
+    }
+    .modal-header {
+        padding:10px 15px;
+    }
+}
