@@ -52,6 +52,7 @@ var selectApp = angular.module('ngQuantum.select', [
             placeholder: 'Please select...',
             filterText: 'search...',
             charTextTemplate: 'select/charText.tpl.html',
+            charText: 'Please enter {{$remainingChar}} or more characters',
             searchingText: 'Searching...',
             maxLength: 3,
             maxTextLength: 30,
@@ -167,7 +168,13 @@ var selectApp = angular.module('ngQuantum.select', [
                       }
 
                       if (options.remoteSearch) {
-                          charLabel = angular.element('<span ng-show="$remainingChar > 0"></span>').append($templateCache.get(options.charTextTemplate))
+                          /** compatibility code **/
+                          var charText =  options.charText;
+                          if (START != '{{') {
+                                charText = $templateCache.get(options.charTextTemplate);
+                          }
+                          /** compatibility code **/
+                          charLabel = angular.element('<span ng-show="$remainingChar > 0"></span>').append(charText);
                           searchLabel = angular.element('<span class="search-label" ng-show="$dataLoading"></span>').append(options.searchingText)
                           options.spinner && searchLabel.append(options.spinner)
                           $compile(charLabel)(scope)
