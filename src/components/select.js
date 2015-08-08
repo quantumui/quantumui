@@ -4,13 +4,18 @@ var selectApp = angular.module('ngQuantum.select', [
       'ngQuantum.popMaster',
       'ngQuantum.scrollbar'
     ])
-    .run(['$templateCache', function ($templateCache) {
+    .run(['$templateCache','$interpolate', function ($templateCache,$interpolate) {
         'use strict';
+        var START = $interpolate.startSymbol();
+        var END   = $interpolate.endSymbol();
         $templateCache.put('select/select.tpl.html',
           '<div tabindex="-1" class="listbox-panel ng-cloak" role="listbox"><div class="scrollable" role=\"listbox\"><ul tabindex=\"-1\" class=\"listbox\"><li role=\"presentation\" tabindex=\"-1\" ng-repeat=\"match in $matches track by $index\"><span class=\"select-option option-label\"  role=\"option\" tabindex=\"-1\" ng-click=\"$select(match)\" ng-bind=\"match.label\"></span> </li></ul></div></div>'
         );
         $templateCache.put('select/selectgroup.tpl.html',
           '<div tabindex="-1" role="listbox" class="listbox-panel ng-cloak"><div tabindex="-1" class="scrollable" role="listbox"> <ul tabindex="-1" class="listbox"> <li tabindex="-1" role="presentation" ng-repeat="match in $groupMatches">  <span class="select-option" ng-if="!match.items" role="option" tabindex="-1" ng-disabled="match.disabled" ng-click="$select(match)"> <span class="option-label" ng-bind="match.label"></span> </span> <div tabindex="-1" class="option-group" ng-if="match.items" ng-disabled="match.disabled"> <span class="group-label" ng-bind="match.label"></span> <ul tabindex="-1">  <li tabindex="-1" role="presentation" data-ng-repeat="item in match.items track by $index"> <span class="select-option" role="option" tabindex="-1" ng-disabled="item.disabled" ng-click="$select(item)"><span class="option-label" ng-bind="item.label"></span></span></li></ul></div></li></ul></div></div>'
+        );
+        $templateCache.put('select/charText.tpl.html',
+            'Please enter ' + START + '$remainingChar' + END + ' or more characters'
         );
     }])
     .provider('$select', function () {
@@ -46,7 +51,7 @@ var selectApp = angular.module('ngQuantum.select', [
             noMatch: 'No result found...',
             placeholder: 'Please select...',
             filterText: 'search...',
-            charText: 'Please enter {{$remainingChar}} or more characters',
+            charTextTemplate: 'select/charText.tpl.html',
             searchingText: 'Searching...',
             maxLength: 3,
             maxTextLength: 30,
@@ -56,7 +61,7 @@ var selectApp = angular.module('ngQuantum.select', [
             selectedRemovable: true
         };
         this.$get = [
-            '$filter',
+          '$filter',
           '$window',
           '$http',
           '$compile',
@@ -68,14 +73,18 @@ var selectApp = angular.module('ngQuantum.select', [
           '$scrollbar',
           '$lazyRequest',
           '$helpers',
-          function ($filter, $window, $http, $compile, $rootScope, $popMaster, $parseOptions, $timeout, $q, $scrollbar, $lazyRequest, $helpers) {
+          '$interpolate',
+          '$templateCache',
+          function ($filter, $window, $http, $compile, $rootScope, $popMaster, $parseOptions, $timeout, $q, $scrollbar, $lazyRequest, $helpers,$interpolate,$templateCache) {
               var bodyEl = angular.element($window.document.body);
               var isTouch = 'createTouch' in $window.document;
               function SelectFactory(element, controller, config, attr, targetEl) {
                   config = $helpers.parseOptions(attr, config);
                   !config.template && config.grouped && (config.template = defaults.groupTemplate)
                   var $select = {}, inputItem, scrollbar;
-                  var searchInput = angular.element(['<input ng-hide="$hideFilter" ng-model="filterModel.label" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="{{$placeholder}}" class="select-input form-control" role="combobox" aria-expanded="true"',
+                  var START = $interpolate.startSymbol();
+                  var END   = $interpolate.endSymbol();
+                  var searchInput = angular.element(['<input ng-hide="$hideFilter" ng-model="filterModel.label" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="' + START + '$placeholder' + END+ '" class="select-input form-control" role="combobox" aria-expanded="true"',
                                     , ' aria-autocomplete="list" style="max-width:100%;" />'].join(""))
 
                   var options = angular.extend({}, defaults, config);
@@ -158,7 +167,7 @@ var selectApp = angular.module('ngQuantum.select', [
                       }
 
                       if (options.remoteSearch) {
-                          charLabel = angular.element('<span ng-show="$remainingChar > 0"></span>').append(options.charText)
+                          charLabel = angular.element('<span ng-show="$remainingChar > 0"></span>').append($templateCache.get(options.charTextTemplate))
                           searchLabel = angular.element('<span class="search-label" ng-show="$dataLoading"></span>').append(options.searchingText)
                           options.spinner && searchLabel.append(options.spinner)
                           $compile(charLabel)(scope)

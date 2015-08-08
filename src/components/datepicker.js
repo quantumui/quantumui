@@ -112,10 +112,13 @@ angular.module('ngQuantum.datepicker', [
           '$parse',
           '$helpers',
           '$timeout',
-          function ($compile, $popMaster, $parse, $helpers, $timeout) {
+          '$interpolate',
+          function ($compile, $popMaster, $parse, $helpers, $timeout,$interpolate) {
               function Factory(element, config, attr, ngModel) {
                   config = $helpers.parseOptions(attr, config);
                   var options = angular.extend({}, defaults, config);
+                  var START = $interpolate.startSymbol();
+                  var END   = $interpolate.endSymbol();
                   if (options.inline) {
                       options.show = true;
                       options.trigger = false;
@@ -565,9 +568,10 @@ angular.module('ngQuantum.datepicker', [
                       return tbody.html();
                   }
                   function buildHeader() {
+
                       var ul = '<table class="cal-header-table"><tr>' +
                                    '<td class="before"><button data-title="Before" class="titip-top" type="button" ng-click="$before()"><i ng-class="$options.prevIcon"></i></button></td>' +
-                                   '<td class="date-head"><span>{{currentMonthTitle}}</span></td>' +
+                                   '<td class="date-head"><span>' + START + 'currentMonthTitle' + END+ '</span></td>' +
                                    '<td class="today"><button data-title="Today" class="titip-top" type="button" ng-click="$today($event)"><i ng-class="$options.todayIcon"></i></button></td>' +
                                    '<td class="next"><button data-title="Next" class="titip-top" type="button" ng-click="$next()"><i ng-class="$options.nextIcon"></i></button></td>' +
                                    '<td class="hide-cal"><button data-title="Close" class="titip-top" type="button" ng-click="$hide()"><i ng-class="$options.closeIcon"></i></button></td>' +
@@ -582,7 +586,7 @@ angular.module('ngQuantum.datepicker', [
                           var inner = angular.element('<div class="selector-inner"></div>').appendTo(yearSelector);
                           options.theme && yearSelector.attr('data-qo-theme', options.theme);
                           getYearArray();
-                          inner.append('<a role="button" tabindex="1" id="year-{{year}}" ng-repeat="year in yearsArray" ng-click="$gotoYear(year, $event)" ng-class="{active:currentYear == year}"><span>{{year}}</span></a>');
+                          inner.append('<a role="button" tabindex="1" id="year-' + START + 'year' + END+ '" ng-repeat="year in yearsArray" ng-click="$gotoYear(year, $event)" ng-class="{active:currentYear == year}"><span>' + START + 'year' + END+ '</span></a>');
                           $picker.yearSelector = yearSelector;
                           $compile(yearSelector)(scope);
                        

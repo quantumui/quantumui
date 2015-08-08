@@ -22,8 +22,8 @@ angular.module('ngQuantum.loading', ['ngQuantum.services.lazy'])
             spinnerIcon: '<i class="fic spin-icon fu-spinner-fan spin"></i>',
             busyText: 'Loading...'
         };
-        this.$get = ['$timeout', '$rootScope', '$compile', '$http',
-          function ($timeout, $rootScope, $compile, $http) {
+        this.$get = ['$timeout', '$rootScope', '$compile', '$http','$interpolate',
+          function ($timeout, $rootScope, $compile, $http,$interpolate) {
               function LoadingFactory(config, theme, placement) {
                   var $loading = {};
                   if (angular.isString(config)) {
@@ -110,13 +110,15 @@ angular.module('ngQuantum.loading', ['ngQuantum.services.lazy'])
 
                   })
                   function getTemplate() {
+                      var START = $interpolate.startSymbol();
+                      var END   = $interpolate.endSymbol();
                       var html = '<div class="loading-container"  ng-class="loadingTheme">'
                                     + '<div class="progress" ng-show="showBar">'
-                                    + '<div class="progress-bar active" ng-class="progressTheme" role="progressbar" ng-style="{\'width\':currentRate + \'%\'}" aria-valuenow="{{currentRate}}" aria-valuemin="0" aria-valuemax="100">'
+                                    + '<div class="progress-bar active" ng-class="progressTheme" role="progressbar" ng-style="{\'width\':currentRate + \'%\'}" aria-valuenow="' + START + 'currentRate' + END+ '" aria-valuemin="0" aria-valuemax="100">'
                                     + '</div>'
                                     + '</div>'
                                     + '<div class="spinner-container">'
-                                        + '<div class="busy-text">'+ options.spinnerIcon +' {{busyText}}</div>'
+                                        + '<div class="busy-text">'+ options.spinnerIcon +' ' + START + 'busyText' + END+ '</div>'
                                     + '</div>'
                                 + '</div>'
                                 + ''

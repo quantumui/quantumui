@@ -1,25 +1,27 @@
 'use strict';
 angular.module('ngQuantum.tabset', ['ngQuantum.services.helpers'])
-    .run(['$templateCache', function ($templateCache) {
+    .run(['$templateCache','$interpolate', function ($templateCache,$interpolate) {
         'use strict';
+        var START = $interpolate.startSymbol();
+        var END   = $interpolate.endSymbol();
         $templateCache.put('tabs/tabset.tpl.html',
-                 '<div class="tab-container {{theme}}">'
-                   + '<ul class="nav {{navClasses}}" nav-placement="{{placement}}">'
+                 '<div class="tab-container ' + START + 'theme' + END + '">'
+                   + '<ul class="nav ' + START + 'navClasses' + END + '" nav-placement="' + START + 'placement' + END + '">'
                    + '<li ng-repeat="pane in panes | orderBy:$paneindex" ng-class="{active: pane.active, disabled: pane.disabled}">'
-                       + '<a role="button" tabindex="0" tab-heading-transclude="pane">{{pane.heading}}</a>'
+                       + '<a role="button" tabindex="0" tab-heading-transclude="pane">' + START + 'pane.heading' + END + '</a>'
                    + '</li>'
                    + '</ul>'
                    + '<div class="tab-content clearfix" ng-transclude></div>'
                + '</div>'
         );
         $templateCache.put('tabs/tabset.responsive.tpl.html',
-                '<div class="tab-container {{theme}}">'
-                 + '<ul class="nav {{navClasses}}" nav-placement="{{placement}}">'
+                '<div class="tab-container ' + START + 'theme' + END + '">'
+                 + '<ul class="nav ' + START + 'navClasses' + END + '" nav-placement="' + START + 'placement' + END + '">'
                  + '<li ng-repeat="pane in panes" ng-show="!pane.stored"  ng-class="{active: pane.active, disabled: pane.disabled}">'
-                     + '<a role="button" tabindex="0" tab-heading-transclude="pane">{{pane.heading}}</a>'
+                     + '<a role="button" tabindex="0" tab-heading-transclude="pane">' + START + 'pane.heading' + END + '</a>'
                  + '</li>'
                  + '<li ng-show="showMore">'
-                    + '<a role="button" tabindex="0" nq-dropdown="" class="dropdown-toggle" data-placement="{{ddPlacement}}">More</a>'
+                    + '<a role="button" tabindex="0" nq-dropdown="" class="dropdown-toggle" data-placement="' + START + 'ddPlacement' + END + '">More</a>'
                      + '<ul class="dropdown-menu">'
                          + '<li ng-repeat="pane in panes | filter:{stored:true}" ng-class="{active: pane.active, disabled: pane.disabled}">'
                               + '<a role="button" tabindex="0" ng-click="pane.select()" ng-bind-html="pane.htmlString"></a>'

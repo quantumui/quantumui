@@ -357,7 +357,7 @@ var asideoptions = {
           }
         ];
     })
-    .directive("nqAside", ["$aside", '$helpers', function ($aside, $helpers) {
+    .directive("nqAside", ["$aside", '$helpers','$interpolate', function ($aside, $helpers,$interpolate) {
         return {
             restrict: "AC",
             scope: true,
@@ -366,8 +366,9 @@ var asideoptions = {
                     $scope: scope,
                     id : attr.id || 'aside-' + scope.$id
                 }
+                var START = $interpolate.startSymbol();
                 angular.forEach(asideoptions, function (val, key) {
-                    if (angular.isDefined(attr[key]) && attr[key].indexOf('{{') < 0)
+                    if (angular.isDefined(attr[key]) && attr[key].indexOf(START) < 0)
                         options[key] = $helpers.parseConstant(attr[key]);
                         
                 });

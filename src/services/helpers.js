@@ -1,6 +1,6 @@
 'use strict';
 angular.module('ngQuantum.services.helpers', [])
-        .factory('$helpers', ['$injector', '$window', function ($injector, $window) {
+        .factory('$helpers', ['$injector', '$window','$interpolate', function ($injector, $window,$interpolate) {
             var fn = {};
             
             fn.injectModule = function (name, base) {
@@ -34,11 +34,12 @@ angular.module('ngQuantum.services.helpers', [])
                 else return defaultval || 0;
             }
             fn.parseConstant = function (value) {
+                var START = $interpolate.startSymbol();
                 if (/^(true|false|\d+|\-?[0-9]\d+)$/.test(value)) {
                     return eval(value)
                 }
                 if (angular.isString(value)) {
-                    if (value[0] == '[' || (value[0] == '{' && value[1] !== '{{')) {
+                    if (value[0] == '[' || (value[0] == '{' && value[1] !== START)) {
                         try {
                             return eval(value)
                         }
