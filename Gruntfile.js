@@ -144,7 +144,7 @@ module.exports = function (grunt) {
                     sourceMapFilename: 'dist/css/bootstrap-<%= pkg.name %>.css.map'
                 },
                 files: {
-                    'dist/css/<%= pkg.name %>.css': 'less/bootstrap-<%= pkg.name %>.less'
+                    'dist/css/bootstrap-<%= pkg.name %>.css': 'less/bootstrap-<%= pkg.name %>.less'
                 }
             }
         },
@@ -328,6 +328,10 @@ module.exports = function (grunt) {
         if (target === 'js') {
             // JS distribution task.
             return grunt.task.run(['comments:js', 'concat', 'uglify']);
+        }
+        if (target === 'less') {
+            // JS distribution task.
+            return grunt.task.run(['less:compileCore', 'less:compileBootstrap']);
         }
         if (target === 'css') {
             // CSS distribution task.

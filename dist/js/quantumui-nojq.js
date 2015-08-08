@@ -1,10 +1,10 @@
 /*!
- * QuantumUI Free v0.0.1 (http://quantumui.org)
+ * QuantumUI Free v1.0.0 (http://quantumui.org)
  * Copyright 2014-2015 Mehmet Otkun, quantumui.org
  */
 
 /*!
- * QuantumUI Free v0.0.1 (http://quantumui.org)
+ * QuantumUI Free v1.0.0 (http://quantumui.org)
  * Copyright 2014-2015 Mehmet Otkun, quantumui.org
  */
 (function (window, angular, undefined) {
