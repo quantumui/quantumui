@@ -1,0 +1,336 @@
+//
+// QuantumUI Variables
+// You must import bootstrap variabled 
+// --------------------------------------------------
+
+
+//== Import Bootstap variables
+//
+//## Import Bootstap variables
+@import '../../bourbon/bourbon';
+@import '../../bootstrap/bootstrap/variables';
+
+
+//==Inverse Colors
+//
+//## skin colors for use across QuantumUI.
+$skin-base:                 darken($gray-lighter, 20%) !default;
+$skin-base-dark:            darken($skin-base, 10%) !default;
+$skin-base-darker:          darken($skin-base, 20%) !default;
+$skin-base-light:           lighten($skin-base, 15%) !default;
+$skin-base-lighter:         lighten($skin-base, 25%) !default;
+$skin-base-active:          #da3282 !default;
+$skin-base-accent:          #ff000a !default;
+
+
+$skin-inverse:                 $gray !default;
+$skin-inverse-dark:            $gray-dark !default;
+$skin-inverse-darker:          $gray-darker !default;
+$skin-inverse-light:           lighten(adjust-hue($skin-inverse, 5%), 10%) !default;
+$skin-inverse-lighter:         lighten(adjust-hue($skin-inverse, 5%), 20%) !default;
+
+$brand-primary-darker:         darken($brand-primary, 15%) !default;
+$brand-primary-dark:           darken($brand-primary, 7.5%) !default;
+$brand-primary-light:          lighten($brand-primary, 18%) !default;
+$brand-primary-lighter:        lighten($brand-primary, 38%) !default;
+
+$brand-info-darker:            darken($brand-info, 15%) !default;
+$brand-info-dark:              darken($brand-info, 7.5%) !default;
+$brand-info-light:             lighten($brand-info, 18%) !default;
+$brand-info-lighter:           lighten($brand-info, 33%) !default;
+
+$brand-success-darker:         darken($brand-success, 15%) !default;
+$brand-success-dark:           darken($brand-success, 7.5%) !default;
+$brand-success-light:          lighten($brand-success, 18%) !default;
+$brand-success-lighter:        lighten($brand-success, 40%) !default;
+
+$brand-warning-darker:         darken($brand-warning, 15%) !default;
+$brand-warning-dark:           darken($brand-warning, 7.5%) !default;
+$brand-warning-light:          lighten($brand-warning, 11%) !default;
+$brand-warning-lighter:        lighten($brand-warning, 20%) !default;
+
+
+$brand-danger-darker:         darken($brand-danger, 15%) !default;
+$brand-danger-dark:           darken($brand-danger, 7.5%) !default;
+$brand-danger-light:          lighten($brand-danger, 18%) !default;
+$brand-danger-lighter:        lighten($brand-danger, 33%) !default;
+
+
+
+//== Iconography
+//
+//## Specify custom location and filename of the included Glyphicons icon font. Useful for those including Bootstrap via Bower.
+
+//** Load fonts from this directory.
+$icon-font-path:          "../fonts/" !default;
+//** File name for all font files.
+$icon-font-name:          "glyphicons-halflings-regular" !default;
+//** Element ID within SVG icon file.
+$icon-font-svg-id:        "glyphicons_halflingsregular" !default;
+
+
+
+
+
+
+//** Global color for active items (e.g., navs or dropdowns).
+$component-active-color:    $skin-base-active !default;
+//** Global background color for active items (e.g., navs or dropdowns).
+$component-active-bg:       $brand-primary !default;
+
+//** component font family.
+$component-font-family:        'glyphicons-halflings-regular' !default;
+$angle-icon:                   '\e259' !default;
+$angle-up-icon:                '\e260' !default;
+$tick-icon:                    '\e013' !default;
+$info-icon:                    '\e086' !default;
+$danger-icon:                  '\e107' !default;
+$warning-icon:                 '\e101' !default;
+
+
+//** Carets increase slightly in size for larger components.
+$caret-width-large:         5px !default;
+
+
+//** Background for the dropdown container.
+$dropdown-container-bg:                    $skin-base-light !default;
+
+$dropdown-container-box-shadow:            0 5px 10px rgba($skin-inverse, (1.75 / 100)) !default;
+
+$dropdown-container-box-shadow-top:        0 -5px 10px rgba($skin-inverse, (1.75 / 100)) !default;
+//** Dropdown container `border-color`.
+$dropdown-container-border:                darken($dropdown-container-bg, 5.5%) !default;
+
+$dropdown-container-fallback-border:       darken($dropdown-container-bg, 5.5%) !default;
+
+$dropdown-container-min-width:             170px !default;
+//** Dropdown container `max-width`.
+$dropdown-container-max-width:             360px !default;
+$dropdown-container-header-padding:        5px 7px !default;
+$dropdown-container-footer-padding:        5px 7px !default;
+$dropdown-container-header-color:          $skin-inverse-dark !default;
+$dropdown-container-footer-color:          $skin-inverse-dark !default;
+
+//-- Z-index master list
+//
+// Warning: Avoid customizing these values. They're used for a bird's eye view
+// of components dependent on the z-axis and are designed to all work together.
+//
+// Note: These variables are not generated into the Customizer.
+
+$zindex-dropdown:          1040 !default;
+$zindex-aside:             1040 !default;
+$zindex-modal:             1050 !default;
+$zindex-titip:             9999 !default;
+
+
+
+//== Modals extend
+//
+//##
+
+
+$modal-box-lg:                    600px !default;
+$modal-box-md:                    450px !default;
+$modal-box-sm:                    250px !default;
+
+//== Tabs
+$nav-tabs-font-size:            ($font-size-base - 1px) !default;
+
+//== Scrollbar
+//
+//##
+
+//** general scrollbar size.
+$scrollbar-image-path:       "../images/scrollbar" !default;
+$scrollbar-size:              8px !default; 
+//** page scrollbar size.
+$scrollbar-page-size:         12px !default; 
+
+$scrollbar-offset:            5px !default;
+
+$scrollbar-color:             #fff !default;
+$scrollbar-bg-color:          rgba($skin-base-light, (30/100)) !default; 
+$scrollbar-button-bg-color:   rgba($skin-base-light, (50/100)) !default;
+$scrollbar-hover-bg-color:    rgba($skin-base-light, (65/100)) !default; 
+$scrollbar-border-color:      lighten($skin-base-light, 35%) !default; 
+
+$scrollbar-track-border-radius:    6px !default; 
+$scrollbar-track-box-shadow:       inset 0 0 6px rgba(0,0,0,0.3) !default;
+
+$scrollbar-thumb-opacity:          0.9 !default;
+$scrollbar-thumb-bg-color:         lighten($skin-inverse, 10%) !default;
+$scrollbar-thumb-border-radius:    6px !default; 
+$scrollbar-thumb-box-shadow:       inset 3px 3px 9px rgba(255, 255, 255, 0.3), inset -3px -3px 9px rgba(255, 255, 255, 0.3) !default;
+$scrollbar-thumb-box-shadow-hover: inset 3px 3px 9px rgba(0, 0, 0, 0.2), inset -3px -3px 9px rgba(0, 0, 0, 0.2) !default;
+$scrollbar-thumb-filter-image:     radial-gradient(ellipse at center, rgba(255,255,255,0.2) 40%, rgba(0,0,0,0.1) 100%) !default;
+
+$scrollbar-corner-bg-color:          lighten($skin-base, 20%) !default; 
+$scrollbar-corner-border-color:      $scrollbar-corner-bg-color !default;
+
+//** quantum scrollbar settings
+$scrollbar-z-index:                9 !default;
+
+$scrollbar-button-bg-color:        $scrollbar-thumb-bg-color !default;
+$scrollbar-button-box-shadow:      1px 1px 2px 0px rgba(50, 50, 50, 0.3) !default;
+$scrollbar-button-size:            $scrollbar-size !default;
+$scrollbar-button-border-width:    4px !default;
+$scrollbar-button-border-color:    rgba(255, 255, 255, 0.8) !default;
+
+
+$scrollbar-info-bg                    : $brand-info-lighter !default;
+$scrollbar-info-color                 : $brand-info-lighter !default;
+$scrollbar-info-thumb-bg              : $brand-info !default;
+
+$scrollbar-warning-bg                 : $brand-warning-lighter !default;
+$scrollbar-warning-color              : $brand-warning-lighter !default;
+$scrollbar-warning-thumb-bg           : $brand-warning-dark !default;
+
+$scrollbar-danger-bg                  : $brand-danger-lighter !default;
+$scrollbar-danger-color               : $brand-danger-lighter !default;
+$scrollbar-danger-thumb-bg            : $brand-danger !default;
+
+$scrollbar-success-bg                 : $brand-success-lighter !default;
+$scrollbar-success-color              : $brand-success-lighter !default;
+$scrollbar-success-thumb-bg           : $brand-success !default;
+
+
+//== with-arrow Utils
+//
+//##
+$with-arrow-border-width:           10px !default;
+$with-arrow-margin:                 $with-arrow-border-width !default;
+$with-arrow-offset:                 $with-arrow-border-width !default;
+$with-arrow-top-box-shadow:         0 -6px 12px rgba(0, 0, 0, 0.175) !default;
+
+$with-arrow-border-inner-color:    #fff !default;
+$with-arrow-border-outer-color:    #fff !default;
+
+//== titip pure CSS tooltip
+//
+//##
+$titip-tringle-width:               8px !default;
+$titip-bg:                          $skin-inverse-dark !default;
+$titip-border-color:                $skin-inverse-darker !default;
+$titip-color:                       $skin-base-lighter !default;
+$titip-padding:                     6px 9px 7px !default;
+$titip-font-size:                   13px !default;
+$titip-line-height:                 13px !default;
+$titip-radius:                      $border-radius-base !default;
+$titip-box-shadow:                  1px 1px 7px 0px rgba(50, 50, 50, 0.09) !default;
+
+//== input[type="range"] IE10+ and nq-range-slider
+//
+//##
+$range-height:                      6px !default;
+$range-bg:                          $skin-base-lighter !default;
+$range-selection-bg:                $skin-base !default;
+$range-thumb-border:                $skin-inverse !default;
+$range-ticks-color:                 $skin-inverse-darker !default;
+$range-ticks-border-color:          $skin-base-light !default;
+$range-values-font-size:            11px !default;
+$range-thumb-width:                 10px !default;
+$range-thumb-height:                20px !default;
+
+$range-box-shadow:                  inset 0 1px 2px rgba(0, 0, 0, 0.2) !default;
+$range-box-shadow-horizontal:       inset 0 -1px 2px rgba(0, 0, 0, 0.1) !default;
+$range-thumb-box-shadow:            inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05) !default;
+
+$range-height-xs:                   4px !default;
+$range-thumb-width-xs:              8px !default;
+$range-thumb-height-xs:             16px !default;
+$range-height-md:                   10px !default;
+$range-thumb-width-md:              14px !default;
+$range-thumb-height-md:             24px !default;
+$range-height-lg:                   14px !default;
+$range-thumb-width-lg:              18px !default;
+$range-thumb-height-lg:             28px !default;
+$range-slider-size:                 210px !default;
+$range-ticks-size:                  12px !default;
+
+$range-primary-bg:                 $brand-primary-lighter !default;
+$range-primary-selection-bg:       $brand-primary !default;
+$range-primary-border:             $brand-primary-dark !default;
+
+$range-success-bg:                 $state-success-bg !default;
+$range-success-selection-bg:       $brand-success !default;
+$range-success-border:             $brand-success-dark !default;
+
+
+$range-info-bg:                    $state-info-bg !default;
+$range-info-selection-bg:          $brand-info !default;
+$range-info-border:                $brand-info-dark !default;
+
+$range-warning-bg:                 $state-warning-bg !default;
+$range-warning-selection-bg:       $brand-warning !default;
+$range-warning-border:             $brand-warning-dark !default;
+
+$range-danger-bg:                  $state-danger-bg !default;
+$range-danger-selection-bg:        $brand-danger !default;
+$range-danger-border:              $brand-danger-dark !default;
+
+//== calendars, datepicker, datetimepicker
+//
+//##
+$listbox-z-index:200; /** TODO $listbox-z-index undefined **/
+$cal-panel-bg:                      #fff !default;
+$cal-panel-z-index:                 $listbox-z-index !default;
+$cal-panel-border-color:            $skin-base-light !default;
+$cal-panel-color:                   $skin-inverse-dark !default;
+$cal-active-bg:                     $skin-base-active !default;
+$cal-active-color:                  #fff !default;
+$cal-hover-bg:                      $skin-inverse !default;
+$cal-hover-color:                   #fff !default;
+$cal-panel-padding:                 3px !default;
+$cal-panel-radius:                  $border-radius-base !default;
+$cal-panel-max-width:               270px !default;
+$cal-panel-font:                    "Trebuchet MS", "Lucida Sans Unicode", "Lucida Sans", Arial, Helvetica, sans-serif !default;
+
+//cal-table
+$cal-table-bg:                      $skin-base-lighter !default;
+$cal-table-color:                   $cal-panel-color !default;
+$cal-table-border-color:            $cal-panel-border-color !default;
+$cal-table-header-size:             25px !default;
+
+$cal-table-cell-size:               30px !default;
+$cal-table-cell-color:              lighten($cal-panel-color, 12%) !default;
+$cal-table-cell-hover-color:        #fff !default;
+$cal-table-cell-hover-bg:           $cal-hover-bg !default;
+//== aside
+//
+//##
+$aside-bg:                          $skin-inverse-dark !default;
+$aside-overlay-bg:                  #fff !default;
+$aside-color:                       $skin-inverse-lighter !default;
+$aside-width:                       220px !default;
+$aside-collapsed-width:             60px !default;
+$aside-font:                       "Trebuchet MS", "Lucida Sans Unicode", "Lucida Sans", Arial, Helvetica, sans-serif !default;
+$aside-header-height:               35px !default;
+$aside-footer-height:               35px !default;
+$aside-transition-duration:         0.2s !default;
+/*aside menu*/
+$aside-menu-color:                  $skin-inverse-lighter !default;
+$aside-menu-link-height:            40px !default;
+
+$aside-default-bg:                          $skin-base-lighter !default;
+$aside-default-overlay-bg:                  $skin-base-darker !default;
+$aside-default-color:                       $skin-inverse-darker !default;
+$aside-default-menu-color:                  $skin-inverse-darker !default;
+
+
+//== listbox(select)
+//
+//##
+$listbox-max-height:                 180px !default;
+$listbox-max-width:                  350px !default;
+$listbox-color:                      $skin-inverse-darker !default;
+$listbox-bg:                         #fff !default;
+$listbox-border-color:               $skin-base-light !default;
+$listbox-font-size:                  ($font-size-base - 1px) !default;
+$listbox-border-radius:              $border-radius-base !default;
+$listbox-z-index:                    $zindex-dropdown !default;
+$listbox-option-hover-bg:            $skin-base-light !default;
+$listbox-option-hover-color:         $skin-inverse-dark !default;
+$listbox-option-active-bg:           $skin-base-active !default;
+$listbox-option-active-color:        #fff !default;
+$listbox-highlight-color:            $skin-base-accent !default;

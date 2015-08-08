@@ -1,0 +1,387 @@
+$cal-table-min-width: ceil((($cal-table-cell-size * 7) + 2px)) !default;
+.calendar-panel {
+    display:none;
+    position:absolute;
+    padding:$cal-panel-padding;
+    border-radius:$cal-panel-radius;
+    width:auto;
+    z-index:$cal-panel-z-index;
+    max-width:$cal-panel-max-width;
+    background-color:$cal-panel-bg;
+    font-family: $cal-panel-font;
+    border: 1px solid $cal-panel-border-color;
+
+  /*with-arrow settings*/
+
+    &.with-arrow[class*=" bottom"] {
+        margin-top:14px;
+    }
+    &.with-arrow[class*=" top"] {
+         margin-top:-14px;
+    }
+    &.with-arrow[class*=" left"] {
+        margin-left:-14px;
+    }
+    &.with-arrow[class*=" right"] {
+         margin-left:14px;
+    }
+    &.with-arrow:before,
+    &.with-arrow:after {
+        top: -14px;
+        bottom:-14px;
+        left: -14px;
+        right:-14px;
+        border-width:14px;
+        margin-left:-14px;
+        margin-top:-14px;
+    }
+    &.with-arrow:after {
+        border-color:$cal-panel-bg;
+    }
+    .fic{
+        top:0.1em;
+    }
+}
+.calendar-panel a,
+.calendar-header button{
+    color:$cal-panel-color;
+}
+.calendar-panel.picker-datetime {
+}
+.calendar-panel.picker-datarange {
+    max-width:ceil((($cal-panel-max-width * 2) + 15px));
+}
+
+.calendar-header,
+.calendar-footer {  
+    width:100%;  
+}
+.calendar-body {
+    width:100%;
+    overflow:hidden;
+    @include clearfix();
+}
+.calendar-footer {
+    margin-top:3px;
+}
+.calendar-footer:empty {
+    display:none;
+}
+
+.calendar-table {
+    border-collapse: separate;
+    min-width:$cal-table-min-width;
+    max-width:100%;
+    overflow:hidden;
+    color: $cal-table-color;
+    background-color: $cal-table-bg;
+    border: 1px solid $cal-table-border-color;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+    /* IE class */
+    &.last-child {
+        margin-bottom: 0;
+    }
+    tr > td {
+        overflow:hidden;
+        position:relative;
+    }
+    thead,
+    tbody,
+    thead tr,
+    tbody tr{
+        border-color:inherit;
+        color:inherit;
+    }
+    thead th,
+    thead td {
+      vertical-align:middle;
+      height:$cal-table-header-size;
+      color: $cal-table-cell-color;
+      border: 1px solid white;
+      border-right-color: inherit;
+      border-bottom-color: inherit;
+        text-align: center;
+        @include gradient-vertical($start-color: $cal-table-bg,$end-color: darken($cal-table-bg, 6%))
+    }
+
+    &.has-week-no thead th,
+    &.has-week-no thead td {
+        width:12.5%;
+    }
+     tbody th,
+     tbody td {
+        text-align: center;
+        border: 1px solid white;
+        border-right-color: inherit;
+        border-bottom-color: inherit;
+        color:inherit;
+        height:$cal-table-cell-size;
+        width:$cal-table-cell-size;
+        min-width:$cal-table-cell-size;
+        cursor:pointer;
+        position:relative;
+        vertical-align: middle;
+    }
+
+    &.has-week-no tbody th,
+    &.has-week-no tbody td {
+        height:ceil(($cal-table-cell-size - 3px));
+    }
+    thead th.cal-week-no,
+    tbody th {
+       color:$cal-table-cell-color;
+       border-right-width:2px;
+    }
+    
+    tbody th.out-month,
+    tbody td.out-month {
+       opacity:0.8;
+       color:saturate($cal-table-cell-color, 12%);
+       background-color: desaturate($cal-table-bg, 10%);
+    }
+    tbody th.weekend,
+    tbody td.weekend {
+       opacity:0.8;
+       color:lighten($cal-table-cell-color, 6%);
+       background-color: darken($cal-table-bg, 3%);
+    }
+    tbody td:hover {
+       background-color:$cal-table-cell-hover-bg;
+       color:$cal-table-cell-hover-color;
+    }
+    tbody td:hover {
+       opacity:0.9 !important;
+    }
+    tbody td.selected,
+    tbody td.selected:hover {
+       background-color:$cal-active-bg;
+       color:$cal-active-color;
+    }
+
+    tbody th.unselectable,
+    tbody td.unselectable {
+       cursor:not-allowed;
+       background-color: greyscale($cal-table-bg, 10%);
+       text-decoration:line-through;
+    }
+    tbody th.unselectable:hover,
+    tbody td.unselectable:hover {
+       background-color: greyscale($cal-table-bg, 10%);
+       opacity:0.9 !important;
+       color:$cal-panel-color;
+    }
+    tr th:last-child,
+    tr td:last-child {
+        border-right-color:white;
+    }
+    tbody tr:last-child th,
+    tbody tr:last-child td {
+        border-bottom-color:white;
+    }
+}
+
+/***header ***/
+
+table.cal-header-table{
+    /*table-layout: fixed;*/
+    width:100%;
+}
+.cal-header-table {
+    tr > td{
+        vertical-align:middle;
+        position:relative;
+    }
+    tr > td.before,
+    tr > td.next,
+    tr > td.today,
+    tr > td.hide-cal{
+        width:25px;
+        /*overflow:hidden;*/
+        vertical-align:middle;
+    }
+    tr > td.date-head{
+       font-weight:bold;
+       text-align:center;
+    }
+    tr > td > button{
+      background: transparent none;
+      padding:3px 4px;
+        border:none;
+        margin:0;
+        &:focus{
+            outline:none;
+        }
+    }
+    tr > td.before button:before{
+    }
+    tr > td.next button:before{
+    }
+    tr > td.today button:before{
+    }
+    tr > td.hide-cal button:before{
+    }
+}
+.calendar-panel .year-selector{
+    min-width:$cal-table-min-width;
+    max-width:100%;
+    height:40px;
+    padding:2px 4px 0;
+    border:1px solid $cal-panel-border-color;
+    background-color:$cal-table-bg;
+    overflow:auto;
+    position:relative;
+}
+.year-selector {
+    .selector-inner{
+        display:table;
+        min-width:100%;
+        width:auto;
+    }
+    .selector-inner > a {
+        display:table-cell;
+        max-width: none;
+        padding:1px 2px;
+        margin-right:5px;
+        cursor:pointer;
+        font-size:12px;
+        font-weight:bold;
+        text-align:center;
+    }
+    .selector-inner > a > span {
+        display:block;
+        width:100%;
+        border:1px solid transparent;
+        padding:3px 7px;
+    }
+    a:first-child {
+        margin-left:5px;
+    }
+    a.active span,
+    a:hover span{
+        border-color:darken($cal-table-cell-hover-bg, 12%);
+        background-color:$cal-table-cell-hover-bg;
+        color:$cal-active-color;
+        border-radius:3px;
+    }
+    a:hover {
+        opacity:0.9;
+    }
+}
+
+/*timepicker*/
+.tp-container {
+    width:100%;
+
+    .tp-switcher{
+        text-align:center;
+        padding-top:6px;
+        padding-bottom:3px;
+        position:relative;
+    }
+}
+.tp-visible {
+    .tp-switcher{
+        background-color: lighten($cal-panel-border-color, 7%);
+        border-bottom: 1px solid $cal-panel-border-color;
+        border-top-left-radius:3px;
+        border-top-right-radius:3px;
+        margin-bottom:7px;
+    }
+}
+.tp-switcher .tp-close{
+    position:absolute;
+    top:5px;
+    right:5px;
+    display:none;
+    cursor:pointer;
+}
+.tp-visible .tp-close{
+    display:block;
+}
+.tp-switcher .tps-btn{
+    cursor:pointer;
+    font-size:0.9em;
+}
+.tp-switcher .tps-btn span{
+    font-size:1.2em;
+    display:inline-block;
+    padding-left:7px;
+}
+.cal-timepicker{
+    display:none;
+}
+.tp-table {
+    width:100%;
+    table-layout: fixed;
+
+    tbody{
+        width:100%;
+    }
+    tr > td {
+        vertical-align:middle;
+        text-align:center;
+        width:26%;
+        height:35px;
+        min-height:35px;
+    }
+    tr > td.tp-seperator {
+        width:6%;
+    }
+    tr > td > button.btn {
+        line-height:25px;
+        padding:1px 15px 0;
+        &:focus{
+            outline:none;
+        }
+    }
+    tr > td > button.btn.tp-up:before {
+    }
+    tr > td > button.btn.tp-down:before {
+    }
+}
+
+.tp-time-list {
+    width:100%;
+    max-height:150px;
+    > a {
+        display:inline-block;
+        width:20%;
+        text-align:center;
+        padding:2px;
+        color:#999;
+        cursor:pointer;
+    }
+    > a span{
+        padding:3px 5px;
+        display:block;
+    }
+    > a:hover span,
+    > a.active  span{
+        background-color:$cal-active-bg;
+        color: $cal-active-color;
+    }
+}
+/*inline*/
+.calendar-inline {
+    width:100%;
+    overflow:hidden;
+
+    .calendar-panel {
+        display:block !important;
+        position:relative;
+        width:100%;
+        min-width:100%;
+        max-width:100%;
+        z-index:2;
+        .calendar-table,
+        .year-selector{
+            width:100%;
+        }
+    }
+    td.hide-cal{
+        display:none;
+    }
+}

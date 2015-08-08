@@ -1,0 +1,207 @@
+//
+// Dropdown menus
+// --------------------------------------------------
+
+
+// Dropdown arrow/caret
+:focus {
+	outline: 0;
+}
+.caret.big {
+    $caret-width-big: ceil(($caret-width-base * 0.5)) !default;
+  margin-left: ceil(($caret-width-big /2));
+  border-top: $caret-width-big solid;
+  border-right: $caret-width-big solid transparent;
+  border-left: $caret-width-big solid transparent;
+}
+
+// Prevent the focus on the dropdown toggle when closing dropdowns
+.dropdown-toggle {
+    text-align:left;
+    padding-right:1.8em;
+    position:relative;
+    &:focus {
+      outline: 0;
+    }
+    &.active:after {
+       @include rotate(180deg);
+       top:0.15em;
+    }
+    &a {
+      padding-right:1.9em !important;
+    }
+    &[data-qo-placement^="left"].btn,
+    &[data-qo-placement^="left-top"],
+    &[data-qo-placement^="left-bottom"],
+    &[qo-placement^="left"].btn,
+    &[qo-placement^="left-top"],
+    &[qo-placement^="left-bottom"] {
+        padding-left:1.5em;
+        &:after{
+            @include rotate(180deg);
+            right:auto;
+            left:0;
+            padding-right:0;
+            padding-left:5px;
+        }
+    }
+    &:after,
+    &.btn:after {
+        font-family:$component-font-family;
+        position:absolute;
+        content: $angle-icon;
+        display:inline-block;
+        right:5px;
+        font-weight:normal;
+        font-size:1.2em;
+        
+    }
+    &[data-qo-placement^="top"].btn,
+    &[data-qo-placement^="top-left"],
+    &[data-qo-placement^="top-right"],
+    &[qo-placement^="top"].btn,
+    &[qo-placement^="top-left"],
+    &[qo-placement^="top-right"] {
+        &:after{
+            @include rotate(90deg);
+        }
+    }
+    &[data-qo-placement^="bottom"].btn,
+    &[data-qo-placement^="bottom-left"],
+    &[data-qo-placement^="bottom-right"],
+    &[qo-placement^="bottom"].btn,
+    &[qo-placement^="bottom-left"],
+    &[qo-placement^="bottom-right"] {
+        &:after{
+            @include rotate(-90deg);
+        }
+    }
+}
+.dropdown-menu {
+  top: 0;
+}
+// The dropdown container (ul or div)
+.dropdown-container {
+  position: absolute;
+  display:none;
+  top: 0;
+  left: 0;
+  z-index: $zindex-dropdown;
+  float: left;
+  min-width: $dropdown-container-min-width;
+  max-width: $dropdown-container-max-width;
+  padding: 3px;
+  margin: 0; // override default ul
+  font-size: $font-size-base;
+  text-align: left; // Ensures proper alignment if parent has it changed (e.g., modal footer)
+  background-color: $dropdown-container-bg;
+  border: 1px solid $dropdown-container-fallback-border; // IE8 fallback
+  border: 1px solid $dropdown-container-border;
+  border-radius: $border-radius-base;
+  @include box-shadow($dropdown-container-box-shadow);
+  background-clip: padding-box;
+  -webkit-animation-delay:0s;
+  animation-delay:0s;
+  transition:none;
+  
+  
+  // dropdown-menu within the dropdown-container
+  .dropdown-menu {
+    position: relative;
+    display: block;
+    z-index: 1;
+    top:0;
+    bottom:0;
+    min-width:100%;
+    padding:0;
+    border:0;
+    border-radius: 0;
+    -webkit-box-shadow: none;
+            box-shadow: none;
+  }
+
+  > div {
+      position:relative;
+      display: block;
+      width:100%;
+  }
+  > .dc-body {
+      @include clearfix;
+      padding:7px 10px;
+      background-color:#fff;
+      border-radius: $border-radius-base;
+      overflow-y:auto;
+  }
+  > .dc-header {
+      padding:$dropdown-container-header-padding;
+      color:$dropdown-container-header-color;
+  }
+  > .dc-footer {
+      color:$dropdown-container-footer-color;
+      padding:$dropdown-container-footer-padding;
+  }
+    &.with-arrow[class*=" bottom"] {
+        margin-top:14px;
+    }
+    &.with-arrow[class*=" top"] {
+         margin-top:-14px;
+         @include box-shadow($dropdown-container-box-shadow-top);
+    }
+    &.with-arrow[class*=" left"] {
+        margin-left:-14px;
+    }
+    &.with-arrow[class*=" right"] {
+         margin-left:14px;
+    }
+    &.with-arrow:before,
+    &.with-arrow:after {
+        top: -14px;
+        bottom:-14px;
+        left: -14px;
+        right:-14px;
+        border-width:14px;
+        margin-left:-14px;
+        margin-top:-14px;
+    }
+    &.with-arrow:after {
+        border-color:$dropdown-container-bg;
+    }
+}
+
+// Open state for the dropdown
+.open {
+  // Show the menu
+  > .dropdown-menu,
+  > .dropdown-container {
+    display: block;
+  }
+}
+[class*="active"] {
+  // Show the menu
+  & + .dropdown-menu,
+  & + .dropdown-container {
+    display: block;
+  }
+}
+
+
+// Allow for dropdowns to go bottom up (aka, dropup-menu)
+//
+// Just add .dropup after the standard .dropdown class and you're set, bro.
+// TODO: abstract this so that the navbar fixed styles are not placed here?
+
+.dropup,
+.navbar-fixed-bottom .dropdown {
+  .caret.big {
+        $caret-width-big: ceil(($caret-width-base * 0.5)) !default;
+        border-bottom: $caret-width-big solid;
+    }
+  // Different positioning for bottom up menu
+  .dropdown-menu,
+  .dropdown-container {
+    top: auto;
+    bottom: 100%;
+    margin-bottom: 1px;
+  }
+}
+
