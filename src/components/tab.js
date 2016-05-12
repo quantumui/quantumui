@@ -274,8 +274,7 @@ angular.module('ngQuantum.tabset', ['ngQuantum.services.helpers'])
                 });
                 elm.on('click', function (evt) {
                     evt.preventDefault();
-                    evt.stopPropagation();
-                    console.log(pane)
+                    evt.stopPropagation();                    
                     if (pane.active) return;
 
                     scope.$apply(function () {

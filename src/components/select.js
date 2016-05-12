@@ -854,7 +854,22 @@ var selectApp = angular.module('ngQuantum.select', [
           }
         ]);
     });
-
+    selectApp.directive('qoDisabled',[function(scope){
+     return{
+         restrict:'A',         
+         link:function(scope, element, attrs, controller){             
+             scope.$watch(function(){
+             return attrs.qoDisabled;
+             },function(newValue,oldValue){             
+             if (angular.lowercase(newValue) === 'true') {
+                    element[0].previousElementSibling.disabled = true;
+                } else {
+                    element[0].previousElementSibling.disabled = false;
+                };            
+             })
+         }         
+     }
+    }])
     selectApp.directive('selectOption', [
       function () {
           return {
