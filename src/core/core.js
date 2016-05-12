@@ -108,7 +108,7 @@ window.addResizeEvent = function (callback) {
     }
     var nqCoreApp = angular.module('ngQuantum.directives', [])
     angular.forEach(['Append', 'Prepend', 'Bind'], function (directive) {
-        nqCoreApp.directive('nq' + directive, ['$compile', function ($compile) {
+        nqCoreApp.directive('nq' + directive, ['$compile','$interpolate', function ($compile,$interpolate) {
             return {
                 restrict: 'A',
                 link: function (scope, element, attr) {
@@ -132,11 +132,12 @@ window.addResizeEvent = function (callback) {
                         }
                     }
                     function ensureElement(value) {
+                        var START = $interpolate.startSymbol();
                         if (angular.isElement(value))
                             bindElement(value);
                         else {
                             if (angular.isString(value)) {
-                                if (value.indexOf('{{') > -1 || value.indexOf('ng-bind') > -1) {
+                                if (value.indexOf(START) > -1 || value.indexOf('ng-bind') > -1) {
                                     var complied = angular.element(value);
                                     $compile(complied)(scope)
                                     bindElement(complied);
