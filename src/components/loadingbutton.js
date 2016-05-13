@@ -1,16 +1,12 @@
-﻿'use strict';
+'use strict';
 angular.module('ngQuantum.loadingButton', ['ngQuantum.services.helpers'])
     .provider('$loadingButton', function () {
         var defaults = this.defaults = {
             timeout: 2000,
-            //onTimeout: angular.noop,
             onError: angular.noop,
             onSuccess: angular.noop,
             loadingText: 'Loading...',
             showIcons: true,
-            //successText: 'Success! Try again',
-            //errorText: 'An error occured',
-            //timeoutText: 'Time is over',
             spinner: '<i class="fic fu-spinner-circle spin"></i> ',
             successIcon: '<i class="fic fu-check  flash"></i>',
             errorIcon: '<i class="fic fu-cross-c flash red"></i> ',
@@ -42,9 +38,7 @@ angular.module('ngQuantum.loadingButton', ['ngQuantum.services.helpers'])
                     if (options.showIcons) {
                         successicon = angular.isElement(options.successIcon) ? options.successIcon : angular.element(options.successIcon)
                         erricon = angular.isElement(options.errorIcon) ? options.errorIcon : angular.element(options.errorIcon)
-                        //timeicon = angular.isElement(options.timeoutIcon) ? options.timeoutIcon : angular.element(options.timeoutIcon)
                     }
-                    // implement our click handler
                     element.on('click', function (event) {
                         scope.$apply(function () {
                             getTimer(event);

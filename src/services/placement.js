@@ -1,4 +1,4 @@
-﻿'use strict';
+'use strict';
 angular.module('ngQuantum.services.placement', ['ngQuantum.services.helpers'])
         .factory('$placement', ['$helpers', function ($helpers) {
             var fn = {};
@@ -23,10 +23,8 @@ angular.module('ngQuantum.services.placement', ['ngQuantum.services.helpers'])
                 
                 offset.top = offset.top + $helpers.ensureNumber(options.offsetTop)
                 offset.left = offset.left + $helpers.ensureNumber(options.offsetLeft)
-                // manually read margins because getBoundingClientRect includes difference
                 var marginTop = parseInt($target.css('margin-top'), 10)
                 var marginLeft = parseInt($target.css('margin-left'), 10)
-                // we must check for NaN for ie 8/9
                 if (isNaN(marginTop)) marginTop = 0;
                 if (isNaN(marginLeft)) marginLeft = 0;
                 
@@ -40,8 +38,6 @@ angular.module('ngQuantum.services.placement', ['ngQuantum.services.helpers'])
                 return options;
             }
             fn.verticalPlacement = function ($target, options) {
-                //if (options.placement !== 'center')
-                //    return;
                 var windowHeght = window.screen.height || 0;
                 var targetHeight = $target.height() || 0;
                 var diff = windowHeght - targetHeight - 10;
@@ -68,7 +64,6 @@ angular.module('ngQuantum.services.placement', ['ngQuantum.services.helpers'])
 
             }
             fn.ensurePosition = function ($target, element, options) {
-                // check to see if placing target in new offset caused the target to resize itself
                 var offset = options.insideFixed ? $target.position() : $target.offset(), ww = window.screen.width, dh = $helpers.docHeight(),
                     tw = $target.width(), th = $target.height(), eh = element.height(), eo = options.insideFixed ? element.position() : element.offset(), classList = $target.attr('class');
                 if (offset.left < 0) {
@@ -104,7 +99,6 @@ angular.module('ngQuantum.services.placement', ['ngQuantum.services.helpers'])
                     rectObj[o] = clipRect[o];
                 }
                 var offset = options.insideFixed ? element.position() : element.offset();
-                //DOMRect could not be extended in firefox;
                 var result = angular.extend({}, rectObj, offset);
                return result;
             }
@@ -141,7 +135,6 @@ angular.module('ngQuantum.services.placement', ['ngQuantum.services.helpers'])
                 if (!split[1]) {
                     return offset;
                 }
-                // Add support for corners @todo css
                 if (split[0] === 'top' || split[0] === 'bottom') {
                     switch (split[1]) {
                         case 'left':

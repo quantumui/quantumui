@@ -1,4 +1,4 @@
-﻿'use strict';
+'use strict';
 angular.module('ngQuantum.pageable.blocker', [])
 .run(['$templateCache', function ($templateCache) {
     'use strict';

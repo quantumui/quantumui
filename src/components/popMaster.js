@@ -1,4 +1,4 @@
-﻿+function (window, angular, undefined) {
++function (window, angular, undefined) {
     var props = ['placement', 'delayShow', 'delayHide', 'effect', 'speed', 'theme', 'showArrow', 'holdHoverDelta'];
     var app  = angular.module('ngQuantum.popMaster', ['ngQuantum.services', 'ngQuantum.directives'])
         .provider('$popMaster', function () {
@@ -49,7 +49,6 @@
                           options.instanceName = options.typeClass
                       var originalOptions = $master.$originalOptions = angular.extend({}, options);
                       isTouch && (options.keyboard = false);
-                      // Provide scope helpers
                       angular.forEach(['hide', 'show', 'toggle'], function (value) {
                           scope['$' + value] = function () {
                               scope.$$postDigest(function () {
@@ -58,7 +57,6 @@
                           }
                       })
                       $master.$isShown = scope.$isShown = false;
-                      // Private vars
                       var timeout, hoverState, linker, $target, $container, $animateTarget, shouldCompile;
 
 
@@ -118,18 +116,15 @@
                       }
 
                       $master.destroy = function () {
-                          // Unbind events
                           $master.isDestroyed = true;
                           angular.element('body').off('click', onBodyClick);
                           if (element && options.trigger)
                               $helpers.unBindTriggers(element, options.trigger, $master);
-                          // Remove element
                           if ($target) {
                               $target.off();
                               $target.remove();
                               $target = null;
                           }
-                          // Destroy scope
                           !options.$scope && scope.$destroy();
                       };
                       $master.enter = function (evt) {
@@ -172,7 +167,6 @@
                           var after = $container ? angular.element(parent[0].lastChild) : element;
                           if (after && after.length < 1)
                               after = null;
-                          // check $target exists
                           if (!$target || $target.length < 1)
                               build();
                           else
@@ -284,7 +278,6 @@
                           if (options.effect) {
                               if (options.displayReflow)
                                   promise = $animate.leave($target).then(function () {
-                                      //$target = null;
                                       complateHide(callback);
                                       if (options.effect.indexOf('collapse') > -1)
                                           $target.css('height', '');
@@ -349,8 +342,6 @@
 
                           })
                       };
-
-                      // Protected methods
                       $master.$onKeyUp = function (evt) {
                           evt.which === 27 && $master.hide();
                       };
@@ -362,7 +353,6 @@
                               return true;
                           evt.preventDefault();
                           evt.stopPropagation();
-                          // Some browsers do not auto-focus buttons (eg. Safari)
                           $master.$isShown ? element.blur() : element.focus();
                       };
                       $master.$applyPlacement = function () {
@@ -374,8 +364,6 @@
                               $placement.applyPlacement($master.$toElement && $master.$toElement || $master.$currentElement && $master.$currentElement || element, $target, options)
                               $target && $target.css({ position: '' })
                           }
-                          //else if ($animateTarget)
-                          //    $placement.verticalPlacement($animateTarget, options)
 
                       };
                       $master.fireEvents = function (status) {
@@ -387,7 +375,6 @@
                       };
 
                       $master.applyEvents = function (status) {
-                          //var fn = $parse(options.onShow);
 
                           if (angular.isDefined(options.onShow))
                               scope.$on(options.prefixEvent + '.show', function () {
@@ -432,7 +419,6 @@
                           }
                       }
                       function build() {
-                          // Options : container
                           if (options.container === 'self') {
                               $container = element;
                           } else if (options.container) {
@@ -487,16 +473,13 @@
                       }
                       function complateHide(callback) {
                           $master.$hoverShown = false;
-                          // Unbind events
                           if (options.keyboard && !options.isInput) {
                               angular.element(document).off('keyup', $master.$onKeyUp);
                               angular.element(document).off('keyup', $master.$onFocusKeyUp);
                           }
-                          // Allow to blur the input when hidden, like when pressing enter key
                           if (options.blur && options.trigger === 'focus') {
                               element && element.blur();
                           }
-                          //element && element.blur();
                           element && element.removeClass('active')
                           if (options.clearExists && (options.hasClick || options.clearStrict)) {
                               angular.element('body').off('click', onBodyClick)
@@ -512,10 +495,8 @@
                       }
                       function complateShow(callback) {
                           $master.$hoverShown = true;
-                          // Bind events
                           if (options.keyboard && !options.isInput) {
                               if (options.trigger !== 'focus') {
-                                  //$master.focus();
                                   angular.element(document).on('keyup', $master.$onKeyUp);
                               } else {
                                   element && angular.element(document).on('keyup', $master.$onFocusKeyUp);
@@ -625,10 +606,6 @@
                         if (!angular.isObject(service))
                             return;
                         options = angular.extend({}, service.$originalOptions, options);
-                        
-                        //attr.title && attr.$observe('title', function (newValue, oldValue) {
-                        //    options.title = $sce.trustAsHtml(newValue);
-                        //});
                         trigger = angular.isDefined(attr.trigger) ? attr.trigger : options.trigger || 'click';
                         if (trigger.indexOf('click'))
                             options.hasClick = true;

@@ -1,4 +1,4 @@
-﻿'use strict';
+'use strict';
 angular.module('ngQuantum.pageable.pagesize')
 .run(['$templateCache', function ($templateCache) {
     $templateCache.put('pageable/pagesize.select.tpl.html',

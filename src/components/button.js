@@ -86,8 +86,6 @@
                         if (!isInput) {
                             element.on(options.toggleEvent, function () {
                                 var viewValue = directive == 'radio' ? trueValue : controller.$modelValue ? $helpers.parseConstant(controller.$modelValue) == trueValue ? falseValue : trueValue : trueValue;
-                                
-                                //controller.$render()
                                 sScope.$apply(function () {
                                     controller.$setViewValue(viewValue);
                                 });

@@ -1,4 +1,4 @@
-﻿'use strict';
+'use strict';
 angular.module('ngQuantum.slider', ['ngQuantum.services.mouse', 'ngQuantum.services.helpers'])
 .provider('$slider', function () {
     var defaults = this.defaults = {
@@ -369,7 +369,6 @@ angular.module('ngQuantum.slider', ['ngQuantum.services.mouse', 'ngQuantum.servi
 .directive('nqSlider', ['$slider', '$helpers', function ($slider, $helpers) {
     return {
         restrict: 'AC',
-        //scope: true,
         require: 'ngModel',
         link: function postLink(scope, element, attr, controller) {
             var options = {

@@ -1,4 +1,4 @@
-﻿'use strict';
+'use strict';
 angular.module('ngQuantum.services.helpers', [])
         .factory('$helpers', ['$injector', '$window', function ($injector, $window) {
             var fn = {};
@@ -11,15 +11,11 @@ angular.module('ngQuantum.services.helpers', [])
                     module = $injector.get(name);
                 }
                 catch (e) {
-                    //alert('ngquery WARNING:' + MESSAGE)
                     console.error('ngquantum WARNING:', MESSAGE);
                 }
 
                 return module;
             }
-            //fn.isTouch = function () {
-            //    return ("createTouch" in $window.document || window.ontouchstart != null) ;
-            //}
             fn.isTouch = function () {
                 if (navigator.userAgent.match(/Android/i)
                     || navigator.userAgent.match(/webOS/i)
@@ -140,24 +136,6 @@ angular.module('ngQuantum.services.helpers', [])
                     return result;
                 }
             }
-            //error on ie8
-            //fn.uniqueId = function () {
-            //    var svc = {
-            //        new: function () {
-            //            function _p8(s) {
-            //                var p = (Math.random().toString(16) + "000000000").substr(2, 8);
-            //                return s ? "-" + p.substr(0, 4) + "-" + p.substr(4, 4) : p;
-            //            }
-            //            return _p8() + _p8(true) + _p8(true) + _p8();
-            //        },
-
-            //        empty: function () {
-            //            return '00000000-0000-0000-0000-000000000000';
-            //        }
-            //    };
-
-            //    return svc;
-            //}
 
             fn.bindTriggers = function (element, triggers, $master) {
                 var array = triggers.split(' ');

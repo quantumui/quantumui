@@ -1,4 +1,4 @@
-﻿(function (window, angular, undefined) {
+(function (window, angular, undefined) {
 'use strict';
 var asideoptions = {
     effect: 'slide-left',
@@ -340,7 +340,6 @@ var asideoptions = {
                       element && element.off();
                       clearStyle();
                   });
-                  //chorme sometimes can't detect fixed positions
                   angular.element(document).ready(function () {
                       setTimeout(function () {
                           if (element.height() > window.innerHeight) {

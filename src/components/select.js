@@ -1,4 +1,4 @@
-﻿+function (window, angular, undefined) {
++function (window, angular, undefined) {
 'use strict';
 var selectApp = angular.module('ngQuantum.select', [
       'ngQuantum.popMaster',
@@ -27,7 +27,6 @@ var selectApp = angular.module('ngQuantum.select', [
             trigger: 'click',
             fireEmit: false,
             lazyAjax:true,
-            //fireBroadcast: true,
             container: 'body',
             displayReflow: false,
             disableClear: false,
@@ -111,7 +110,6 @@ var selectApp = angular.module('ngQuantum.select', [
                       if (angular.isDefined(options[key]) && !angular.isFunction(options[key]))
                           options[key] = $parse(options[key]);
                   })
-                  //options.displayType == 'input' && (options.trigger == 'focus')
                   $select = new $popMaster(element, options);
                   var scope = $select.$scope;
                   options = $select.$options = $helpers.observeOptions(attr, $select.$options);
@@ -201,7 +199,6 @@ var selectApp = angular.module('ngQuantum.select', [
                           
                       }
                   };
-                  // Public methods
                   $select.update = function (matches) {
                       var selected = $filter('filter')($select.optionData, { selected: true })
                       $select.optionData = matches;
@@ -302,12 +299,9 @@ var selectApp = angular.module('ngQuantum.select', [
                       }
                       if (isTagsInput)
                           $select.hide();
-                      // Emit event
                       scope.$emit('$select.select', item);
-                      //scope.filterModel = { label: '' };
                       searchInput.val('');
                   }
-                  // Protected methods;
                   $select.$getIndex = function (value) {
                       var l = $select.optionData.length, i = l;
                       if (!l || !angular.isDefined(value))
@@ -326,7 +320,6 @@ var selectApp = angular.module('ngQuantum.select', [
                   $select.$onMouseDown = function (evt) {
                       evt.preventDefault();
                       evt.stopPropagation();
-                      // Emulate click for mobile devices
                       if (isTouch) {
                           var targetEl = angular.element(evt.target);
                           targetEl.triggerHandler('click');
@@ -337,7 +330,6 @@ var selectApp = angular.module('ngQuantum.select', [
                           return true;
                       e.preventDefault();
                       e.stopPropagation();
-                      // Select with enter
                       
                       var $items = $target.find('.select-option:visible');
                     
@@ -378,8 +370,6 @@ var selectApp = angular.module('ngQuantum.select', [
                       $select.$target.css('min-width', element.outerWidth(true));
                       promise && promise.then(function () {
                           if (options.filterable) {
-                              //if (options.directive != 'nqTagsInput')
-                              //    scope.filterModel = { label: '' };
                               setTimeout(function () {
                                   searchInput.focus();
                               }, 0);
@@ -399,7 +389,6 @@ var selectApp = angular.module('ngQuantum.select', [
                   };
                   var _hide = $select.hide;
                   $select.hide = function () {
-                      //targetEl && targetEl.attr('style', 'display:none;')
                       $select.$target.off(isTouch ? 'touchstart' : 'mousedown', $select.$onMouseDown);
                       if (options.keyboard && $select.$target)
                           angular.element(document).off('keydown', $select.$onKeyDown);
@@ -428,7 +417,6 @@ var selectApp = angular.module('ngQuantum.select', [
                           return;
                       if ($select.oldValue && (!controller.$modelValue || (isNaN(controller.$modelValue) && !angular.isObject(controller.$modelValue)) || $select.oldValue == controller.$modelValue))
                           return;
-                      //targetEl && targetEl.attr('style', 'display:none;')
                       if (angular.isDefined(controller.$modelValue) && options.modelIsLabel) {
                           if ($select.complated) {
                               if (angular.isArray(controller.$modelValue)) {
@@ -532,7 +520,6 @@ var selectApp = angular.module('ngQuantum.select', [
                           });
                       });
                   }
-                  // Build proper nqOptions
                   if (angular.isDefined(attr.nqOptions)) {
                       parsedOptions = $parseOptions(attr.nqOptions);
                       var watchedOptions = parsedOptions.$match[7].replace(/\|.+/, '').trim();
@@ -560,10 +547,8 @@ var selectApp = angular.module('ngQuantum.select', [
                       controller.$render();
                   }
                   if (angular.isDefined(attr.ngChange)) {
-                      //cause dublicate call
                       scope.$parent.$watch(attr.ngModel, function (newValue, oldValue) {
                           if (!oldValue && newValue !== oldValue) {
-                              //scope.$parent.$eval(attr.ngChange);
                           }
                           scope.$parent.$watch(attr.ngModel, function () { })
                       });
@@ -620,7 +605,6 @@ var selectApp = angular.module('ngQuantum.select', [
                           else {
                               element.html('<span class="place-holder">' + options.placeholder + '</span>');
                               if ($select.optionData.length && angular.isDefined(controller.$modelValue)) {
-                                  //TODO: Make sure that available value is not valid
                                   $timeout(function () {
                                       scope.$lastSelected && (scope.$lastSelected.selected = false);
                                       controller.$setViewValue(null);
@@ -680,7 +664,6 @@ var selectApp = angular.module('ngQuantum.select', [
                                     li.show();
                                     inputItem.css('display', '');
                               })
-                              //searchInput.focus();
                               
                           }
                           
@@ -690,7 +673,6 @@ var selectApp = angular.module('ngQuantum.select', [
                                        e.preventDefault();
                                        e.stopPropagation();
                                        if (angular.isArray(controller.$modelValue)) {
-                                           //TODO:try $setViewValue is working correct
                                            controller.$modelValue = controller.$modelValue.splice(key, 1);
                                        }
                                        else
@@ -813,12 +795,6 @@ var selectApp = angular.module('ngQuantum.select', [
                       return param;
                   }
                   function validateModel() {
-                      //if (angular.isDefined(attr.required)) {
-                      //    controller.$setValidity("required", angular.isDefined(controller.$modelValue));
-                      //}
-                      //if (angular.isDefined(attr.ngRequired)) {
-                      //    controller.$setValidity("required", controller.$modelValue);
-                      //}
                       if (options.minRequired) {
                           if (angular.isArray(controller.$modelValue))
                               controller.$setValidity("min-required", controller.$modelValue.length >= options.minRequired);
@@ -913,8 +889,6 @@ var selectApp = angular.module('ngQuantum.select', [
                                   };
                                   $tagsInput.addOption(item)
                               }
-                              //if (index == newValue.length - 1)
-                              //    $tagsInput.render();
                           })
                       }
                   });
@@ -981,19 +955,14 @@ var selectApp = angular.module('ngQuantum.select', [
 
                               scroller.append(targetEl.show());
                               options.targetElement = angular.element('<div tabindex="-1" role="listbox" class="listbox-panel"></div>').append(scroller);
-                              //options.container = false;
                           }
                           else if (attr.qoDisplayType == 'input') {
                               buildElement();
                           }
-                          // Initialize select
                           var select = new $tagsInput(element, ngModel, options, attr, targetEl);
                           controllers[1].addOption = select.addOption;
                           controllers[1].changeOption = select.changeOption;
                           controllers[1].select = select.select;
-
-
-                          // Model rendering in view
                           ngModel.$render = select.render;
                           scope.$on('$destroy', function () {
                               select.destroy();
@@ -1075,7 +1044,6 @@ var selectApp = angular.module('ngQuantum.select', [
         return function (array) {
             if (!array || !array.length)
                 return []
-            //return array
             var newArray = [];
             angular.forEach(array, function (value) {
                 if (value.group)
@@ -1105,7 +1073,6 @@ var selectApp = angular.module('ngQuantum.select', [
                     newArray.push(group)
                 }
             }
-            //return array
             return newArray;
         };
     }]);

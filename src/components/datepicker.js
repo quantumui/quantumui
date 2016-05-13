@@ -1,4 +1,4 @@
-﻿(function (moment) {
+(function (moment) {
     if(!moment)
         return;
     moment.fn.clearTime = function () {
@@ -98,7 +98,6 @@ angular.module('ngQuantum.datepicker', [
             readonly :  true,
             overseeingTarget: true,
             modelType:'date',
-            //buildOnShow:true,
             nextIcon: 'fic fu-angle-r',
             prevIcon: 'fic fu-angle-l',
             todayIcon: 'fic fu-restore',
@@ -171,14 +170,10 @@ angular.module('ngQuantum.datepicker', [
                   $picker.init = function () {
                       optimize();
                       init();
-                      //if ($picker.$target) {
-                      //    buildFirst()
-                      //}
                       if (!initialized) {
                           initialized = true;
                           buildScope();
                       }
-                      //fireChange();
                       if (!options.allowWrite) {
                           element.on('keydown', function () {
                               return false;
@@ -211,7 +206,6 @@ angular.module('ngQuantum.datepicker', [
                       }
                       var promise = hide();
                       promise && promise.then(function () {
-                          //options.showYears && scrollYear();
                           if (scope.$timeViewActive && options.datepicker)
                               scope.$toggleTimepicker();
                           element && element.focus();
@@ -486,7 +480,6 @@ angular.module('ngQuantum.datepicker', [
                           while (options.disableWeekdays.indexOf(scope.currentDate.day()) > -1)
                               scope.currentDate.add(-1, 'day');
                       if (options.timepicker) {
-                          //scope.format += ' ' + options.timeFormat;
                           options.minHour = angular.isNumber(options.minHour) && (options.minHour >= 0) ? options.minHour : 8;
                           options.maxHour = angular.isNumber(options.maxHour) && options.maxHour || 22;
                           options.divideHour = angular.isNumber(options.divideHour) && options.divideHour || 4;

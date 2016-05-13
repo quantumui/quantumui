@@ -1,4 +1,4 @@
-﻿'use strict';
+'use strict';
 angular.module('ngQuantum.pageable.filtering', [])
 .directive('nqFilterField', [function () {
     return {
@@ -46,7 +46,6 @@ angular.module('ngQuantum.pageable.filtering', [])
                         scope.$active = !scope.$active;
                         if (scope.$active) {
                             element.addClass('active')
-                            //controller.setFilterKey(field, attr.filterValue);
                         }
 
                         else {

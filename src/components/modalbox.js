@@ -40,9 +40,6 @@ angular.module('ngQuantum.modalBox', ['ngQuantum.modal'])
                           scope[key] = options[key]
 
                       })
-
-                     
-                      // Overrides
                       var init = $modalBox.init;
                       $modalBox.init = function () {
                           init();
@@ -137,7 +134,6 @@ angular.module('ngQuantum.modalBox', ['ngQuantum.modal'])
               restrict: 'EAC',
               scope:true,
               link: function postLink(scope, element, attr, transclusion) {
-                  // Directive options
                   var options = {
                       $scope: scope
                   };

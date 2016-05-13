@@ -109,7 +109,6 @@
                     
 
                 });
-                //options.dimension === 'horizontal' && element.addClass('accordion-horizontal')
 
             }
         };

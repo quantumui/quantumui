@@ -1,4 +1,4 @@
-﻿(function(window, angular){
+(function(window, angular){
     'use strict';
     var defaults,
     editApp = angular.module('ngQuantum.pageable.editing', ['ngQuantum.services.templateHelper'])
@@ -136,7 +136,6 @@
                         var viewEl = angular.element(tScope[templateKey]),
                            parent,
                            after;
-                        //console.log('dsdsds', viewEl, tScope)
                         if (container == 'over') {
                             parent = controller.shellElement;
                             var items = controller.shellElement.find('.pageable-item');
@@ -202,7 +201,6 @@
                         else
                             templateTransclude(_show);
                     };
-                    //if (tType !== 'detail') {
                         function setRowField() {
                             $timeout(function () {
                                 if (tType !== 'insert')
@@ -244,7 +242,6 @@
                         };
                         $child.$delete = function () {
                             $timeout(function () {
-                                //TODO:check result
                                 controller.deleteRow(scope[controller.rowField]);
                                 $child.$back();
                             }, 0)
@@ -256,7 +253,6 @@
                             }, 0)
 
                         };
-                    //}
                     
                     return $child;
                 }

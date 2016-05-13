@@ -1,4 +1,4 @@
-﻿+function(){'use strict';
++function(){'use strict';
 angular.module('ngQuantum.alert', ['ngQuantum.popMaster', 'ngQuantum.services.helpers'])
     .run(['$templateCache', function ($templateCache) {
         'use strict';
@@ -67,14 +67,12 @@ angular.module('ngQuantum.alert', ['ngQuantum.popMaster', 'ngQuantum.services.he
                   }
                   if (attr && attr.onHide)
                       options.onHide = $parse(attr.onHide);
-                  // Overrides
                   var show = $alert.show;
                   $alert.show = function () {
                       scope.$closeIcon = options.closeIcon;
                       options.alertType && (scope.alertType = 'alert-' + options.alertType)
                       container && container.show()
                       var promise = show();
-                      //recomplie required
                       $compile($alert.$target)(scope);
                       
                       if (options.duration)

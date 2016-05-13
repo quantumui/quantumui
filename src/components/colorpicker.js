@@ -1,4 +1,4 @@
-﻿+function (window, angular, undefined) {
++function (window, angular, undefined) {
 'use strict';
     angular.module('ngQuantum.colorpicker', ['ngQuantum.popMaster'])
     .run(['$templateCache', function ($templateCache) {
@@ -300,7 +300,6 @@
     .directive('nqColorPicker', ['$colorPicker', function ($colorPicker) {
         return {
             restrict: 'AC',
-            //scope: {},
             require: 'ngModel',
             link: function postLink(scope, element, attr, controller) {
                 var options = {

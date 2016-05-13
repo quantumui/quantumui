@@ -104,7 +104,6 @@ angular.module('ngQuantum.popover', ['ngQuantum.popMaster'])
                   if (angular.isDefined(attr.qsTitle) || angular.isDefined(attr.qsContent) || attr.nqPopover
                       || angular.isDefined(attr.qoTemplate) || angular.isDefined(attr.qoContentTemplate))
                       options.useTemplate = true;
-                  // Initialize popover
                   var popover = {};
                   if (angular.isDefined(attr.qoIndependent)) {
                       options.independent = true;

@@ -8,10 +8,8 @@ angular.module('ngQuantum.services.parseOptions', [])
               function ($parse, $q) {
                   function ParseOptionsFactory(attr, $element) {
                       var $parseOptions = {};
-                      // Common vars
                       var options = angular.extend({}, defaults);
                       $parseOptions.$values = [];
-                      // Private vars
                       var match, displayFn, valueName, keyName, groupByFn, valueFn, valuesFn;
                       $parseOptions.init = function () {
                           $parseOptions.$match = match = attr.match(options.regexp);
@@ -45,7 +43,6 @@ angular.module('ngQuantum.services.parseOptions', [])
                               return false;
                           return parseValues([newValue])[0];
                       };
-                      // Private functions
                       function parseValues(values) {;
                           return values.map(function (match, index) {
                               var locals = {}, label, value, group;

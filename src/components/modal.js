@@ -51,7 +51,6 @@ angular.module('ngQuantum.modal', ['ngQuantum.popMaster'])
                   function ModalFactory(config, attr) {
 
                       var $modal = {}, element = config.element;
-                      // Common vars
                       if (!config.$scope) {
                           config.autoDestroy = true;
                           config.show = true;
@@ -110,7 +109,6 @@ angular.module('ngQuantum.modal', ['ngQuantum.popMaster'])
                               backdropElement = null;
                           }
                       };
-                      // Overrides
                       var show = $modal.show;
                       $modal.show = function () {
                           if (options.killBodyScroll)
@@ -162,9 +160,6 @@ angular.module('ngQuantum.modal', ['ngQuantum.popMaster'])
                           return promise;
                           
                       };
-
-                      
-                      // Private methods
                       function hideOnBackdropClick(evt) {
                           options.backdrop === 'static' ? $modal.focus() : $modal.hide();
                       }
@@ -194,7 +189,6 @@ angular.module('ngQuantum.modal', ['ngQuantum.popMaster'])
                           }
                       };
                       if (attr) {
-                          // Support scope as data-attrs
                           angular.forEach(['title', 'content'], function (key) {
                               var akey = 'qs' + key.capitaliseFirstLetter();
                               attr[akey] && (scope[key] = $sce.trustAsHtml(attr[akey]));
@@ -294,7 +288,6 @@ angular.module('ngQuantum.modal', ['ngQuantum.popMaster'])
               restrict: 'EAC',
               scope: true,
               link: function postLink(scope, element, attr, transclusion) {
-                  // Directive options
                   var options = {
                       $scope: scope
                   };

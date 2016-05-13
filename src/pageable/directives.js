@@ -1,4 +1,4 @@
-﻿(function (window, angular) {
+(function (window, angular) {
     'use strict';
     var pApp = angular.module('ngQuantum.pageable.directives', ['ngQuantum.pageable.factory']);
     pApp.directive('nqPageable', ['$pageable', function ($pageable) {

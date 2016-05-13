@@ -1,4 +1,4 @@
-﻿'use strict';
+'use strict';
 angular.module('ngQuantum.tooltip', ['ngQuantum.popMaster'])
     .run(['$templateCache', function ($templateCache) {
         'use strict';
@@ -34,7 +34,6 @@ angular.module('ngQuantum.tooltip', ['ngQuantum.popMaster'])
                   $tooltip = new $popMaster(element, options);
                   var scope = $tooltip.$scope
                   options = $tooltip.$options = $helpers.observeOptions(attr, $tooltip.$options);
-                  // Support scope as string options
                   if (options.title) {
                       scope.title = options.title;
                   }
@@ -62,13 +61,11 @@ angular.module('ngQuantum.tooltip', ['ngQuantum.popMaster'])
           return {
               restrict: 'EAC',
               link: function postLink(scope, element, attr, transclusion) {
-                  // Directive options
                   var options = {
                       $scope: scope.$new()
                   };
                   if (element[0].tagName.toLowerCase() == 'input')
                       options.isInput = true;
-                  // Initialize tooltip
                   var tooltip = $tooltip(element, options, attr);
                   scope.$on('$destroy', function () {
                       options.$scope.$destroy();

@@ -1,4 +1,4 @@
-﻿'use strict';
+'use strict';
 angular.module('ngQuantum.services.mouse', [])
         .provider('$mouseConfig', function () {
             this.adjustOldDeltas = true, // see shouldAdjustOldDeltas() below
@@ -114,23 +114,15 @@ angular.module('ngQuantum.services.mouse', [])
                         orgEvent.cancelBubble = false;;
                     }
                 };
-
-                // Old school scrollwheel delta
                 if ('detail' in orgEvent) { deltaY = orgEvent.detail * -1; }
                 if ('wheelDelta' in orgEvent) { deltaY = orgEvent.wheelDelta; }
                 if ('wheelDeltaY' in orgEvent) { deltaY = orgEvent.wheelDeltaY; }
                 if ('wheelDeltaX' in orgEvent) { deltaX = orgEvent.wheelDeltaX * -1; }
-
-                // Firefox < 17 horizontal scrolling related to DOMMouseScroll event
                 if ('axis' in orgEvent && orgEvent.axis === orgEvent.HORIZONTAL_AXIS) {
                     deltaX = deltaY * -1;
                     deltaY = 0;
                 }
-
-                // Set delta to be deltaY or deltaX if deltaY is 0 for backwards compatabilitiy
                 delta = deltaY === 0 ? deltaX : deltaY;
-
-                // New school wheel delta (wheel event)
                 if ('deltaY' in orgEvent) {
                     deltaY = orgEvent.deltaY * -1;
                     delta = deltaY;
@@ -139,15 +131,7 @@ angular.module('ngQuantum.services.mouse', [])
                     deltaX = orgEvent.deltaX;
                     if (deltaY === 0) { delta = deltaX * -1; }
                 }
-
-                // No change actually happened, no reason to go any further
                 if (deltaY === 0 && deltaX === 0) { return; }
-
-                // Need to convert lines and pages to pixels if we aren't already in pixels
-                // There are three delta modes:
-                //   * deltaMode 0 is by pixels, nothing to do
-                //   * deltaMode 1 is by lines
-                //   * deltaMode 2 is by pages
                 if (orgEvent.deltaMode === 1) {
                     var lineHeight = element.data()['mousewheel-line-height'];
                     delta *= lineHeight;
@@ -159,60 +143,37 @@ angular.module('ngQuantum.services.mouse', [])
                     deltaY *= pageHeight;
                     deltaX *= pageHeight;
                 }
-
-                // Store lowest absolute delta to normalize the delta values
                 absDelta = Math.max(Math.abs(deltaY), Math.abs(deltaX));
 
                 if (!lowestDelta || absDelta < lowestDelta) {
                     lowestDelta = absDelta;
-
-                    // Adjust older deltas if necessary
                     if (shouldAdjustOldDeltas(orgEvent, absDelta)) {
                         lowestDelta /= 40;
                     }
                 }
-
-                // Adjust older deltas if necessary
                 if (shouldAdjustOldDeltas(orgEvent, absDelta)) {
-                    // Divide all the things by 40!
                     delta /= 40;
                     deltaX /= 40;
                     deltaY /= 40;
                 }
-
-                // Get a whole, normalized value for the deltas
                 delta = Math[delta >= 1 ? 'floor' : 'ceil'](delta / lowestDelta);
                 deltaX = Math[deltaX >= 1 ? 'floor' : 'ceil'](deltaX / lowestDelta);
                 deltaY = Math[deltaY >= 1 ? 'floor' : 'ceil'](deltaY / lowestDelta);
-
-                // Normalise offsetX and offsetY properties
                 if ($mouseConfig.normalizeOffset && element[0].getBoundingClientRect) {
                     var boundingRect = element[0].getBoundingClientRect();
                     offsetX = event.clientX - boundingRect.left;
                     offsetY = event.clientY - boundingRect.top;
                 }
-
-                // Add information to the event object
                 event.deltaX = deltaX;
                 event.deltaY = deltaY;
                 event.deltaFactor = lowestDelta;
                 event.offsetX = offsetX;
                 event.offsetY = offsetY;
-                // Go ahead and set deltaMode to 0 since we converted to pixels
-                // Although this is a little odd since we overwrite the deltaX/Y
-                // properties with normalized deltas.
                 event.deltaMode = 0;
-                // Add event and delta to the front of the arguments
                 args.unshift(event, delta, deltaX, deltaY);
-                
-                // Clearout lowestDelta after sometime to better
-                // handle multiple device types that give different
-                // a different lowestDelta
-                // Ex: trackpad = 3 and mouse wheel = 120
                 if (nullLowestDeltaTimeout) { clearTimeout(nullLowestDeltaTimeout); }
                 nullLowestDeltaTimeout = setTimeout(nullLowestDelta, 200);
                 return callback(event);
-                //return element[0].dispatchEvent.apply(element[0], args);
             }
             function shouldAdjustOldDeltas(orgEvent, absDelta) {
                 return $mouseConfig.adjustOldDeltas && orgEvent.type === 'mousewheel' && absDelta % 120 === 0;

@@ -1,4 +1,4 @@
-﻿'use strict';
+'use strict';
 angular.module('ngQuantum.pageable.factory', ['ngQuantum.services.helpers'])
 .provider('$pageable', function () {
     var defaults = this.defaults = {
@@ -11,7 +11,6 @@ angular.module('ngQuantum.pageable.factory', ['ngQuantum.services.helpers'])
         showSize: true,
         showResultText: true,
         sizeOptions: [10, 20, 30, 40, 50],
-        //displaySizeAs: 'select',
         startPage: 1,
         firstLast: true,
         prevNext: true,
@@ -31,7 +30,6 @@ angular.module('ngQuantum.pageable.factory', ['ngQuantum.services.helpers'])
         methodDelete: 'DELETE',
         methodUpdate: 'PUT',
         paramsField: false,
-        //paramsField: 'PageableRequest',
         primaryKeys:false,
         serverRoot: false,
         baseUrl: false,
@@ -172,11 +170,6 @@ angular.module('ngQuantum.pageable.factory', ['ngQuantum.services.helpers'])
                     scope.$pageSize = scope.$pageSize || options.pageSize || 10;
                     if (!rows.length) {
                         if (options.remotePaging) {
-                            //TO DO:think about this when delete update insert
-                            //if (options.cacheResult && $pageable.caches['page_' + cm]) {
-                            //    rows = $pageable.caches['page_' + cm];
-                            //    setRows()
-                            //} else
                             if (!newrows)
                                 $pageable.loadRemote();
                             else if (!newrows.length)
@@ -529,7 +522,6 @@ angular.module('ngQuantum.pageable.factory', ['ngQuantum.services.helpers'])
                             ajax.url = buildUrl(prm, options.deleteSuffix);
                             ajax.method = 'POST';
                             ajax.data = options.paramsField ? ajax.data[options.paramsField] : obj.items;
-                            //ajax.data[options.paramsField] = obj.items;
                             
                         }
                         else {

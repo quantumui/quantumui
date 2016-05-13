@@ -1,4 +1,4 @@
-﻿'use strict';
+'use strict';
 angular.module('ngQuantum.loading', ['ngQuantum.services.lazy'])
     .run(['$http', '$rootScope', '$timeout', function ($http, $rootScope, $timeout) {
         $rootScope.$watch(function () { return $http.pendingRequests.length }, function (newVal, oldVal) {
@@ -57,7 +57,6 @@ angular.module('ngQuantum.loading', ['ngQuantum.services.lazy'])
                   if (options.placement)
                       template.addClass('loading-' + options.placement)
                   $loading.show = function () {
-                      //$('body').removeClass('content-loaded').addClass('waiting-load')
                       template.css('display', 'block')
                       $loading.isShown = true;
                       if (options.showBar)
@@ -108,12 +107,10 @@ angular.module('ngQuantum.loading', ['ngQuantum.services.lazy'])
                       if (newVal <= 0) {
                           $http.$pendingRequestCount = 0;
                           $timeout(function () {
-                              //$('body').removeClass('xhr-active');
                               $loading.hide();
                           }, 10)
                       }
                       else {
-                          //$('body').addClass('xhr-active');
                       }
 
                   })

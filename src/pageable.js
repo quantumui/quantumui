@@ -1,4 +1,4 @@
-﻿'use strict';
+'use strict';
 angular.module('ngQuantum.pageable', [
     'ngQuantum.pageable.factory',
     'ngQuantum.pageable.directives',

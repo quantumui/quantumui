@@ -1,4 +1,4 @@
-﻿if (!String.prototype.trim) {
+if (!String.prototype.trim) {
     String.prototype.trim = function () {
         return this.replace(/^\s+|\s+$/g, '');
     };
@@ -40,18 +40,9 @@ String.prototype.replaceAll = function (find, replace) {
     return str.replace(new RegExp(find, 'g'), replace);
 };
 window.isEmpty = function isEmpty(obj) {
-
-    // null and undefined are "empty"
     if (obj == null) return true;
-
-    // Assume if it has a length property with a non-zero value
-    // that that property is correct.
     if (obj.length > 0) return false;
     if (obj.length === 0) return true;
-
-    // Otherwise, does it have any properties of its own?
-    // Note that this doesn't handle
-    // toString and valueOf enumeration bugs in IE < 9
     for (var key in obj) {
         if (Object.prototype.hasOwnProperty.call(obj, key)) return false;
     }
