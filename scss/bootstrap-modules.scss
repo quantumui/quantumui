@@ -1,0 +1,51 @@
+// THIS File is include list of bootstrap modules
+
+
+// Reset and dependencies
+@import '../../wwwroot/lib/bootstrap/less/normalize';
+@import '../../wwwroot/lib/bootstrap/less/print';
+@import '../../wwwroot/lib/bootstrap/less/glyphicons';
+
+// Core CSS
+@import '../../wwwroot/lib/bootstrap/less/scaffolding';
+@import '../../wwwroot/lib/bootstrap/less/type';
+@import '../../wwwroot/lib/bootstrap/less/code';
+@import '../../wwwroot/lib/bootstrap/less/grid';
+@import '../../wwwroot/lib/bootstrap/less/tables';
+@import '../../wwwroot/lib/bootstrap/less/forms';
+@import '../../wwwroot/lib/bootstrap/less/buttons';
+
+// Components
+@import '../../wwwroot/lib/bootstrap/less/component-animations';
+@import '../../wwwroot/lib/bootstrap/less/dropdowns';
+@import '../../wwwroot/lib/bootstrap/less/button-groups';
+@import '../../wwwroot/lib/bootstrap/less/input-groups';
+@import '../../wwwroot/lib/bootstrap/less/navs';
+@import '../../wwwroot/lib/bootstrap/less/navbar';
+@import '../../wwwroot/lib/bootstrap/less/breadcrumbs';
+@import '../../wwwroot/lib/bootstrap/less/pagination';
+@import '../../wwwroot/lib/bootstrap/less/pager';
+@import '../../wwwroot/lib/bootstrap/less/labels';
+@import '../../wwwroot/lib/bootstrap/less/badges';
+@import '../../wwwroot/lib/bootstrap/less/jumbotron';
+@import '../../wwwroot/lib/bootstrap/less/thumbnails';
+@import '../../wwwroot/lib/bootstrap/less/alerts';
+@import '../../wwwroot/lib/bootstrap/less/progress-bars';
+@import '../../wwwroot/lib/bootstrap/less/media';
+@import '../../wwwroot/lib/bootstrap/less/list-group';
+@import '../../wwwroot/lib/bootstrap/less/panels';
+@import '../../wwwroot/lib/bootstrap/less/responsive-embed';
+@import '../../wwwroot/lib/bootstrap/less/wells';
+@import '../../wwwroot/lib/bootstrap/less/close';
+
+// Components w/ JavaScript
+@import '../../wwwroot/lib/bootstrap/less/modals';
+//@import '../../wwwroot/lib/bootstrap/less/tooltip'; //this is not required
+@import '../../wwwroot/lib/bootstrap/less/popovers';
+@import '../../wwwroot/lib/bootstrap/less/carousel';
+
+// Utility classes
+@import '../../wwwroot/lib/bootstrap/less/utilities';
+@import '../../wwwroot/lib/bootstrap/less/responsive-utilities';
+
+

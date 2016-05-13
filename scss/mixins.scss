@@ -1,10 +1,11 @@
 // Import Bootstrap Mixins
 // --------------------------------------------------
-@import '../../bootstrap/bootstrap/mixins';
+@import '../../wwwroot/lib/bootstrap/less/mixins';
 
 
-//QuantumUI
+//QuantumUI mixings
 @import 'mixins/calendars';
 @import 'mixins/range-input';
 @import 'mixins/scrollbar';
-@import 'mixins/overwrite';
+@import 'mixins/gradients';
+@import 'mixins/vendor-prefixes';

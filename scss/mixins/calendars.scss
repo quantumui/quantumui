@@ -1,4 +1,4 @@
-@mixin calendar-skin($panel-bg, $color, $table-bg, $border-color, $active-bg, $active-color){
+@mixin calendar-skin($panel-bg; $color; $table-bg; $border-color; $active-bg; $active-color){
     background-color:$panel-bg;
     &.with-arrow:after {
         border-color:$panel-bg;
@@ -13,7 +13,7 @@
         thead th,
         thead td {
             color: lighten($color, 8%);
-            @include gradient-vertical($start-color: $table-bg,$end-color: darken($table-bg, 6%))
+            #gradient > .vertical($start-color: $table-bg !default; $end-color: darken($table-bg, 6%))
         }
 
         thead th.cal-week-no,
@@ -63,6 +63,7 @@
     }
     .tp-time-list {
         > a:hover span,
+        > a:focus span,
         > a.active  span{
             background-color:$active-bg;
             color: $active-color;

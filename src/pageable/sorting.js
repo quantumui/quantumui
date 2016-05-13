@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 angular.module('ngQuantum.pageable.sorting', [])
 .directive('nqColumnSort', [function () {
     return {
@@ -10,6 +10,7 @@ angular.module('ngQuantum.pageable.sorting', [])
 
             if (field) {
                 if (angular.isDefined(attr.useTemplate)) {
+                    element.addClass('sorting-header');
                     element.css('position', 'relative')
                     template = angular.element('<span class="column-sorting"><span class="asc-icon"></span><span class="desc-icon"></span></span>');
                     element.append(template)

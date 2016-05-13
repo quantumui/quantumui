@@ -7,79 +7,105 @@
 //== Import Bootstap variables
 //
 //## Import Bootstap variables
-@import '../../bourbon/bourbon';
-@import '../../bootstrap/bootstrap/variables';
 
-
-//==Inverse Colors
-//
-//## skin colors for use across QuantumUI.
-$skin-base:                 darken($gray-lighter, 20%) !default;
-$skin-base-dark:            darken($skin-base, 10%) !default;
-$skin-base-darker:          darken($skin-base, 20%) !default;
-$skin-base-light:           lighten($skin-base, 15%) !default;
-$skin-base-lighter:         lighten($skin-base, 25%) !default;
-$skin-base-active:          #da3282 !default;
-$skin-base-accent:          #ff000a !default;
-
-
-$skin-inverse:                 $gray !default;
-$skin-inverse-dark:            $gray-dark !default;
-$skin-inverse-darker:          $gray-darker !default;
-$skin-inverse-light:           lighten(adjust-hue($skin-inverse, 5%), 10%) !default;
-$skin-inverse-lighter:         lighten(adjust-hue($skin-inverse, 5%), 20%) !default;
-
-$brand-primary-darker:         darken($brand-primary, 15%) !default;
-$brand-primary-dark:           darken($brand-primary, 7.5%) !default;
-$brand-primary-light:          lighten($brand-primary, 18%) !default;
-$brand-primary-lighter:        lighten($brand-primary, 38%) !default;
-
-$brand-info-darker:            darken($brand-info, 15%) !default;
-$brand-info-dark:              darken($brand-info, 7.5%) !default;
-$brand-info-light:             lighten($brand-info, 18%) !default;
-$brand-info-lighter:           lighten($brand-info, 33%) !default;
-
-$brand-success-darker:         darken($brand-success, 15%) !default;
-$brand-success-dark:           darken($brand-success, 7.5%) !default;
-$brand-success-light:          lighten($brand-success, 18%) !default;
-$brand-success-lighter:        lighten($brand-success, 40%) !default;
-
-$brand-warning-darker:         darken($brand-warning, 15%) !default;
-$brand-warning-dark:           darken($brand-warning, 7.5%) !default;
-$brand-warning-light:          lighten($brand-warning, 11%) !default;
-$brand-warning-lighter:        lighten($brand-warning, 20%) !default;
-
-
-$brand-danger-darker:         darken($brand-danger, 15%) !default;
-$brand-danger-dark:           darken($brand-danger, 7.5%) !default;
-$brand-danger-light:          lighten($brand-danger, 18%) !default;
-$brand-danger-lighter:        lighten($brand-danger, 33%) !default;
-
-
-
-//== Iconography
-//
-//## Specify custom location and filename of the included Glyphicons icon font. Useful for those including Bootstrap via Bower.
+@import '../../wwwroot/lib/bootstrap/less/variables';
 
 //** Load fonts from this directory.
-$icon-font-path:          "../fonts/" !default;
-//** File name for all font files.
-$icon-font-name:          "glyphicons-halflings-regular" !default;
-//** Element ID within SVG icon file.
-$icon-font-svg-id:        "glyphicons_halflingsregular" !default;
+$icon-font-path:          "../../wwwroot/lib/bootstrap/fonts/" !default;
+
+//== Colors
+//
+//## Skin and brand colors for use across QuantumUI Bootstrap Skin.
+
+$skin-base-color:                  $gray-light !default;
+$skin-base-accent:                 lighten($brand-info, 10%) !default;
+$skin-base-active:                 darken($brand-warning, 10%) !default;
+
+
+$skin-base-50:             tint(shade($skin-base-color, -48.5%), 97%) !default;
+$skin-base-100:            tint(shade($skin-base-color, -40%), 88%) !default;
+$skin-base-200:            tint(shade($skin-base-color, -30%), 60%) !default;
+$skin-base-300:            tint(shade($skin-base-color, -20%), 40%) !default;
+$skin-base-400:            tint(shade($skin-base-color, -10%), 20%) !default;
+$skin-base-500:            $skin-base-color !default;
+$skin-base-600:            shade(tint($skin-base-color, -7.5%), 15%) !default;
+$skin-base-700:            shade(tint($skin-base-color, -15%), 30%) !default;
+$skin-base-800:            shade(tint($skin-base-color, -22.5%), 45%) !default;
+$skin-base-900:            shade(tint($skin-base-color, -33.5%), 67%) !default;
+$skin-base-1000:           shade(tint($skin-base-color, -40%), 80%) !default;
+
+
+$skin-accent-50:           tint(shade($skin-base-accent, -41.5%), 92%) !default;
+$skin-accent-100:          tint(shade($skin-base-accent, -35%), 74%) !default;
+$skin-accent-200:          tint(shade($skin-base-accent, -27%), 54%) !default;
+$skin-accent-300:          tint(shade($skin-base-accent, -14%), 28%) !default;
+$skin-accent-400:          $skin-base-accent !default;
+$skin-accent-700:          shade(tint($skin-base-accent, -15%), 30%) !default;
+
+$skin-active-50:           tint(shade($skin-base-active, -47.5%), 95%) !default;
+$skin-active-100:          tint(shade($skin-base-active, -40%), 80%) !default;
+$skin-active-200:          tint(shade($skin-base-active, -27%), 54%) !default;
+$skin-active-300:          tint(shade($skin-base-active, -14%), 28%) !default;
+$skin-active-400:          $skin-base-active !default;
+$skin-active-700:          shade(tint($skin-base-active, -15%), 30%) !default;
+
+$white:                   #fff !default;
+$white-lighter:           darken($white, 0.6%) !default;
+$white-light:             darken($white, 1.8%) !default;
+$white-dark:              darken($white, 3.3%) !default;
+$white-darker:            darken($white, 5.8%) !default;
+
+
+//==Brand Shades
+//
+//## Brand colors for use across QuantumUI.
+
+$brand-primary-darker:         shade(tint($brand-primary, -19%), 38%) !default;
+$brand-primary-dark:           shade(tint($brand-primary, -9%), 18%) !default;
+$brand-primary-light:          tint(shade($brand-primary, -9%), 18%) !default;
+$brand-primary-lighter:        tint(shade($brand-primary, -19%), 38%) !default;
+
+$brand-info-darker:            shade(tint($brand-info, -7.5%), 15%) !default;
+$brand-info-dark:              shade(tint($brand-info, -3.75%), 7.5%) !default;
+$brand-info-light:             tint(shade($brand-info, -9%), 18%) !default;
+$brand-info-lighter:           tint(shade($brand-info, -19%), 38%) !default;
+
+$brand-success-darker:         shade(tint($brand-success, -7.5%), 15%) !default;
+$brand-success-dark:           shade(tint($brand-success, -3.75%), 7.5%) !default;
+$brand-success-light:          tint(shade($brand-success, -9%), 18%) !default;
+$brand-success-lighter:        tint(shade($brand-success, -18%), 38%) !default;
+
+$brand-warning-darker:         shade(tint($brand-warning, -7.5%), 15%) !default;
+$brand-warning-dark:           shade(tint($brand-warning, -3.75%), 7.5%) !default;
+$brand-warning-light:          tint(shade($brand-warning, -9%), 18%) !default;
+$brand-warning-lighter:        tint(shade($brand-warning, -19%), 38%) !default;
+
+
+$brand-danger-darker:         shade(tint($brand-danger, -7.5%), 15%) !default;
+$brand-danger-dark:           shade(tint($brand-danger, -3.75%), 7.5%) !default;
+$brand-danger-light:          tint(shade($brand-danger, -9%), 18%) !default;
+$brand-danger-lighter:        tint(shade($brand-danger, -19%), 38%) !default;
+//== Scaffolding
+//
+//## Settings for some of the most global styles.
+
+
+$font-size-largest:       21px !default;
+$font-size-smallest:      ceil(($font-size-base * 0.7)) !default; // ~10px
 
 
 
+//== Components
+//
+//## Define common padding and border radius sizes and more. Values based on 14px text and 1.428 line-height (~20px to start).
 
 
+$line-height-largest:       1.18 !default;
 
-//** Global color for active items (e.g., navs or dropdowns).
-$component-active-color:    $skin-base-active !default;
-//** Global background color for active items (e.g., navs or dropdowns).
-$component-active-bg:       $brand-primary !default;
+$border-radius-largest:     8px !default;
 
 //** component font family.
-$component-font-family:        'glyphicons-halflings-regular' !default;
+$component-font-family:        'Glyphicons Halflings' !default;
 $angle-icon:                   '\e259' !default;
 $angle-up-icon:                '\e260' !default;
 $tick-icon:                    '\e013' !default;
@@ -88,28 +114,40 @@ $danger-icon:                  '\e107' !default;
 $warning-icon:                 '\e101' !default;
 
 
-//** Carets increase slightly in size for larger components.
 $caret-width-large:         5px !default;
 
 
+
+
+
+//== Dropdowns
+//
+//## Dropdown menu container and contents.
+
+$dropdown-min-width:             160px !default;
+$dropdown-box-shadow:            0 6px 12px rgba($skin-base-700, (2/100)) !default;
+$dropdown-caret-color:           $skin-base-800 !default;
+
 //** Background for the dropdown container.
-$dropdown-container-bg:                    $skin-base-light !default;
+$dropdown-container-bg:                    $skin-base-100 !default;
 
-$dropdown-container-box-shadow:            0 5px 10px rgba($skin-inverse, (1.75 / 100)) !default;
+$dropdown-container-box-shadow:            0 5px 10px rgba($skin-base-700, (2/100)) !default;
 
-$dropdown-container-box-shadow-top:        0 -5px 10px rgba($skin-inverse, (1.75 / 100)) !default;
+$dropdown-container-box-shadow-top:        0 -5px 10px rgba($skin-base-700, (2/100)) !default;
 //** Dropdown container `border-color`.
-$dropdown-container-border:                darken($dropdown-container-bg, 5.5%) !default;
+$dropdown-container-border:                shade($dropdown-container-bg, 5.5%) !default;
 
-$dropdown-container-fallback-border:       darken($dropdown-container-bg, 5.5%) !default;
+$dropdown-container-fallback-border:       shade($dropdown-container-bg, 5.5%) !default;
 
 $dropdown-container-min-width:             170px !default;
 //** Dropdown container `max-width`.
 $dropdown-container-max-width:             360px !default;
 $dropdown-container-header-padding:        5px 7px !default;
 $dropdown-container-footer-padding:        5px 7px !default;
-$dropdown-container-header-color:          $skin-inverse-dark !default;
-$dropdown-container-footer-color:          $skin-inverse-dark !default;
+$dropdown-container-header-color:          $skin-base-800 !default;
+$dropdown-container-footer-color:          $skin-base-800 !default;
+
+
 
 //-- Z-index master list
 //
@@ -125,7 +163,11 @@ $zindex-titip:             9999 !default;
 
 
 
-//== Modals extend
+//== Tabs
+$nav-tabs-font-size:                        ($font-size-base - 1px) !default;
+
+
+//== Modalbox
 //
 //##
 
@@ -134,15 +176,23 @@ $modal-box-lg:                    600px !default;
 $modal-box-md:                    450px !default;
 $modal-box-sm:                    250px !default;
 
-//== Tabs
-$nav-tabs-font-size:            ($font-size-base - 1px) !default;
+//== Carousel
+//
+//##
+
+$carousel-indicator-thumb-color:             $skin-base-800 !default;
+$carousel-indicator-thumb-bg:                $skin-base-200 !default;
+$carousel-indicator-thumb-border-color:      $skin-base-300 !default;
+
+$carousel-caption-color:                     #fff !default;
+$carousel-caption-bg:                        $skin-base-700 !default;
 
 //== Scrollbar
 //
 //##
 
 //** general scrollbar size.
-$scrollbar-image-path:       "../images/scrollbar" !default;
+$scrollbar-image-path:       "../../images/scrollbar" !default;
 $scrollbar-size:              8px !default; 
 //** page scrollbar size.
 $scrollbar-page-size:         12px !default; 
@@ -150,22 +200,22 @@ $scrollbar-page-size:         12px !default;
 $scrollbar-offset:            5px !default;
 
 $scrollbar-color:             #fff !default;
-$scrollbar-bg-color:          rgba($skin-base-light, (30/100)) !default; 
-$scrollbar-button-bg-color:   rgba($skin-base-light, (50/100)) !default;
-$scrollbar-hover-bg-color:    rgba($skin-base-light, (65/100)) !default; 
-$scrollbar-border-color:      lighten($skin-base-light, 35%) !default; 
+$scrollbar-bg-color:          rgba($skin-base-300, (30/100)) !default; 
+$scrollbar-button-bg-color:   rgba($skin-base-300, (50/100)) !default;
+$scrollbar-hover-bg-color:    rgba($skin-base-300, (65/100)) !default; 
+$scrollbar-border-color:      lighten($skin-base-300, 35%) !default; 
 
 $scrollbar-track-border-radius:    6px !default; 
 $scrollbar-track-box-shadow:       inset 0 0 6px rgba(0,0,0,0.3) !default;
 
 $scrollbar-thumb-opacity:          0.9 !default;
-$scrollbar-thumb-bg-color:         lighten($skin-inverse, 10%) !default;
+$scrollbar-thumb-bg-color:         $skin-base-600 !default;
 $scrollbar-thumb-border-radius:    6px !default; 
 $scrollbar-thumb-box-shadow:       inset 3px 3px 9px rgba(255, 255, 255, 0.3), inset -3px -3px 9px rgba(255, 255, 255, 0.3) !default;
 $scrollbar-thumb-box-shadow-hover: inset 3px 3px 9px rgba(0, 0, 0, 0.2), inset -3px -3px 9px rgba(0, 0, 0, 0.2) !default;
 $scrollbar-thumb-filter-image:     radial-gradient(ellipse at center, rgba(255,255,255,0.2) 40%, rgba(0,0,0,0.1) 100%) !default;
 
-$scrollbar-corner-bg-color:          lighten($skin-base, 20%) !default; 
+$scrollbar-corner-bg-color:          $skin-base-100 !default;
 $scrollbar-corner-border-color:      $scrollbar-corner-bg-color !default;
 
 //** quantum scrollbar settings
@@ -176,7 +226,6 @@ $scrollbar-button-box-shadow:      1px 1px 2px 0px rgba(50, 50, 50, 0.3) !defaul
 $scrollbar-button-size:            $scrollbar-size !default;
 $scrollbar-button-border-width:    4px !default;
 $scrollbar-button-border-color:    rgba(255, 255, 255, 0.8) !default;
-
 
 $scrollbar-info-bg                    : $brand-info-lighter !default;
 $scrollbar-info-color                 : $brand-info-lighter !default;
@@ -194,7 +243,6 @@ $scrollbar-success-bg                 : $brand-success-lighter !default;
 $scrollbar-success-color              : $brand-success-lighter !default;
 $scrollbar-success-thumb-bg           : $brand-success !default;
 
-
 //== with-arrow Utils
 //
 //##
@@ -210,9 +258,9 @@ $with-arrow-border-outer-color:    #fff !default;
 //
 //##
 $titip-tringle-width:               8px !default;
-$titip-bg:                          $skin-inverse-dark !default;
-$titip-border-color:                $skin-inverse-darker !default;
-$titip-color:                       $skin-base-lighter !default;
+$titip-bg:                          $skin-base-600 !default;
+$titip-border-color:                $skin-base-700 !default;
+$titip-color:                       $skin-base-100 !default;
 $titip-padding:                     6px 9px 7px !default;
 $titip-font-size:                   13px !default;
 $titip-line-height:                 13px !default;
@@ -223,11 +271,11 @@ $titip-box-shadow:                  1px 1px 7px 0px rgba(50, 50, 50, 0.09) !defa
 //
 //##
 $range-height:                      6px !default;
-$range-bg:                          $skin-base-lighter !default;
-$range-selection-bg:                $skin-base !default;
-$range-thumb-border:                $skin-inverse !default;
-$range-ticks-color:                 $skin-inverse-darker !default;
-$range-ticks-border-color:          $skin-base-light !default;
+$range-bg:                          $skin-base-50 !default;
+$range-selection-bg:                $skin-base-400 !default;
+$range-thumb-border:                $skin-base-500 !default;
+$range-ticks-color:                 $skin-base-800 !default;
+$range-ticks-border-color:          $skin-base-100 !default;
 $range-values-font-size:            11px !default;
 $range-thumb-width:                 10px !default;
 $range-thumb-height:                20px !default;
@@ -272,14 +320,13 @@ $range-danger-border:              $brand-danger-dark !default;
 //== calendars, datepicker, datetimepicker
 //
 //##
-$listbox-z-index:200; /** TODO $listbox-z-index undefined **/
 $cal-panel-bg:                      #fff !default;
 $cal-panel-z-index:                 $listbox-z-index !default;
-$cal-panel-border-color:            $skin-base-light !default;
-$cal-panel-color:                   $skin-inverse-dark !default;
+$cal-panel-border-color:            $skin-base-100 !default;
+$cal-panel-color:                   $skin-base-900 !default;
 $cal-active-bg:                     $skin-base-active !default;
 $cal-active-color:                  #fff !default;
-$cal-hover-bg:                      $skin-inverse !default;
+$cal-hover-bg:                      $skin-base-700 !default;
 $cal-hover-color:                   #fff !default;
 $cal-panel-padding:                 3px !default;
 $cal-panel-radius:                  $border-radius-base !default;
@@ -287,7 +334,7 @@ $cal-panel-max-width:               270px !default;
 $cal-panel-font:                    "Trebuchet MS", "Lucida Sans Unicode", "Lucida Sans", Arial, Helvetica, sans-serif !default;
 
 //cal-table
-$cal-table-bg:                      $skin-base-lighter !default;
+$cal-table-bg:                      $skin-base-50 !default;
 $cal-table-color:                   $cal-panel-color !default;
 $cal-table-border-color:            $cal-panel-border-color !default;
 $cal-table-header-size:             25px !default;
@@ -299,9 +346,9 @@ $cal-table-cell-hover-bg:           $cal-hover-bg !default;
 //== aside
 //
 //##
-$aside-bg:                          $skin-inverse-dark !default;
+$aside-bg:                          $skin-base-700 !default;
 $aside-overlay-bg:                  #fff !default;
-$aside-color:                       $skin-inverse-lighter !default;
+$aside-color:                       $skin-base-400 !default;
 $aside-width:                       220px !default;
 $aside-collapsed-width:             60px !default;
 $aside-font:                       "Trebuchet MS", "Lucida Sans Unicode", "Lucida Sans", Arial, Helvetica, sans-serif !default;
@@ -309,13 +356,14 @@ $aside-header-height:               35px !default;
 $aside-footer-height:               35px !default;
 $aside-transition-duration:         0.2s !default;
 /*aside menu*/
-$aside-menu-color:                  $skin-inverse-lighter !default;
+$aside-menu-color:                  $skin-base-400 !default;
 $aside-menu-link-height:            40px !default;
 
-$aside-default-bg:                          $skin-base-lighter !default;
-$aside-default-overlay-bg:                  $skin-base-darker !default;
-$aside-default-color:                       $skin-inverse-darker !default;
-$aside-default-menu-color:                  $skin-inverse-darker !default;
+$aside-default-bg:                          $skin-base-100 !default;
+$aside-default-overlay-bg:                  $skin-base-600 !default;
+$aside-default-color:                       $skin-base-1000 !default;
+$aside-default-menu-color:                  $skin-base-1000 !default;
+
 
 
 //== listbox(select)
@@ -323,14 +371,15 @@ $aside-default-menu-color:                  $skin-inverse-darker !default;
 //##
 $listbox-max-height:                 180px !default;
 $listbox-max-width:                  350px !default;
-$listbox-color:                      $skin-inverse-darker !default;
+$listbox-color:                      $skin-base-800 !default;
 $listbox-bg:                         #fff !default;
-$listbox-border-color:               $skin-base-light !default;
+$listbox-border-color:               $skin-base-100 !default;
 $listbox-font-size:                  ($font-size-base - 1px) !default;
 $listbox-border-radius:              $border-radius-base !default;
 $listbox-z-index:                    $zindex-dropdown !default;
-$listbox-option-hover-bg:            $skin-base-light !default;
-$listbox-option-hover-color:         $skin-inverse-dark !default;
+$listbox-option-hover-bg:            $skin-accent-100 !default;
+$listbox-option-hover-color:         $skin-accent-700 !default;
 $listbox-option-active-bg:           $skin-base-active !default;
 $listbox-option-active-color:        #fff !default;
-$listbox-highlight-color:            $skin-base-accent !default;
+$listbox-highlight-color:            $skin-base-active !default;
+

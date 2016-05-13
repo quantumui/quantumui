@@ -55,6 +55,7 @@
                 return {
                     restrict: 'A',
                     require: 'ngModel',
+                    scope:false,
                     link: function postLink(scope, element, attr, controller) {
                         var options = $button.defaults;
                         directive = directive.toLowerCase();
@@ -75,17 +76,21 @@
                         }
                         attr.showTick == 'left' && activeElement.addClass('tick-left')
                         angular.isDefined(attr.checked) && controller.$setViewValue(trueValue);
-
-                        scope.$watch(attr.ngModel, function (newValue, oldValue) {
-                            var isActive = angular.equals($helpers.parseConstant(controller.$modelValue), trueValue);
+                        var sScope = angular.isDefined(scope.$index) ? scope.$parent : scope;
+                        sScope.$watch(attr.ngModel, function (newValue, oldValue) {
+                            var isActive = angular.equals($helpers.parseConstant(newValue), trueValue);
                             !isActive && element.removeAttr('checked');
-                            activeElement.toggleClass(options.activeClass, isActive);
+                            activeElement = isInput ? element.parent() : element;
+                            !isActive ? activeElement.removeClass(options.activeClass) : activeElement.addClass(options.activeClass);
                         });
                         if (!isInput) {
-                            element.bind(options.toggleEvent, function () {
+                            element.on(options.toggleEvent, function () {
                                 var viewValue = directive == 'radio' ? trueValue : controller.$modelValue ? $helpers.parseConstant(controller.$modelValue) == trueValue ? falseValue : trueValue : trueValue;
-                                controller.$setViewValue(viewValue);
-                                scope.$apply();
+                                
+                                //controller.$render()
+                                sScope.$apply(function () {
+                                    controller.$setViewValue(viewValue);
+                                });
                             });
                         }
                     }

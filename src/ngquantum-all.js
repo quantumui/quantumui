@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 angular.module('ngQuantum', [
   'ngQuantum.directives',
   'ngQuantum.tooltip',

@@ -8,17 +8,25 @@ angular.module('ngQuantum.services.parseOptions', [])
               function ($parse, $q) {
                   function ParseOptionsFactory(attr, $element) {
                       var $parseOptions = {};
+                      // Common vars
                       var options = angular.extend({}, defaults);
                       $parseOptions.$values = [];
+                      // Private vars
                       var match, displayFn, valueName, keyName, groupByFn, valueFn, valuesFn;
                       $parseOptions.init = function () {
                           $parseOptions.$match = match = attr.match(options.regexp);
-                          displayFn = $parse(match[2] || match[1]), valueName = match[4] || match[6], keyName = match[5], groupByFn = $parse(match[3] || ''), valueFn = $parse(match[2] ? match[1] : valueName), valuesFn = $parse(match[7]);
+                          displayFn = $parse(match[2] || match[1]),
+                          valueName = match[4] || match[6],
+                          keyName = match[5],
+                          groupByFn = $parse(match[3] || ''),
+                          valueFn = $parse(match[2] ? match[1] : valueName),
+                          valuesFn = $parse(match[7]);
 
                       };
                       $parseOptions.valuesFn = function (scope, controller) {
                           return $q.when(valuesFn(scope, controller)).then(function (values) {
-                              $parseOptions.$values = values ? parseValues(values) : {};
+                              if (angular.isArray(values))
+                                  $parseOptions.$values = values ? parseValues(values) : {};
                               return $parseOptions.$values;
                           });
                       };
@@ -32,12 +40,18 @@ angular.module('ngQuantum.services.parseOptions', [])
                               return $parseOptions.$values;
                           });
                       };
-                      function parseValues(values) {
+                      $parseOptions.parseValue = function (newValue) {
+                          if (!newValue)
+                              return false;
+                          return parseValues([newValue])[0];
+                      };
+                      // Private functions
+                      function parseValues(values) {;
                           return values.map(function (match, index) {
                               var locals = {}, label, value, group;
                               locals[valueName] = match;
                               label = displayFn(locals);
-                              value = valueFn(locals) || label;
+                              value = valueFn(locals);
                               group = groupByFn(locals);
                               return {
                                   label: label,

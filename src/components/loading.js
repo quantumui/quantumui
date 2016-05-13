@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 angular.module('ngQuantum.loading', ['ngQuantum.services.lazy'])
     .run(['$http', '$rootScope', '$timeout', function ($http, $rootScope, $timeout) {
         $rootScope.$watch(function () { return $http.pendingRequests.length }, function (newVal, oldVal) {
@@ -14,16 +14,16 @@ angular.module('ngQuantum.loading', ['ngQuantum.services.lazy'])
             placement: 'top',
             container: 'body',
             backdrop: false,
-            timeout: 2000,
-            delayHide: 500,
+            timeout: 500,
+            delayHide: 300,
             theme: false,
             showBar: true,
             showSpinner: true,
             spinnerIcon: '<i class="fic spin-icon fu-spinner-fan spin"></i>',
             busyText: 'Loading...'
         };
-        this.$get = ['$timeout', '$rootScope', '$compile', '$http','$interpolate',
-          function ($timeout, $rootScope, $compile, $http,$interpolate) {
+        this.$get = ['$timeout', '$rootScope', '$compile', '$http',
+          function ($timeout, $rootScope, $compile, $http) {
               function LoadingFactory(config, theme, placement) {
                   var $loading = {};
                   if (angular.isString(config)) {
@@ -38,11 +38,11 @@ angular.module('ngQuantum.loading', ['ngQuantum.services.lazy'])
                   if (!container.length)
                       container = angular.element('body');
                   var scope = $loading.$scope = options.$scope || $rootScope.$new(), cancel;
-
+                  var showTimeout, hideTimeout;
                   var template = angular.element(getTemplate());
                   var place = options.container == 'body' ? 'prepend' : 'append';
                   $compile(template)(scope);
-                  $timeout(function () {
+                  setTimeout(function () {
                       container[place](template);
                   }, 0)
                   
@@ -57,6 +57,7 @@ angular.module('ngQuantum.loading', ['ngQuantum.services.lazy'])
                   if (options.placement)
                       template.addClass('loading-' + options.placement)
                   $loading.show = function () {
+                      //$('body').removeClass('content-loaded').addClass('waiting-load')
                       template.css('display', 'block')
                       $loading.isShown = true;
                       if (options.showBar)
@@ -64,21 +65,26 @@ angular.module('ngQuantum.loading', ['ngQuantum.services.lazy'])
                               scope.currentRate = 0;
                               $loading.updateProgress();
                           }, 0)
-                          
-                      options.timeout !== false &&
-                      $timeout(function () {
-                          $loading.hide();
-                      }, options.timeout)
+                      showTimeout && $timeout.cancel(showTimeout);
+                      if (options.timeout !== false) {
+                          showTimeout = $timeout(function () {
+                              $timeout.cancel(showTimeout);
+                              $loading.hide();
+                          }, options.timeout);
+                      }
+                      
                   };
-                  $loading.hide = function () {
-                      if (!$loading.isShown)
+                  $loading.hide = function (delay) {
+                      delay = delay || options.delayHide;
+                      if (!$loading.isShown || $http.$pendingRequestCount > 0)
                           return;
                       scope.currentRate = 100;
-                      $timeout(function () {
+                      hideTimeout && $timeout.cancel(hideTimeout);
+                      hideTimeout =  $timeout(function () {
                           template.css('display', 'none')
                           scope.currentRate = 0;
                           $loading.isShown = false;
-                      }, options.delayHide)
+                      }, delay)
 
                   };
                   $loading.updateProgress = function (rate) {
@@ -102,23 +108,23 @@ angular.module('ngQuantum.loading', ['ngQuantum.services.lazy'])
                       if (newVal <= 0) {
                           $http.$pendingRequestCount = 0;
                           $timeout(function () {
+                              //$('body').removeClass('xhr-active');
                               $loading.hide();
                           }, 10)
                       }
                       else {
+                          //$('body').addClass('xhr-active');
                       }
 
                   })
                   function getTemplate() {
-                      var START = $interpolate.startSymbol();
-                      var END   = $interpolate.endSymbol();
                       var html = '<div class="loading-container"  ng-class="loadingTheme">'
                                     + '<div class="progress" ng-show="showBar">'
-                                    + '<div class="progress-bar active" ng-class="progressTheme" role="progressbar" ng-style="{\'width\':currentRate + \'%\'}" aria-valuenow="' + START + 'currentRate' + END+ '" aria-valuemin="0" aria-valuemax="100">'
+                                    + '<div class="progress-bar active" ng-class="progressTheme" role="progressbar" ng-style="{\'width\':currentRate + \'%\'}" aria-valuenow="{{currentRate}}" aria-valuemin="0" aria-valuemax="100">'
                                     + '</div>'
                                     + '</div>'
                                     + '<div class="spinner-container">'
-                                        + '<div class="busy-text">'+ options.spinnerIcon +' ' + START + 'busyText' + END+ '</div>'
+                                        + '<div class="busy-text">'+ options.spinnerIcon +' {{busyText}}</div>'
                                     + '</div>'
                                 + '</div>'
                                 + ''

@@ -1,6 +1,6 @@
-'use strict';
+﻿'use strict';
 angular.module('ngQuantum.services.helpers', [])
-        .factory('$helpers', ['$injector', '$window','$interpolate', function ($injector, $window,$interpolate) {
+        .factory('$helpers', ['$injector', '$window', function ($injector, $window) {
             var fn = {};
             
             fn.injectModule = function (name, base) {
@@ -11,13 +11,29 @@ angular.module('ngQuantum.services.helpers', [])
                     module = $injector.get(name);
                 }
                 catch (e) {
+                    //alert('ngquery WARNING:' + MESSAGE)
                     console.error('ngquantum WARNING:', MESSAGE);
                 }
 
                 return module;
             }
+            //fn.isTouch = function () {
+            //    return ("createTouch" in $window.document || window.ontouchstart != null) ;
+            //}
             fn.isTouch = function () {
-                return "createTouch" in $window.document && window.ontouchstart != null;
+                if (navigator.userAgent.match(/Android/i)
+                    || navigator.userAgent.match(/webOS/i)
+                    || navigator.userAgent.match(/iPhone/i)
+                    || navigator.userAgent.match(/iPad/i)
+                    || navigator.userAgent.match(/iPod/i)
+                    || navigator.userAgent.match(/BlackBerry/i)
+                    || navigator.userAgent.match(/Windows Phone/i)
+                    ) {
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
             }
             var isTouch = fn.isTouch();
             fn.isHtml = function (value) {
@@ -34,18 +50,20 @@ angular.module('ngQuantum.services.helpers', [])
                 else return defaultval || 0;
             }
             fn.parseConstant = function (value) {
-                var START = $interpolate.startSymbol();
                 if (/^(true|false|\d+|\-?[0-9]\d+)$/.test(value)) {
                     return eval(value)
                 }
                 if (angular.isString(value)) {
-                    if (value[0] == '[' || (value[0] == '{' && value[1] !== START)) {
+                    if (value[0] == '[' || (value[0] == '{' && value[1] !== '{')) {
                         try {
                             return eval(value)
                         }
                         catch (e) {
                             return value.trimStart("'").trimEnd("'")
                         }
+                    }
+                    else if (!value || (value[0] == '{' && value[1] == '{')) {
+                        return 0;
                     }
                     return value.trimStart("'").trimEnd("'")
                 }
@@ -97,6 +115,9 @@ angular.module('ngQuantum.services.helpers', [])
                 }
                 return key
             }
+            fn.camelFirst = function (key) {
+                return key.charAt(0).toUpperCase() + key.slice(1);
+            }
             fn.formatUrl = function (url, params) {
                 url = url.trimEnd('/')
                 for (var o in params) {
@@ -119,6 +140,24 @@ angular.module('ngQuantum.services.helpers', [])
                     return result;
                 }
             }
+            //error on ie8
+            //fn.uniqueId = function () {
+            //    var svc = {
+            //        new: function () {
+            //            function _p8(s) {
+            //                var p = (Math.random().toString(16) + "000000000").substr(2, 8);
+            //                return s ? "-" + p.substr(0, 4) + "-" + p.substr(4, 4) : p;
+            //            }
+            //            return _p8() + _p8(true) + _p8(true) + _p8();
+            //        },
+
+            //        empty: function () {
+            //            return '00000000-0000-0000-0000-000000000000';
+            //        }
+            //    };
+
+            //    return svc;
+            //}
 
             fn.bindTriggers = function (element, triggers, $master) {
                 var array = triggers.split(' ');

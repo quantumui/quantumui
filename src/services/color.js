@@ -1,4 +1,4 @@
-
+﻿//stolen from angular-bootstrap-colorpicker
 angular.module('ngQuantum.services.color', ['ngQuantum.services.helpers'])
 .factory('$color', ['$helpers', function ($helpers) {
     var color = {};

@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 angular.module('ngQuantum.services.templateHelper', []).factory('templateHelper', [
       '$http',
       '$q',
@@ -7,8 +7,10 @@ angular.module('ngQuantum.services.templateHelper', []).factory('templateHelper'
       function ($http, $q, $templateCache, $timeout) {
           var fn = {};
           fn.fetchTemplate = function (template) {
+              //$templateCache.removeAll();
               return $q.when($templateCache.get(template) || $http.get(template)).then(function (res) {
                   if (angular.isObject(res)) {
+                      //$templateCache.put(template, res.data);
                       return res.data;
                   }
                   return res;
@@ -30,6 +32,10 @@ angular.module('ngQuantum.services.templateHelper', []).factory('templateHelper'
                       });
                   }
                   return template;
+                  //else if (angular.isElement(ct)) {
+                  //    tel.removeAttr('ng-bind').removeAttr('ng-bind-html').append(ct)
+                  //    return tm;
+                  //}
 
               });
           }

@@ -1,10 +1,10 @@
-'use strict';
+﻿'use strict';
 angular.module('ngQuantum.pageable.pagesize')
 .run(['$templateCache', function ($templateCache) {
     $templateCache.put('pageable/pagesize.select.tpl.html',
         '<div class="page-size-container">'
            + '<small class="size-text" ng-bind="$locale.sizesText"></small>'
-           + '<button type="button" ng-model="$pageSize" nq-select="" ng-change="$parent.$pageSize = $pageSize" data-qo-filterable="false" data-qo-html="false" ng-options="item for item in sizeOptions"'
+           + '<button type="button" ng-model="$pageSize" nq-select="" ng-change="$parent.$pageSize = $pageSize" data-qo-filterable="false" data-qo-html="false" nq-options="item for item in sizeOptions"'
                       + ' data-ng-bind="$locale.sizesText" data-qo-placeholder="size..." data-qo-disable-clear="true" class="btn page-size-select" ng-class="$selectClasses">'
            + '</button>'
         + '<div>'

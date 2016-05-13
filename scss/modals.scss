@@ -1,7 +1,16 @@
 //
-// Modals extends
+// Modals
 // --------------------------------------------------
 
+// .modal-open      - body class for killing the scroll
+// .modal           - container to scroll within
+// .modal-dialog    - positioning shell for the actual modal
+// .modal-content   - actual modal w/ bg and corners and shit
+
+// Kill the scroll on the body
+.modal-open {
+  overflow: hidden;
+}
 
 // Container that the modal scrolls within
 .modal {
@@ -30,10 +39,34 @@
     }
 }
 
+
+
+// Modal background
+.modal-backdrop {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width:100%;
+  height:100%;
+  z-index:0 !important;
+}
 .modal-content > .close {
   position:absolute;
   top:7px;
   right:7px;
+}
+
+.modal-body {
+  max-height:100%;
+  overflow:auto;
+  &:extend(.clearfix all);
+}
+
+// Footer (for actions)
+.modal-footer {
+  width:100%;
 }
 
 .modal-fix-height{
@@ -47,7 +80,7 @@
         bottom:0;
     }
     > .modal-dialog {
-        @include calc(height, "100% - 20px");
+        height:calc(unquote("100% - 20px"));
     }
 }
 .modal.screen-mode {
@@ -112,7 +145,7 @@
 @media (min-width: $screen-sm-min) {
   .modal-fix-height{
         > .modal-dialog {
-          @include calc(width, "100% - 60px");
+            height:calc(unquote("100% - 60px"));
         }
    }
    .modalbox .modal-dialog {
@@ -128,7 +161,6 @@
        width: $modal-box-lg;
    }
 }
-
 .modalbox  {
     .modal-body-inner:before {
       font-family:$component-font-family;
@@ -142,11 +174,11 @@
     }
     &.modal-danger .modal-body-inner:before {
       content:$danger-icon;
-      color:$brand-danger;
+      color:$brand-danger-light;
     }
     &.modal-warning .modal-body-inner:before {
       content:$warning-icon;
-      color:$brand-warning;
+      color:$brand-warning-light;
     }
     &.no-icon .modal-body-inner:before {
       content:'';

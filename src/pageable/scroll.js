@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 angular.module('ngQuantum.pageable.scroll', ['ngQuantum.scrollbar'])
 .directive('nqFixTableScroll', ['$compile', function ($compile) {
     return {

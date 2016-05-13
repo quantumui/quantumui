@@ -13,6 +13,8 @@
     -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
           box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
     margin-top:0px;
+    left:0;
+    top:0;
 
     > span {
         display: block;
@@ -42,7 +44,7 @@
       }
     }
    > .select-input{
-       height:26px;
+       height:30px;
        padding:4px 8px;
        font-size:12px;
    }
@@ -122,6 +124,9 @@
         li{
             display:table-cell;
             width:100%;
+            .select-input{
+               width:100%;
+            }
         }
         li + li{
             display:none;
@@ -282,4 +287,19 @@
         position:relative;
         z-index:2;
     } 
+}
+@media (max-width: @screen-xs-max) {
+    .listbox-panel {
+        .scrollable{
+            overflow: scroll !important; 
+            overflow-y: scroll !important; 
+            -webkit-overflow-scrolling: touch;
+            -webkit-box-flex: 1;
+            max-height:300px !important;
+        }
+        .listbox .select-option {
+            padding: 10px 6px 10px 8px;
+            font-size: 20px;
+        }
+    }
 }

@@ -5,7 +5,7 @@
     }
     &[class*=" top"] {
          margin-top:-$with-arrow-margin;
-         @include box-shadow($with-arrow-top-box-shadow);
+        .box-shadow($with-arrow-top-box-shadow)
     }
     &[class*=" left"] {
         margin-left:-$with-arrow-margin;
@@ -17,13 +17,15 @@
     &:after {
         content: '';
         display: inline-block;
-      position: absolute;
-      top: -$with-arrow-offset;
+        border-style:solid;
+        position: absolute;
+        border-color:inherit;
+        top: -$with-arrow-offset;
         bottom:-$with-arrow-offset;
         left: -$with-arrow-offset;
         right:-$with-arrow-offset;
-      border: $with-arrow-border-width solid inherit;
-      margin-left:-$with-arrow-margin;
+        border-width:$with-arrow-border-width;
+        margin-left:-$with-arrow-margin;
         margin-top:-$with-arrow-margin;
     }
     &:after {
@@ -41,7 +43,7 @@
     }
     &.bottom,&.bottom-left,&.bottom-right{
         &:before {
-            margin-top:0 !important;
+            margin-top:0px !important;
         }
         &:after {
             margin-top:2px !important;
@@ -54,7 +56,7 @@
     }
     &.top,&.top-left,&.top-right{
         &:before {
-            margin-bottom:0 !important;
+            margin-bottom:0px !important;
         }
         &:after {
             margin-bottom:2px !important;

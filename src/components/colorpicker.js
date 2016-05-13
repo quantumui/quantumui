@@ -1,21 +1,19 @@
-+function (window, angular, undefined) {
+﻿+function (window, angular, undefined) {
 'use strict';
     angular.module('ngQuantum.colorpicker', ['ngQuantum.popMaster'])
-    .run(['$templateCache','$interpolate', function ($templateCache,$interpolate) {
+    .run(['$templateCache', function ($templateCache) {
         'use strict';
-        var START = $interpolate.startSymbol();
-        var END   = $interpolate.endSymbol();
         $templateCache.put('colorpicker/colorpicker.tpl.html',
                     '<div class="popover colorpicker">'
                     + '<ul class="nav palettes-list clearfix">'
                         + '<li ng-repeat="color in palettes"  ng-click="$parent.$select($index)">'
-                            + '<span class="color-pick titip-top" data-title="' + START + 'color' + END+ '" ng-style="{\'background-color\':color}"></span>'
+                            + '<span class="color-pick titip-top" data-title="{{color}}" ng-style="{\'background-color\':color}"></span>'
                         + '</li>'
                     + '</ul>'
                     + '<div class="clearfix">'
-                        + '<span class="color-pick titip-top" data-title="' + START + 'selectedColor' + END+ '" ng-style="{\'background-color\':selectedColor}"></span>&nbsp;&nbsp;'
+                        + '<span class="color-pick titip-top" data-title="{{selectedColor}}" ng-style="{\'background-color\':selectedColor}"></span>&nbsp;&nbsp;'
                         + '<span class="color-pick titip-top" ng-click="$select(\'transparent\')" data-title="Set Transparent" style="background-color:transparent;"></span>'
-                        + '<small class="pull-right color-more-label" ng-click="$showPicker()">' + START + '$options.moreText || \'More\'' + END+ ' <i ng-class="$options.iconDown" class="angle-down"></i><i ng-class="$options.iconUp" class="angle-up"></i></small>'
+                        + '<small class="pull-right color-more-label" ng-click="$showPicker()">{{$options.moreText || \'More\'}} <i ng-class="$options.iconDown" class="angle-down"></i><i ng-class="$options.iconUp" class="angle-up"></i></small>'
                     + '</div>'
                     + '<div class="color-selector-panel">'
                         + '<ul class="clearfix nav-color-current">'
@@ -28,7 +26,7 @@
                            + '<div class="color-hue"><span class="hue-slider"></span></div>'
                        + '</div>'
                        + '<div class="clearfix alpha-row">'
-                           + '<div class="color-alpha"><span class="alpha-slider titip-top titip-yellow titip-xs"><span class="titip-content">' + START + '$alphaValue' + END+ '%</span></span></div>'
+                           + '<div class="color-alpha"><span class="alpha-slider titip-top titip-yellow titip-xs"><span class="titip-content">{{$alphaValue}}%</span></span></div>'
                            + '<div class="color-button"><button type="button" class="btn btn-default" ng-click="$select()">ok</button></div>'
                        + '</div>'
                     + '</div>'
@@ -302,6 +300,7 @@
     .directive('nqColorPicker', ['$colorPicker', function ($colorPicker) {
         return {
             restrict: 'AC',
+            //scope: {},
             require: 'ngModel',
             link: function postLink(scope, element, attr, controller) {
                 var options = {

@@ -1,4 +1,4 @@
-
+﻿
 'use strict';
 angular.module('ngQuantum.pageable.pagesize', ['ngQuantum.services.templateHelper', 'ngQuantum.services.helpers'])
 .directive('nqPagingSizes', ['$helpers', '$parse', function ($helpers, $parse) {

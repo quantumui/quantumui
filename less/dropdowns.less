@@ -19,7 +19,8 @@
     }
     &.active:after {
        .rotate(180deg);
-       top:0.15em;
+       /*top:0.15em;*/
+       margin-top: -0.8em;
     }
     a& {
       padding-right:1.9em !important;
@@ -48,6 +49,8 @@
         right:5px;
         font-weight:normal;
         font-size:1.2em;
+        top: 50%;
+        margin-top: -0.7em;
         
     }
     &[data-qo-placement^="top"].btn,
@@ -127,6 +130,14 @@
     border-radius: 0;
     -webkit-box-shadow: none;
             box-shadow: none;
+      > li > a,
+      > li > span {
+        border-bottom:1px solid @dropdown-container-bg;
+      }
+      > li:last-child > a,
+      > lilast-child  > span {
+        border-bottom-color:transparent;
+      }
   }
 
   > div {

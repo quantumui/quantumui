@@ -1,4 +1,4 @@
-﻿.pageable-container {
+.pageable-container {
     position:relative;
     display:block;
     a:focus {
@@ -54,9 +54,9 @@
         }
         &.panel-modal{
             position:fixed;
-            left:ceil((@aside-width + 15px));
-            top:ceil((@navbar-height + 20px));
-            z-index:@zindex-navbar;
+            left:ceil(($aside-width + 15px));
+            top:ceil(($navbar-height + 20px));
+            z-index:$zindex-navbar;
         }
     }
     .panel-backdrop  {
@@ -81,11 +81,11 @@
     }
 }
 .table-header-clone {
-    border-bottom:1px solid @table-border-color !important;
+    border-bottom:1px solid $table-border-color !important;
     margin-bottom:0 !important;
 }
 .table-footer-clone {
-    border-top:1px solid @table-border-color !important;
+    border-top:1px solid $table-border-color !important;
     margin-bottom:0 !important;
 }
 .no-result-found {
@@ -155,7 +155,7 @@
     z-index:-500;
     top:-100%;
     opacity:0;
-    .transition(opacity 600ms linear);
+    @include transition(opacity 600ms linear);
     &.visible{
         opacity:1;
         display:block;
@@ -202,10 +202,10 @@
 
         /* Styles */
         border-radius: 50%;
-        background: @skin-base-accent; /* Fallback */
+        background: $skin-base-accent; /* Fallback */
         background:
-            linear-gradient(@skin-base-accent 50%, @skin-base-color 50%), /* First column */
-            linear-gradient(@skin-base-color 50%, @skin-base-accent 50%); /* Second column */
+            linear-gradient($skin-base-accent 50%, $skin-base-color 50%), /* First column */
+            linear-gradient($skin-base-color 50%, $skin-base-accent 50%); /* Second column */
         background-position: 
     	    0 0,    /* Position of 1st column */
     	    100% 0; /* Position of 2nd column */

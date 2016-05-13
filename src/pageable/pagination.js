@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 angular.module('ngQuantum.pageable.pagination', [])
 .directive('nqPagination', ['$timeout', function ($timeout) {
     return {

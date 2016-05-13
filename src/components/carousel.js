@@ -1,15 +1,13 @@
-+function (window, angular, undefined) {
+﻿+function (window, angular, undefined) {
 'use strict';
     angular.module('ngQuantum.carousel', ['ngQuantum.services.helpers'])
-    .run(['$templateCache','$interpolate', function ($templateCache,$interpolate) {
+    .run(['$templateCache', function ($templateCache) {
         'use strict';
-        var START = $interpolate.startSymbol();
-        var END   = $interpolate.endSymbol();
         $templateCache.put('carousel/carousel.tpl.html',
                  '<div class="carousel" ng-style="{width:$outerWidth}">'
                    + '<ol class="carousel-indicators">'
                        + '<li ng-repeat="item in items"  indicator-transclude="item" ng-class="{active: item.active}" ng-click="item.select($index)">'
-                           + '<span class="indicator-no">' + START + '$index + 1' + END + '</span>'
+                           + '<span class="indicator-no">{{$index + 1}}</span>'
                        + '</li>'
                    + '</ol>'
                    + '<div class="carousel-inner" ng-transclude ng-style="{height:$innerHeight}"></div>'
@@ -52,6 +50,9 @@
                   var stopFunc;
                   angular.forEach(['next', 'prev', 'play', 'pause'], function (value) {
                       $scope['$' + value] = function (evt) {
+                          //$scope.$$postDigest(function () {
+                          //    $carousel[value](evt);
+                          //});
                           $carousel[value](evt);
                       }
                   })
@@ -66,6 +67,7 @@
                           $carousel.play()
                           hoverStop();
                       }
+                      //TODO:do this in correct time
                       $timeout(function () {
                           if (parseInt($scope.$outerWidth) > $element.width()) {
                               $scope.$innerHeight = ((parseInt($scope.$innerHeight) / parseInt($scope.$outerWidth)) * $element.width()) + 'px';
@@ -263,6 +265,7 @@
                 }
                 function hide() {
                     if (scope.effect) {
+                        //elm.hide();
                         
                         $animate.removeClass(elm, scope.effect).then(function () {
                             elm.hide();

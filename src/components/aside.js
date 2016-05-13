@@ -1,4 +1,4 @@
-(function (window, angular, undefined) {
+﻿(function (window, angular, undefined) {
 'use strict';
 var asideoptions = {
     effect: 'slide-left',
@@ -274,7 +274,7 @@ var asideoptions = {
 
                   }
                   function applyOptions() {
-                      element.addClass('aside-'+ options.side);
+                      element.addClass('aside-' + options.side);
                       element.css('top', options.topOffset && options.topOffset || 0);
                       element.css('bottom', options.bottomOffset && options.bottomOffset || 0);
                       if (options.width)
@@ -340,6 +340,7 @@ var asideoptions = {
                       element && element.off();
                       clearStyle();
                   });
+                  //chorme sometimes can't detect fixed positions
                   angular.element(document).ready(function () {
                       setTimeout(function () {
                           if (element.height() > window.innerHeight) {
@@ -357,7 +358,7 @@ var asideoptions = {
           }
         ];
     })
-    .directive("nqAside", ["$aside", '$helpers','$interpolate', function ($aside, $helpers,$interpolate) {
+    .directive("nqAside", ["$aside", '$helpers', function ($aside, $helpers) {
         return {
             restrict: "AC",
             scope: true,
@@ -366,9 +367,8 @@ var asideoptions = {
                     $scope: scope,
                     id : attr.id || 'aside-' + scope.$id
                 }
-                var START = $interpolate.startSymbol();
                 angular.forEach(asideoptions, function (val, key) {
-                    if (angular.isDefined(attr[key]) && attr[key].indexOf(START) < 0)
+                    if (angular.isDefined(attr[key]) && attr[key].indexOf('{{') < 0)
                         options[key] = $helpers.parseConstant(attr[key]);
                         
                 });
