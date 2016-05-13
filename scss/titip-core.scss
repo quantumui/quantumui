@@ -48,7 +48,9 @@
     &:after {
       z-index: $zindex-titip;
       content: '';
-      border: $titip-tringle-width solid inherit;
+      border-style:solid;
+      border-color:inherit;
+      border-width: $titip-tringle-width;
       width:0;
       height:0;
       padding:0;
@@ -93,7 +95,7 @@
     &[data-title]:before,
     &[data-title]:after{
         left: 50%;
-        @include transform(translateX(-50%));
+        .translateX(-50%)
     }
     > .titip-content:before,
     > .titip-content:after,
@@ -212,7 +214,7 @@
     > .titip-content,
     &[data-title]:before,
     &[data-title]:after {
-        @include transform(translateX(0%));
+        @include translateX(0%);
     }
     
 }
@@ -264,7 +266,7 @@
     &[data-title]:before,
     &[data-title]:after{
         top: 50%;
-        @include transform(translateY(-50%));
+        .translateY(-50%)
     }
     > .titip-content:before,
     > .titip-content:after,
@@ -320,11 +322,11 @@
       margin-right: 16px;
     }
     > .titip-content.thick-border:before {
-      border-width:5px 0 5px 10px;
+      border-width:5px 0px 5px 10px;
       right: -10px;
     }
     > .titip-content.thick-border:after {
-      border-width:10px 0 10px 15px;
+      border-width:10px 0px 10px 15px;
       right: -15px;
     }
 }
@@ -361,11 +363,11 @@
       margin-left: 16px;
     }
     > .titip-content.thick-border:before {
-      border-width:5px 10px 5px 0;
+      border-width:5px 10px 5px 0px;
       left: -10px;
     }
     > .titip-content.thick-border:after {
-      border-width:10px 15px 10px 0;
+      border-width:10px 15px 10px 0px;
       left: -15px;
     }
 }

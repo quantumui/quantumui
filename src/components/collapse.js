@@ -18,13 +18,13 @@
                      target.addClass('in');
                      size = target[dimension]();
                  }
-                  function toggle() {
+                 function toggle() {
+                     
                       if ($collapse.collapsed) {
                           position = target[0].style.position || '';
                           target.css('position', 'absolute').show();
                           var dm = dimension == 'height' ? 'outerHeight' : 'outerWidth';
                           size = target[dm]();
-
                           target.css('display', '')[dimension](0).css('position', position);
                           target.addClass('in collapsing');
                           setTimeout(function () {
@@ -109,6 +109,7 @@
                     
 
                 });
+                //options.dimension === 'horizontal' && element.addClass('accordion-horizontal')
 
             }
         };

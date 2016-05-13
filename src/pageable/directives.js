@@ -1,4 +1,4 @@
-(function (window, angular) {
+﻿(function (window, angular) {
     'use strict';
     var pApp = angular.module('ngQuantum.pageable.directives', ['ngQuantum.pageable.factory']);
     pApp.directive('nqPageable', ['$pageable', function ($pageable) {
@@ -7,23 +7,27 @@
             require: 'nqPageable',
             scope: true,
             controller: ['$scope', '$element', '$attrs', function ($scope, $element, $attrs) {
-                var that = this;
+                var that = {};
                 var options = {
                     $scope: $scope
                 };
                 $element.addClass('pageable-container');
                 $element.css('position', 'relative');
-                that = angular.extend(that, new $pageable($element, options, $attrs));
+                var pgbl = new $pageable($element, options, $attrs)
+                that = angular.extend(that, pgbl);
                 that.$container = $element;
                 $scope.$watch($attrs.nqPageable, function (newVal, oldVal) {
                     that.setModelData(newVal);
                 })
                 if (angular.isDefined($attrs.qoAlias) && angular.isString($attrs.qoAlias)) {
-                    $scope.$parent[$attrs.qoAlias] = that;
-
+                    $scope.$parent.$parent[$attrs.qoAlias] = that;
                 }
                 return that;
-            }]
+            }],
+            link: function postLink(scope, element, attr, controller) {
+
+              
+            }
         };
     }])
     angular.forEach(['pageableRepeat', 'pageableRepeatStart', 'pageableRepeatEnd'], function (directive, dIndex) {

@@ -1,4 +1,4 @@
-+function (window, angular, undefined) {
+﻿+function (window, angular, undefined) {
 'use strict';
     angular.module('ngQuantum.carousel', ['ngQuantum.services.helpers'])
     .run(['$templateCache', function ($templateCache) {
@@ -50,6 +50,9 @@
                   var stopFunc;
                   angular.forEach(['next', 'prev', 'play', 'pause'], function (value) {
                       $scope['$' + value] = function (evt) {
+                          //$scope.$$postDigest(function () {
+                          //    $carousel[value](evt);
+                          //});
                           $carousel[value](evt);
                       }
                   })
@@ -64,6 +67,7 @@
                           $carousel.play()
                           hoverStop();
                       }
+                      //TODO:do this in correct time
                       $timeout(function () {
                           if (parseInt($scope.$outerWidth) > $element.width()) {
                               $scope.$innerHeight = ((parseInt($scope.$innerHeight) / parseInt($scope.$outerWidth)) * $element.width()) + 'px';
@@ -261,6 +265,7 @@
                 }
                 function hide() {
                     if (scope.effect) {
+                        //elm.hide();
                         
                         $animate.removeClass(elm, scope.effect).then(function () {
                             elm.hide();

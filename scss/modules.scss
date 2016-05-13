@@ -1,0 +1,32 @@
+// Core Modules of QuantumUI
+// DON'T Import These without variables and mixins
+
+// Components w/ Extended
+@import 'dropdowns';
+@import 'modals';
+@import 'tooltip'; //you must remove bootstrap tooltip.less file from bootstrap.less
+@import 'carousel';
+@import 'alert';
+
+
+// quantumui components
+@import 'with-arrow';
+@import 'aside';
+@import 'scrollbar';
+@import 'font-icon';
+@import 'calendars';
+@import 'colorpicker';
+@import 'range-input';
+@import 'range-slider';
+@import 'loading';
+@import 'switch-button';
+@import 'listbox';
+
+@import 'pageable'; //if you don't want to use pageable component u can remove this
+
+
+// bootstrap extend
+@import 'navs-extend';
+@import 'pagination-extend';
+@import 'component-animations';
+@import 'bootstrap-extend';

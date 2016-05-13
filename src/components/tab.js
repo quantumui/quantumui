@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 angular.module('ngQuantum.tabset', ['ngQuantum.services.helpers'])
     .run(['$templateCache', function ($templateCache) {
         'use strict';
@@ -41,6 +41,8 @@ angular.module('ngQuantum.tabset', ['ngQuantum.services.helpers'])
             prefixEvent: 'tabs',
             directive: 'nqTab',
             instanceName: 'tabs',
+            //template:'tabs/tabset.tpl.html',
+            //responsiveTemplate:'tabs/tabset.responsive.tpl.html',
             fireEmit: false,
             fireBroadcast: false,
             keyboard: false,
@@ -94,6 +96,7 @@ angular.module('ngQuantum.tabset', ['ngQuantum.services.helpers'])
                   $tabset.removePane = function (pane) {
                       var index = panes.indexOf(pane);
                       if (pane.active && panes.length > 1) {
+                          //If this is the last tab, select the previous tab. else, the next tab.
                           var newActiveIndex = index == panes.length - 1 ? index - 1 : index + 1;
                           $tabset.select(panes[newActiveIndex]);
                       }
@@ -114,6 +117,7 @@ angular.module('ngQuantum.tabset', ['ngQuantum.services.helpers'])
             transclude: true,
             replace: true,
             scope: {},
+            //template: '<div ng-include src="\'tabs/tabset.tpl.html\'"></div>',
             templateUrl: function (element, attr) {
                 if(angular.isDefined(attr.template))
                     return attr.template;
@@ -247,6 +251,7 @@ angular.module('ngQuantum.tabset', ['ngQuantum.services.helpers'])
                     $timeout(function () {
                         scope.$transcludeFn = transclude;
                     }, 0)
+                    //scope.$transcludeFn = transclude;
                     
                 };
             }
@@ -274,7 +279,7 @@ angular.module('ngQuantum.tabset', ['ngQuantum.services.helpers'])
                 });
                 elm.on('click', function (evt) {
                     evt.preventDefault();
-                    evt.stopPropagation();                    
+                    evt.stopPropagation();
                     if (pane.active) return;
 
                     scope.$apply(function () {
@@ -298,7 +303,7 @@ angular.module('ngQuantum.tabset', ['ngQuantum.services.helpers'])
         };
     }])
    
-    .directive('tabContentTransclude', ['$animate', '$timeout', function ($animate, $timeout) {
+    .directive('tabContentTransclude', ['$animate', '$timeout', '$compile', function ($animate, $timeout, $compile) {
         return {
             restrict: 'A',
             require: '^nqTab',
@@ -307,11 +312,19 @@ angular.module('ngQuantum.tabset', ['ngQuantum.services.helpers'])
                     value && scope.$transcludeFn(scope.$parent, function (contents) {
                         angular.forEach(contents, function (node, i) {
                             if (isTabHeading(node)) {
+                                //Let tabHeadingTransclude know.
                                 scope.headingElement = node;
                             } else {
                                 elm.append(node);
+                                //elm.append(removeNonBindable(node));
                             }
                         });
+                        //if (attrs.reCompile) {
+                        //    var inner = angular.element(elm.html());
+                        //    elm.html('');
+                        //    $compile(inner)(scope.$parent);
+                        //    elm.append(inner);
+                        //}
                             
                     });
                 });
@@ -337,6 +350,10 @@ angular.module('ngQuantum.tabset', ['ngQuantum.services.helpers'])
                     if (scope.effect) {
                         elm.removeClass(scope.speed)
                         elm.removeClass(scope.effect)
+                        //$animate.removeClass(elm, scope.effect, function () {
+                        //    elm.removeClass(scope.speed)
+
+                        //});
                     }
                 }
             }
@@ -349,4 +366,10 @@ angular.module('ngQuantum.tabset', ['ngQuantum.services.helpers'])
               node.tagName.toLowerCase() === 'data-tab-heading'
             );
         }
+        //function removeNonBindable(node) {
+        //    if (node && node.removeAttribute) {
+        //       node.removeAttribute('ng-non-bindable');
+        //    }
+        //    return node;
+        //}
     }]);

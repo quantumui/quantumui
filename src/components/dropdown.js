@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 angular.module('ngQuantum.dropdown', ['ngQuantum.popMaster'])
     .run(['$templateCache', function ($templateCache) {
         'use strict';
@@ -23,7 +23,9 @@ angular.module('ngQuantum.dropdown', ['ngQuantum.popMaster'])
             fireEmit: true,
             displayReflow: false,
             keyboard: true,
-            fixWidth:true
+            fixWidth: true,
+            clearClick: true,
+            holdHoverDelta:true
         };
         this.$get = [
           '$timeout',
@@ -33,6 +35,7 @@ angular.module('ngQuantum.dropdown', ['ngQuantum.popMaster'])
 
               function DropdownFactory(element, config, attr) {
                   var $dropdown = {};
+                  // Common vars
                   config = angular.extend(config, $helpers.parseOptions(attr, config))
                   var options = angular.extend({}, defaults, config);
                   if (!options.independent) {
@@ -52,11 +55,13 @@ angular.module('ngQuantum.dropdown', ['ngQuantum.popMaster'])
                   $dropdown = new $popMaster(element, options);
                   options = $dropdown.$options = $helpers.observeOptions(attr, $dropdown.$options);
                   var scope = $dropdown.$scope
+                  // Protected methods
                   $dropdown.$onKeyDown = function (e) {
                       if (!/(38|40|13)/.test(e.keyCode))
                           return;
                       e.preventDefault();
                       e.stopPropagation();
+                      // Retrieve focused index
 
                       var $items = $dropdown.$target.find('[role="menuitem"]:visible');
                       $dropdown.$target.focus();
@@ -72,12 +77,17 @@ angular.module('ngQuantum.dropdown', ['ngQuantum.popMaster'])
                       scope.lastIndex = index;
 
                   };
+                  // Overrides
                   var show = $dropdown.show;
                   $dropdown.show = function (callback) {
                       var promise = show(callback);
                       angular.element(document).off('keydown.nqDropdown.api.data');
                       angular.element(document).on('keydown.nqDropdown.api.data', $dropdown.$onKeyDown);
-
+                      //if (options.clearClick) {
+                      //    angular.element(document).off('click.nqDropdown.api.data');
+                      //    angular.element(document).on('click.nqDropdown.api.data', $dropdown.hide);
+                      //}
+                          
                       if (!scope.$$phase) {
                           scope.$apply(function () {
                               $dropdown.$target.focus();
@@ -90,14 +100,14 @@ angular.module('ngQuantum.dropdown', ['ngQuantum.popMaster'])
                           if(ew > tw)
                               $dropdown.$target.css('min-width', ew)
                       }
-                      element.parent().addClass('open')
+                      element && element.parent().addClass('open')
                       return promise;
                   };
                   var hide = $dropdown.hide;
                   $dropdown.hide = function (callback) {
                       scope.lastIndex = -1;
                       angular.element(document).off('keydown.nqDropdown.api.data');
-                      element.parent().removeClass('open')
+                      element && element.parent().removeClass('open')
                      return hide(callback);
                   };
                   if (attr && angular.isDefined(options.directive)) {
@@ -123,9 +133,10 @@ angular.module('ngQuantum.dropdown', ['ngQuantum.popMaster'])
       function ($dropdown, templateHelper) {
           return {
               restrict: 'EA',
+              scope: true,
               link: function postLink(scope, element, attr, transclusion) {
                   var options = {
-                      $scope: scope.$new()
+                      $scope: scope
                   };
                   
                   options.uniqueId = attr.qoUniqueId || attr.id || options.$scope.$id;

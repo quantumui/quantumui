@@ -1,8 +1,8 @@
-'use strict';
+﻿'use strict';
 angular.module('ngQuantum.pageable.search')
 .run(['$templateCache', function ($templateCache) {
     $templateCache.put('pageable/tablesearch.tpl.html',
-        '<form name="tableSearchForm" class="pageable-search-form" ng-class="$formClasses" ng-submit="$searchTable(searchTerm)">'
+        '<form name="tableSearchForm" class="pageable-search-form" ng-class="$formClasses" ng-submit="$searchTable(searchTerm)" novalidate="novalidate">'
             + '<div class="input-group" ng-class="$inputGroupClasses">'
                 + '<div class="form-control" ng-class="$formControlClasses">'
                     + '<input type="text" ng-model="searchTerm"  class="pageable-search-input" placeholder="{{$searchPlaceholder || \'search\'}}">'

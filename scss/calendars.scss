@@ -3,15 +3,16 @@ $cal-table-min-width: ceil((($cal-table-cell-size * 7) + 2px)) !default;
     display:none;
     position:absolute;
     padding:$cal-panel-padding;
+    border:1px solid transparent;
     border-radius:$cal-panel-radius;
     width:auto;
     z-index:$cal-panel-z-index;
     max-width:$cal-panel-max-width;
     background-color:$cal-panel-bg;
     font-family: $cal-panel-font;
-    border: 1px solid $cal-panel-border-color;
+    border-color:$cal-panel-border-color;
 
-  /*with-arrow settings*/
+    /*with-arrow settings*/
 
     &.with-arrow[class*=" bottom"] {
         margin-top:14px;
@@ -45,6 +46,7 @@ $cal-table-min-width: ceil((($cal-table-cell-size * 7) + 2px)) !default;
 .calendar-panel a,
 .calendar-header button{
     color:$cal-panel-color;
+    text-decoration:none;
 }
 .calendar-panel.picker-datetime {
 }
@@ -97,14 +99,18 @@ $cal-table-min-width: ceil((($cal-table-cell-size * 7) + 2px)) !default;
     }
     thead th,
     thead td {
-      vertical-align:middle;
-      height:$cal-table-header-size;
-      color: $cal-table-cell-color;
-      border: 1px solid white;
-      border-right-color: inherit;
-      border-bottom-color: inherit;
+        vertical-align:middle;
+        height:$cal-table-header-size;
+        
+        color: $cal-table-cell-color;
+        border-width:1px;
+        border-style:solid;
+        border-color:inherit;
+        border-top-color:white;
+        border-left-color:white;
+        vertical-align: middle;
         text-align: center;
-        @include gradient-vertical($start-color: $cal-table-bg,$end-color: darken($cal-table-bg, 6%))
+        #gradient > .vertical($start-color: $cal-table-bg !default; $end-color: darken($cal-table-bg, 6%))
     }
 
     &.has-week-no thead th,
@@ -114,13 +120,16 @@ $cal-table-min-width: ceil((($cal-table-cell-size * 7) + 2px)) !default;
      tbody th,
      tbody td {
         text-align: center;
-        border: 1px solid white;
-        border-right-color: inherit;
-        border-bottom-color: inherit;
+        border-width:1px;
+        border-style:solid;
+        border-color:inherit;
+        border-top-color:white;
+        border-left-color:white;
         color:inherit;
         height:$cal-table-cell-size;
         width:$cal-table-cell-size;
         min-width:$cal-table-cell-size;
+        text-align: center;
         cursor:pointer;
         position:relative;
         vertical-align: middle;
@@ -145,6 +154,7 @@ $cal-table-min-width: ceil((($cal-table-cell-size * 7) + 2px)) !default;
     tbody th.weekend,
     tbody td.weekend {
        opacity:0.8;
+       color:#999;
        color:lighten($cal-table-cell-color, 6%);
        background-color: darken($cal-table-bg, 3%);
     }
@@ -163,6 +173,7 @@ $cal-table-min-width: ceil((($cal-table-cell-size * 7) + 2px)) !default;
 
     tbody th.unselectable,
     tbody td.unselectable {
+       cursor:default;
        cursor:not-allowed;
        background-color: greyscale($cal-table-bg, 10%);
        text-decoration:line-through;
@@ -207,8 +218,9 @@ table.cal-header-table{
        text-align:center;
     }
     tr > td > button{
-      background: transparent none;
-      padding:3px 4px;
+        background-color:transparent;
+        background-image:none;
+        padding:3px 4px;
         border:none;
         margin:0;
         &:focus{
@@ -332,7 +344,7 @@ table.cal-header-table{
     }
     tr > td > button.btn {
         line-height:25px;
-        padding:1px 15px 0;
+        padding:1px 15px 0px;
         &:focus{
             outline:none;
         }
@@ -359,9 +371,14 @@ table.cal-header-table{
         display:block;
     }
     > a:hover span,
+    > a:focus span,
     > a.active  span{
         background-color:$cal-active-bg;
         color: $cal-active-color;
+    }
+    > a:focus span,
+    > a:hover span{
+        opacity:0.8;
     }
 }
 /*inline*/

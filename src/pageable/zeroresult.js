@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 angular.module('ngQuantum.pageable.zeroresult', [])
 .directive('nqZeroResult', [function () {
     return {

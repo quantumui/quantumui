@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 angular.module('ngQuantum.switchButton', ['ngQuantum.services.helpers'])
     .run(['$templateCache', function ($templateCache) {
         'use strict';

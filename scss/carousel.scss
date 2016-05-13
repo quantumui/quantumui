@@ -1,15 +1,35 @@
 //
-// Carousel extend
+// Carousel QuantumUI styles
 // --------------------------------------------------
 
+.carousel {
+  position: relative;
+  margin-left:auto;
+  margin-right:auto;
+  max-width:100%;
+}
 
 .carousel-inner {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
 
   > .item {
     position: absolute;
     width:100%;
     height:100%;
     overflow:hidden;
+    &.ng-animate[class*="-remove"]{
+        position:absolute !important;
+        top:0;
+    }
+  }
+
+}
+
+.carousel-indicators {
+  li {
+    text-indent: -9999px;
   }
 }
 
@@ -33,8 +53,9 @@
 /*number navigation*/
 .carousel.number-navigation,
 .carousel.thumb-navigation {
-    padding: 2px 2px 30px;
-    border: 1px solid $skin-base-light;
+    padding:2px;
+    padding-bottom:30px;
+    border: 1px solid $carousel-indicator-thumb-border-color;
     border-radius:4px;
    .carousel-indicators {
       bottom: 0;
@@ -43,8 +64,8 @@
       width: 100%;
       padding: 2px;
       margin: 0;
-      background-color:$skin-base-light;
-      @include gradient-vertical($start-color: lighten($skin-base-light, 4%), $end-color: $skin-base-light);
+      background-color:$carousel-indicator-thumb-bg;
+      @include gradient-vertical($start-color: mix(#ffffff, $carousel-indicator-thumb-bg, 4%); $end-color: $carousel-indicator-thumb-bg;) !default;
       
         > li{
             width: 30px;
@@ -52,8 +73,12 @@
             margin: 1px;
             text-indent: 0;
             border-radius:4px;
-            @include gradient-radial($inner-color: lighten($skin-base-light, 4%), $outer-color: darken($skin-base-light, 8%));
+            opacity:0.4;
+            @include gradient-elipse($inner-color: mix(#ffffff, $carousel-indicator-thumb-bg, 4%); $outer-color: mix(#000000, $carousel-indicator-thumb-bg, 6%);) !default;
        }
+        .active {
+            opacity:1;
+         }
        
    }
     .indicator-no {
@@ -61,7 +86,7 @@
         font-size:16px;
         font-weight:bold;
         line-height:30px;
-        color:$skin-inverse;
+        color:$carousel-indicator-thumb-color;
     }
     .carousel-caption {
         right: 0;
@@ -70,8 +95,8 @@
         color: #ffffff;
         text-align: justify;
         padding:10px;
-        border-top: 1px solid $skin-base-light;
-        background-color:rgba($skin-inverse, (50/100));
+        border-top: 1px solid $carousel-indicator-thumb-border-color;
+        background-color:rgba($carousel-caption-bg, (50/100));
     }
 }
 
@@ -85,7 +110,8 @@
           width: 70px;
           height: 50px;
           line-height:50px;
-          margin: 1px 1px 3px;
+          margin: 1px;
+          margin-bottom:3px;
           text-indent: 0;
           border-radius:0;
           opacity:0.6;
@@ -98,4 +124,18 @@
       bottom: 50px;
       color: #ffffff;
     }
+}
+
+@media (max-width: $screen-xs-max) {
+
+  .carousel-caption {
+    left: 10%;
+    right: 10%;
+    bottom:0;
+    padding-bottom: 0;
+    font-size:0.6em;
+    h4{
+        font-size:12px;
+    }
+  }
 }

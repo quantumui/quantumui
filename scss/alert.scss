@@ -1,0 +1,40 @@
+//
+// Alerts QuantumUI Addidional
+// --------------------------------------------------
+
+.alert-container {
+  position:fixed;
+  top:10px;
+  right:10px;
+  max-width:300px;
+  background-image:none;
+  background-color:transparent;
+  z-index:9998;
+    &.top-left {
+      top:10px;
+      right:auto;
+      right:initial;
+      left:10px;
+    }
+    &.bottom-left {
+      top:auto;
+      top:initial;
+      right:auto;
+      right:initial;
+      left:10px;
+      bottom:10px;
+    }
+    &.bottom-right {
+      top:auto;
+      top:initial;
+      bottom:10px;
+    }
+    &.center {
+      top:40%;
+      right:40%;
+    }
+}
+
+  .alert-title {
+    padding-right:10px;
+  }

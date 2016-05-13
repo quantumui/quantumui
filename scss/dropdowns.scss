@@ -1,20 +1,14 @@
 //
-// Dropdown menus
+// Dropdown menus QuantumUI
 // --------------------------------------------------
 
-
-// Dropdown arrow/caret
-:focus {
-	outline: 0;
-}
 .caret.big {
     $caret-width-big: ceil(($caret-width-base * 0.5)) !default;
-  margin-left: ceil(($caret-width-big /2));
+  margin-left: ceil(($caret-width-big / 2));
   border-top: $caret-width-big solid;
   border-right: $caret-width-big solid transparent;
   border-left: $caret-width-big solid transparent;
 }
-
 // Prevent the focus on the dropdown toggle when closing dropdowns
 .dropdown-toggle {
     text-align:left;
@@ -25,9 +19,10 @@
     }
     &.active:after {
        @include rotate(180deg);
-       top:0.15em;
+       /*top:0.15em;*/
+       margin-top: -0.8em;
     }
-    &a {
+    a& {
       padding-right:1.9em !important;
     }
     &[data-qo-placement^="left"].btn,
@@ -54,6 +49,8 @@
         right:5px;
         font-weight:normal;
         font-size:1.2em;
+        top: 50%;
+        margin-top: -0.7em;
         
     }
     &[data-qo-placement^="top"].btn,
@@ -77,16 +74,32 @@
         }
     }
 }
+
+// The dropdown menu (ul)
 .dropdown-menu {
   top: 0;
+  left: 0;
+  min-width: $dropdown-min-width;
+  padding: 3px;
+  @include box-shadow($dropdown-box-shadow);
+  // Links within the dropdown menu
+  > li > a {
+    padding: 6px 20px;
+  }
+  > li > span {
+    display: block;
+    padding: 3px 10px;
+    font-weight: normal;
+    line-height: $line-height-base;
+  }
 }
-// The dropdown container (ul or div)
 .dropdown-container {
   position: absolute;
   display:none;
   top: 0;
   left: 0;
   z-index: $zindex-dropdown;
+  display: none; // none by default, but block on "open" of the menu
   float: left;
   min-width: $dropdown-container-min-width;
   max-width: $dropdown-container-max-width;
@@ -100,10 +113,9 @@
   border-radius: $border-radius-base;
   @include box-shadow($dropdown-container-box-shadow);
   background-clip: padding-box;
-  -webkit-animation-delay:0s;
-  animation-delay:0s;
+  -webkit-animation-delay:0;
+  animation-delay:0;
   transition:none;
-  
   
   // dropdown-menu within the dropdown-container
   .dropdown-menu {
@@ -118,6 +130,14 @@
     border-radius: 0;
     -webkit-box-shadow: none;
             box-shadow: none;
+      > li > a,
+      > li > span {
+        border-bottom:1px solid $dropdown-container-bg;
+      }
+      > li:last-child > a,
+      > lilast-child  > span {
+        border-bottom-color:transparent;
+      }
   }
 
   > div {
@@ -126,7 +146,7 @@
       width:100%;
   }
   > .dc-body {
-      @include clearfix;
+      &:extend(.clearfix all);
       padding:7px 10px;
       background-color:#fff;
       border-radius: $border-radius-base;
@@ -168,27 +188,20 @@
     }
 }
 
-// Open state for the dropdown
-.open {
-  // Show the menu
-  > .dropdown-menu,
-  > .dropdown-container {
-    display: block;
-  }
-}
+.open,
 [class*="active"] {
+  outline: 0;
   // Show the menu
   & + .dropdown-menu,
   & + .dropdown-container {
     display: block;
   }
+
+  // Remove the outline when :focus is triggered
+  > a {
+    outline: 0;
+  }
 }
-
-
-// Allow for dropdowns to go bottom up (aka, dropup-menu)
-//
-// Just add .dropup after the standard .dropdown class and you're set, bro.
-// TODO: abstract this so that the navbar fixed styles are not placed here?
 
 .dropup,
 .navbar-fixed-bottom .dropdown {
@@ -204,4 +217,9 @@
     margin-bottom: 1px;
   }
 }
-
+.dropdown-menu,
+  .dropdown-container {
+    &:focus{
+        outline:0;
+    }
+  }

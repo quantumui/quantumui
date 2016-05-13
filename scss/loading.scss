@@ -52,12 +52,12 @@ body > .loading-container {
 }
 @mixin loading-variant($bg){
     > .progress {
-          @include box-shadow($bg 1px 0 6px 1px)
+          .box-shadow($bg 1px 0 6px 1px)
     }
     .spinner-container {
         border-color:darken($bg, 10%);
         background-color:rgba($bg, (75/100));
-        @include box-shadow($bg 1px 0 6px 1px)
+        .box-shadow($bg 1px 0 6px 1px)   
     }
 }
 .loading-info {

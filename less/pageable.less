@@ -52,6 +52,22 @@
         > .panel-footer{
             height:50px;
         }
+        &.panel-modal{
+            position:fixed;
+            left:ceil((@aside-width + 15px));
+            top:ceil((@navbar-height + 20px));
+            z-index:@zindex-navbar;
+        }
+    }
+    .panel-backdrop  {
+        position:fixed;
+        top:0;
+        left:0;
+        top:0;
+        bottom:0;
+        right:0;
+        background-color:rgba(255,255,255,.8);
+        z-index:-1;
     }
 }
 .pageable-template-transclude{
@@ -217,6 +233,11 @@
         }
     }
 }
+th.sorting-header,
+td.sorting-header{
+    padding-right:20px !important;
+}
+
 @keyframes spinnerRotate {
     25%  { transform: rotate(270deg); }
     50%  { transform: rotate( 90deg); }

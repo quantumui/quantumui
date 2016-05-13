@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 angular.module('ngQuantum.pageable.search', [])
 .directive('nqTableSearch', [function () {
     return {
@@ -15,6 +15,7 @@ angular.module('ngQuantum.pageable.search', [])
         link: function (scope, element, attr, controller) {
             element.addClass('page-searching');
             scope.$inputGroupClasses = 'input-group-sm input-group-rounded';
+            scope.searchTerm = '';
             scope.$searchButtonClasses = 'btn-default';
             angular.forEach(['formClasses', 'inputGroupClasses', 'formControlClasses', 'searchButtonClasses'], function (val, key) {
                     attr[val] &&  attr.$observe(val, function (newVal) {

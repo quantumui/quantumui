@@ -1,4 +1,4 @@
-'use strict';
+﻿'use strict';
 angular.module('ngQuantum.pageable.factory', ['ngQuantum.services.helpers'])
 .provider('$pageable', function () {
     var defaults = this.defaults = {
@@ -11,6 +11,7 @@ angular.module('ngQuantum.pageable.factory', ['ngQuantum.services.helpers'])
         showSize: true,
         showResultText: true,
         sizeOptions: [10, 20, 30, 40, 50],
+        //displaySizeAs: 'select',
         startPage: 1,
         firstLast: true,
         prevNext: true,
@@ -29,7 +30,8 @@ angular.module('ngQuantum.pageable.factory', ['ngQuantum.services.helpers'])
         methodFilter: 'POST',
         methodDelete: 'DELETE',
         methodUpdate: 'PUT',
-        paramsField: 'PageableRequest',
+        paramsField: false,
+        //paramsField: 'PageableRequest',
         primaryKeys:false,
         serverRoot: false,
         baseUrl: false,
@@ -53,24 +55,26 @@ angular.module('ngQuantum.pageable.factory', ['ngQuantum.services.helpers'])
         function ($timeout, $filter, $http, $rootScope, $parse, $helpers, $q, $lazyRequest) {
             function Factory(element, config, attr) {
 
-                var $pageable = {}, options = {}, currentPage = 1;
-                attr && (config = $helpers.parseOptions(attr, config))
-                  
-                options = $pageable.$options = angular.extend(defaults, config);
+                var $pageable = {}, options = {}, currentPage = 1, cnf;
+                attr && (cnf = $helpers.parseOptions(attr, config))
+                
+                options = $pageable.$options = angular.extend({}, defaults, cnf);
                 var scope = $pageable.$scope = options.$scope || $rootScope.$new();
                 if (attr) {
                     if (angular.isDefined(attr.qoAllOptions)) {
                         options = scope.$eval(attr.qoAllOptions)
                     } else {
+                        
                         options = $pageable.$options = $helpers.observeOptions(attr, $pageable.$options);
                         angular.forEach(['formatRequest', 'formatData', 'loadError', 'deleted', 'updated', 'inserted', 'onRefresh'],
                             function (val) {
-                                if (angular.isDefined(attr[val])) {
-                                    options[val] = $parse(attr[val]);
+                                if (angular.isDefined(options[val])) {
+                                    options[val] = $parse(options[val]);
                                 }
                             })
                     }
-                    
+                    if(attr.qsBaseUrl)
+                        options.baseUrl = scope.$parent.$eval(attr.qsBaseUrl);
                 }
                 
                 scope.$pageableBusy = true;
@@ -168,6 +172,11 @@ angular.module('ngQuantum.pageable.factory', ['ngQuantum.services.helpers'])
                     scope.$pageSize = scope.$pageSize || options.pageSize || 10;
                     if (!rows.length) {
                         if (options.remotePaging) {
+                            //TO DO:think about this when delete update insert
+                            //if (options.cacheResult && $pageable.caches['page_' + cm]) {
+                            //    rows = $pageable.caches['page_' + cm];
+                            //    setRows()
+                            //} else
                             if (!newrows)
                                 $pageable.loadRemote();
                             else if (!newrows.length)
@@ -204,33 +213,40 @@ angular.module('ngQuantum.pageable.factory', ['ngQuantum.services.helpers'])
                     },0)
                 }
                 $pageable.loadRemote = function () {
+                    if (attr.qsBaseUrl)
+                        options.baseUrl = scope.$parent.$eval(attr.qsBaseUrl);
                     scope.$pageableBusy = true;
                     var obj = { params: loadingParams(), url: buildUrl(), eventType: 'load' }, ajax = {};
-                   
+                    var loadSuffix = '';
+                    if (attr.qsLoadSuffix) {
+                        loadSuffix = scope.$parent.$eval(attr.qsLoadSuffix);
+                        obj.url += loadSuffix;
+                    }
+                    
                     if (options.formatRequest) {
                         ajax = callFormatUrl(obj)
                     }
                     else {
                         
-                        var post = options.method.toLowerCase() == 'post';
+                        var post = options.method.toLowerCase() == 'post' || (scope.filterParams && scope.filterParams.length);
                         ajax.method = post ? 'POST' : 'GET';
                         var prm = angular.extend({}, obj.params.routeParams);
                         if (post) {
-                            ajax.url = buildUrl(prm);
+                            ajax.url = buildUrl(prm) + loadSuffix;
                             var data = angular.extend({}, obj.params)
                             data.routeParams && delete data.routeParams;
-                            ajax.data = {}, ajax.data[options.paramsField] = data;
+                            ajax.data = {}, ajax.data = options.paramsField ? ajax.data[options.paramsField] : data;
                         }
                         else {
-                            prm = angular.extend({}, prm, obj.params.pageParams, obj.params.sortParams, { 'searchTerm': obj.params.searchTerm });
-                            ajax.url = buildUrl(prm);
+                            if (options.remotePaging)
+                                prm = angular.extend({}, prm, obj.params.pageParams, obj.params.sortParams, { 'searchTerm': obj.params.searchTerm });
+                            ajax.url = buildUrl(prm) + loadSuffix;
                         }
                        if (options.useQueryString) {
                             ajax.params = prm;
                         }
                     }
                     ajax && (ajax.cache = options.cacheResult);
-                    
                     if (ajax)
                         return $http(ajax)
                             .success(function (res) {
@@ -302,6 +318,16 @@ angular.module('ngQuantum.pageable.factory', ['ngQuantum.services.helpers'])
                     }
 
                 }
+                $pageable.filterTable = function () {
+                    scope.$currentPage = 1;
+                    if (options.remotePaging) {
+                        $pageable.loadRemote();
+                    }
+                    else {
+                        
+                    }
+
+                }
                 $pageable.refresh = function (full) {
                     scope.$currentPage = 1;
                     sortedData = false;
@@ -321,7 +347,7 @@ angular.module('ngQuantum.pageable.factory', ['ngQuantum.services.helpers'])
                     }
                     scope.selectedRows = [];
                 }
-                
+                $pageable.setFilterKey = setFilterKey;
                 
              
                 scope.$watch('$pageSize', function (newVal, oldVal) {
@@ -336,13 +362,12 @@ angular.module('ngQuantum.pageable.factory', ['ngQuantum.services.helpers'])
                 }
                 function callFormatUrl(obj) {
                     if (options.formatRequest) {
-                        var called = options.formatRequest(scope, { $url: obj.url, $params: obj.params, $eventType:obj.eventType });
+                        var called = options.formatRequest(scope, { $url: obj.url, $params: obj.params, $eventType: obj.eventType });
                         if (angular.isString(called)) {
                             obj.url = called;
                             obj.params = false;
                         } else if (angular.isObject(called)) {
-                            url = called.url;
-                            obj.params = called.params;
+                            return called;
                         }
                     }
                     return obj;
@@ -354,6 +379,7 @@ angular.module('ngQuantum.pageable.factory', ['ngQuantum.services.helpers'])
                     params.pageParams = pageParams();
                     if (scope.sortParam) params.sortParams = scope.sortParam;
                     if (scope.searchTerm) params.searchTerm = scope.searchTerm;
+                    if (scope.filterParams) params.filterParams = scope.filterParams;
                     return params == {} ? undefined : params;
                 }
                 function deletingParams(items) {
@@ -419,9 +445,28 @@ angular.module('ngQuantum.pageable.factory', ['ngQuantum.services.helpers'])
                         scope.sortParam = prm;
                     
                 }
-             
+                function setFilterKey(key, value, comperator) {
+                    var prm = {
+                        Key: key,
+                        Value: value
+                    }
+                    if (comperator)
+                        prm.Comperator = comperator
+                    if (!scope.filterParams) {
+                        scope.filterParams = [prm];
+                    }
+                    else if(scope.filterParams.indexOf(prm) < 0)
+                        scope.filterParams.push(prm)
+
+                }
+                function removeFilterKey(key, value, comperator) {
+                    scope.filterParams = $filter('filter')(scope.filterParams, function (item) {
+                        return !(item.Key == key && item.Value == value);
+                    });
+
+                }
                 function buildUrl(params, suffix) {
-                    var url = (options.serverRoot || '') + options.baseUrl;
+                    var url = (options.serverRoot || '') + (options.baseUrl || '');
                     if (suffix)
                         url = url.trimEnd('/'), url = url + suffix;
                     if (!options.useQueryString && params) {
@@ -483,7 +528,8 @@ angular.module('ngQuantum.pageable.factory', ['ngQuantum.services.helpers'])
                         if (angular.isArray(items) || options.methodDelete.toLowerCase() == 'post') {
                             ajax.url = buildUrl(prm, options.deleteSuffix);
                             ajax.method = 'POST';
-                            ajax.data[options.paramsField] = obj.items;
+                            ajax.data = options.paramsField ? ajax.data[options.paramsField] : obj.items;
+                            //ajax.data[options.paramsField] = obj.items;
                             
                         }
                         else {
@@ -539,14 +585,15 @@ angular.module('ngQuantum.pageable.factory', ['ngQuantum.services.helpers'])
                         eventType = isNew ? 'insert' : 'update',
                         method = isNew ? 'POST' : options.methodUpdate,
                         parseKey = isNew ? 'inserted' : 'updated',
-                    obj = { params: {routeParams:rp, data:item}, url: buildUrl(null, options[eventType + 'Suffix']), eventType: eventType}, ajax = {};
+                    obj = { params: { routeParams: rp, data: item }, url: buildUrl(null, options[eventType + 'Suffix']), eventType: eventType }, ajax = {};
                     if (options.formatRequest) {
                         ajax = callFormatUrl(obj)
                     }
                     else {
                         ajax.url = buildUrl(rp, options[eventType + 'Suffix']);
                         ajax.method = method;
-                        ajax.data[options.paramsField] = item;
+                        ajax.data = options.paramsField ? ajax.data[options.paramsField]: item;
+
 
                         if (options.useQueryString && rp) {
                             ajax.params = rp;
@@ -618,6 +665,8 @@ angular.module('ngQuantum.pageable.factory', ['ngQuantum.services.helpers'])
                 $pageable.deleteRow = deleteRow;
                 $pageable.addRow = addRow;
                 $pageable.saveRow = saveRow;
+                $pageable.setFilterKey = setFilterKey;
+                $pageable.removeFilterKey = removeFilterKey;
                 scope.$$postDigest(function () {
                     scope.$first = function () {
                         $pageable.gotoPage(1);
@@ -641,7 +690,9 @@ angular.module('ngQuantum.pageable.factory', ['ngQuantum.services.helpers'])
                         options.onRefresh(scope)
                     })
                 }
+                
                 $pageable.init();
+                
                 return $pageable;
             }
             return Factory;
