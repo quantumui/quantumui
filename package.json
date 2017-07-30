@@ -1,7 +1,11 @@
 {
   "name": "quantumui",
   "description": "The most powerful ANGULARJS and Bootstrap CSS based UI components make developer life easy.",
+<<<<<<< HEAD
   "version": "1.2.0",
+=======
+  "version": "1.1.0",
+>>>>>>> origin/master
   "keywords": [
     "quantumui",
     "angular",
