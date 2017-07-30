@@ -78,7 +78,7 @@ angular.module('ngQuantum.alert', ['ngQuantum.popMaster', 'ngQuantum.services.he
                       if (options.duration)
                           $timeout(function () {
                               $alert &&  $alert.hide();
-                          }, ($helpers.ensureNumber(options.duration, 3)));
+                          }, ($helpers.ensureNumber(options.duration, 3) * 1000));
                       return promise;
                   };
                   var hide = $alert.hide;

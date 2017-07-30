@@ -896,10 +896,13 @@
                 if (element.charAt(0) !== '<' || (element.charAt(0) == ' ' && element.charAt(1) !== '<')) {
                     if (element.indexOf(':visible') > -1)
                         return filterVisible(element);
-                    element = document.querySelectorAll(element);
+                    if (element)
+                        element = document.querySelectorAll(element);
                 }
             }
-            return _jqLite(element);
+            if (element)
+                return _jqLite(element);
+            return _jqLite();
         };
         angular.element = JQLite;
         angular.element = angular.extend(angular.element, _jqLite);

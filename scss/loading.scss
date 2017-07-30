@@ -29,7 +29,7 @@
     margin:0 auto;
     line-height:40px;
     border:1px solid $progress-bar-bg;
-    background-color:rgba($progress-bar-bg, (75/100));
+    background-color:rgba($progress-bar-bg, 75%/100.0%);
     border-radius:4px;
     @include box-shadow($progress-bar-bg 1px 0 6px 1px);
       > .busy-text {
@@ -52,12 +52,12 @@ body > .loading-container {
 }
 @mixin loading-variant($bg){
     > .progress {
-          .box-shadow($bg 1px 0 6px 1px)
+          @include box-shadow($bg 1px 0 6px 1px);
     }
     .spinner-container {
         border-color:darken($bg, 10%);
-        background-color:rgba($bg, (75/100));
-        .box-shadow($bg 1px 0 6px 1px)   
+        background-color:rgba($bg, 75%/100.0%);
+        @include box-shadow($bg 1px 0 6px 1px);   
     }
 }
 .loading-info {

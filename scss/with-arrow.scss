@@ -5,7 +5,7 @@
     }
     &[class*=" top"] {
          margin-top:-$with-arrow-margin;
-        .box-shadow($with-arrow-top-box-shadow)
+        @include box-shadow($with-arrow-top-box-shadow);
     }
     &[class*=" left"] {
         margin-left:-$with-arrow-margin;

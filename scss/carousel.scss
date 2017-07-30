@@ -8,7 +8,9 @@
   margin-right:auto;
   max-width:100%;
 }
-
+.carousel-control{
+    cursor:pointer;
+}
 .carousel-inner {
   position: relative;
   overflow: hidden;
@@ -30,6 +32,10 @@
 .carousel-indicators {
   li {
     text-indent: -9999px;
+    img{
+        width:100%;
+        height:100%;
+    }
   }
 }
 
@@ -60,21 +66,23 @@
    .carousel-indicators {
       bottom: 0;
       left: 0;
-      z-index: 15;
+      z-index: 91;
       width: 100%;
       padding: 2px;
       margin: 0;
       background-color:$carousel-indicator-thumb-bg;
-      @include gradient-vertical($start-color: mix(#ffffff, $carousel-indicator-thumb-bg, 4%); $end-color: $carousel-indicator-thumb-bg;) !default;
+      @include gradient_vertical($start-color: tint($carousel-indicator-thumb-bg, 4%), $end-color: $carousel-indicator-thumb-bg,);
       
         > li{
             width: 30px;
             height: 30px;
-            margin: 1px;
+            margin: 0;
+            padding:1px;
+            background-origin:content-box;
             text-indent: 0;
             border-radius:4px;
             opacity:0.4;
-            @include gradient-elipse($inner-color: mix(#ffffff, $carousel-indicator-thumb-bg, 4%); $outer-color: mix(#000000, $carousel-indicator-thumb-bg, 6%);) !default;
+            @include gradient_elipse($inner-color: tint($carousel-indicator-thumb-bg, 4%), $outer-color: shade($carousel-indicator-thumb-bg, 6%),);
        }
         .active {
             opacity:1;
@@ -96,7 +104,7 @@
         text-align: justify;
         padding:10px;
         border-top: 1px solid $carousel-indicator-thumb-border-color;
-        background-color:rgba($carousel-caption-bg, (50/100));
+        background-color:rgba($carousel-caption-bg, 50%/100.0%);
     }
 }
 
@@ -105,16 +113,29 @@
     padding-bottom:5px;
     .carousel-indicators {
       overflow:hidden;
-      height:54px;
+      height:56px;
+      padding:0;
+      padding-top:3px;
       > li{
           width: 70px;
           height: 50px;
-          line-height:50px;
-          margin: 1px;
-          margin-bottom:3px;
+          margin: 0;
+          margin-bottom:0;
           text-indent: 0;
           border-radius:0;
           opacity:0.6;
+          border:0;
+          padding:3px;
+          span{
+              display:block;
+              line-height:46px;
+              text-align:center;
+          }
+          canvas{
+              display:block;
+              width:100%;
+              height:100%;
+          }
       }
     }
     .indicator-no {
@@ -124,8 +145,84 @@
       bottom: 50px;
       color: #ffffff;
     }
+  
+    &.show-page-butons:hover{
+       .carousel-page-control{
+           &.page-left,
+           &.page-right{
+               display:block;
+           }
+           &.page-all{
+               right:32px; 
+           }
+        }
+    }
+    &.all-thumbs-button:hover{
+       .carousel-page-control{
+           &.page-all{
+               display:block;
+           }
+        }
+    }
+    &.shown-all-thumbs,
+    &.shown-all-thumbs:hover{
+        padding-bottom:0;
+        .carousel-page-control{
+           display:none !important;
+        }
+        .carousel-indicators {
+          overflow:auto;
+          height:auto;
+          max-height:216px;
+          position:relative;
+          > li{
+              width: 52px !important;
+              display:inline-block !important;
+          }
+        }
+    }
 }
+.carousel-page-control{
+        position:absolute;
+        display:none;
+        bottom:0;
+        height:54px;
+        line-height:53px;
+        text-align:center;
+        width:30px;
+        cursor:pointer;
+        z-index:92;
+        border:1px solid darken($carousel-indicator-thumb-border-color, 10%);
+        background-color:darken($carousel-indicator-thumb-border-color, 3%);
+       @include gradient_radial($inner-color: tint($carousel-indicator-thumb-border-color, 4%), $outer-color: darken($carousel-indicator-thumb-border-color, 30%),);
 
+       &.page-left{
+           left:0;
+           font-size:1.667em;
+       }
+       &.page-right{
+           right:0;
+           font-size:1.667em;
+       }
+       &.page-all{
+           width:54px;
+           right:0;
+           padding-top:12px;
+           line-height:10px;
+           > *{
+               display:block;
+           }
+           .page-all-total{
+               font-weight:bold;
+           }
+       }
+    }
+
+.carousel-zoom{
+    .zoom-item{
+        cursor:zoom-in;
+    }
+}
 @media (max-width: $screen-xs-max) {
 
   .carousel-caption {

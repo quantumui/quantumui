@@ -1,4 +1,4 @@
-@mixin webkit-scrollbar-variant($bg-color; $color; $thumb-bg;){
+@mixin webkit-scrollbar-variant($bg-color, $color, $thumb-bg,){
     &::-webkit-scrollbar {
         background-color: $bg-color; 
     }
@@ -16,7 +16,7 @@
         }
     }
     &::-webkit-scrollbar-thumb:window-inactive {
-	    background-color:rgba($thumb-bg, (15/100)); 
+	    background-color:rgba($thumb-bg, 15%/100.0%); 
     }      
     &::-webkit-scrollbar-corner {
 	    background-color: $bg-color;
@@ -24,7 +24,7 @@
     }                                                                                                                 
 }
 
-@mixin nq-scrollbar-variant($bg-color; $color; $thumb-bg;){
+@mixin nq-scrollbar-variant($bg-color, $color, $thumb-bg,){
    .scrollbar .scrollbar-thumb{
         background-color:$thumb-bg;
     }    
@@ -42,7 +42,7 @@
         }
     }                                                                                                    
 }
-@mixin scrollbar-variant($bg-color; $color; $thumb-bg;){
+@mixin scrollbar-variant($bg-color, $color, $thumb-bg,){
    /*.webkit-scrollbar-variant($bg-color; $color; $thumb-bg;);*/
-   .nq-scrollbar-variant($bg-color; $color; $thumb-bg;)                                                                                                 
+   @include nq-scrollbar-variant($bg-color, $color, $thumb-bg,);                                                                                                 
 }

@@ -57,7 +57,7 @@
 }
 .select-toggle:focus {
   outline: 0;
-  .box-shadow(none)
+  @include box-shadow(none);
 }
 .select-toggle.active, 
 .btn.select-toggle.active{
@@ -183,8 +183,8 @@
         .select-input,
         > li > a {
             padding:5px 4px;
-            height:ceil(($input-height-small - 11px));
-            line-height:ceil(($input-height-small - 11px));
+            height:ceil(($input-height-large - 11px));
+            line-height:ceil(($input-height-large - 11px));
         }
         > li > a {
             padding:0px 7px;

@@ -128,7 +128,7 @@
                           !options.$scope && scope.$destroy();
                       };
                       $master.enter = function (evt) {
-                          var promise;
+                          var defered = $q.defer();
                           if (this !== $master)
                               $master.$currentElement = angular.element(this);
                           clearTimeout(timeout);
@@ -138,18 +138,19 @@
                           }
                           timeout = setTimeout(function () {
                               if (hoverState === 'in')
-                                  promise =   $master.show();
+                                  defered.resolve($master.show());
                           }, options.delayShow);
-                          return promise;
+                          return defered.promise;
                       };
                       $master.show = function (callback) {
                           var lasttheme;
                           var promise;
-                          if (options.buildOnShow) {
+                          if (options.buildOnShow && !$master.builded) {
                               options.show = true;
                               options.buildOnShow = false;
+                              $master.builded = true;
                               start();
-                              return false;
+                              return $q.when('');
                           }
                           options = $master.$options;
                           if (($master.$isShown || $master.$isShowing || $master.$isHidding))
@@ -241,8 +242,7 @@
                           return promise;
                       };
                       $master.leave = function (evt) {
-                         
-                          var promise;
+                          var defered = $q.defer();
                           if (this !== $master)
                               $master.$currentElement = angular.element(this);
                           clearTimeout(timeout);
@@ -252,12 +252,15 @@
                               $master.$isShowing = false;
                               !exrtadelay && (exrtadelay = 10);
                           }
+                          if (!exrtadelay) {
+                              return $master.hide();
+                          }
                           timeout = setTimeout(function () {
                               if (hoverState === 'out') {
-                                  promise = $master.hide();
+                                  defered.resolve($master.hide());
                               }
                           }, exrtadelay);
-                          return promise;
+                          return defered.promise;
                       };
                       $master.hide = function (callback) {
                           
@@ -329,7 +332,7 @@
                           if (evt && evt.isDefaultPrevented() && $master.$currentElement[0].tagName.toLowerCase() != "a")
                               return false;
 
-                          $master.$isShown ? $master.leave() : $master.enter();
+                          $master.$isShown ? $master.leave(evt) : $master.enter(evt);
                       };
                       $master.focus = function () {
                           $target && $target.focus();
@@ -391,30 +394,31 @@
 
                       
                       $rootScope.$on('$locationChangeStart', function (event, next, current) {
-                          $master && $master.$isShown && $master.leave();
+                          $master && $master.$isShown && $master.leave(event);
                       });
                       function onBodyClick(evt) {
-                          
-                          if (options.clearClick) {
-                             return $master.leave();
+                          var elm = $master.$currentElement && $master.$currentElement || element;
+                         
+                          if (options.clearClick && !(evt.target == elm[0] || elm.has(evt.target))) {
+                              hoverState = 'out';
+                              return $master.leave();
                           }
                           if (evt.isDefaultPrevented())
                               return false;
-                          var elm = $master.$currentElement && $master.$currentElement || element;
                           if (evt.target === elm[0])
                               return false;
                           else if (elm.has(angular.element(evt.target)))
                               return false;
                           else if ((options.multiple || options.overseeingTarget) && (evt.target == $master.$target[0] || $master.$target.has(evt.target)))
                               return false;
-                          return evt.target !== elm[0] && $master.leave();
+                          return evt.target !== elm[0] && $master.leave(evt);
                       }
                       function outerHoverTrigger(evt) {
                           if ($master.$target[0] == evt.target || $master.$target.has(angular.element(evt.target))) {
-                              if (evt.type == 'mouseenter')
+                              if (evt.type == 'mouseenter' || evt.type == 'mouseover')
                                   return hoverState = 'in';
-                              else if (evt.type == 'mouseleave') {
-                                  return $master.leave();
+                              else if (evt.type == 'mouseleave' || evt.type == 'mouseout') {
+                                  return $master.leave(evt);
                               }
                           }
                       }
@@ -637,8 +641,12 @@
                             sScope.title = $sce.trustAsHtml(scope.$eval(attr.qsTitle) || attr.qsTitle);
                         if (angular.isDefined(attr.qsContent)) {
                             var newContent = scope.$eval(attr.qsContent) || attr.qsContent;
-                            if (angular.isObject(newContent))
-                                angular.extend(sScope, newContent);
+                            if (angular.isObject(newContent)) {
+                                if (angular.isDefined(attr.contentField))
+                                    sScope[attr.contentField] = newContent;
+                                else
+                                    angular.extend(sScope, newContent);
+                            }
                             else
                                 sScope.content = $sce.trustAsHtml(newContent);
                         }

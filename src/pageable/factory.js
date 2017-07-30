@@ -113,10 +113,12 @@ angular.module('ngQuantum.pageable.factory', ['ngQuantum.services.helpers'])
                         if (angular.isArray(data)) {
                             if (options.remotePaging) {
                                 promise = $timeout(function () {
-                                    scope.$pagerWarning = options.noTotalResultText;
-                                    scope.$currentPage = 0;
-                                    scope.totalResult = 0;
-                                    $pageable.getRows(data);
+                                    var first = data[0];
+                                    var total = first && first[options.totalField] || 0;
+                                    scope.$pagerWarning = total > 0 ? false : options.noTotalResultText;
+                                    $pageable.totalResult = scope.totalResult = total;
+                                    scope.$currentPage = total > 0 ? scope.$currentPage: 0;
+                                    $pageable.getRows(data, total);
                                 }, 0)
                             }
                             else {
@@ -130,9 +132,9 @@ angular.module('ngQuantum.pageable.factory', ['ngQuantum.services.helpers'])
                             }
                         } else if (angular.isObject(data)) {
                             var total, array;
+                            
                             total = $helpers.getFieldValue(data, options.totalField);
                             array = $helpers.getFieldValue(data, options.recordsField);
-                            
                             if (!total || !array) {
                                 for (var o in data) {
                                     if (!total && angular.isNumber(data[o]))
@@ -147,7 +149,7 @@ angular.module('ngQuantum.pageable.factory', ['ngQuantum.services.helpers'])
                                 scope.totalResult = total;
                                 if (options.remotePaging) {
                                     scope.totalResult = total;
-                                    modelData = array;
+                                    modelData = scope[scope.$modelKey] = array || [];
                                     $pageable.getRows(array, total);
                                     
                                 } else {
@@ -217,6 +219,10 @@ angular.module('ngQuantum.pageable.factory', ['ngQuantum.services.helpers'])
                     }
                     
                     if (options.formatRequest) {
+                        if (attr.postParams) {
+                            var postParams = scope.$eval(attr.postParams);
+                            obj.params = angular.extend({}, obj.params, postParams)
+                        }
                         ajax = callFormatUrl(obj)
                     }
                     else {
@@ -228,6 +234,10 @@ angular.module('ngQuantum.pageable.factory', ['ngQuantum.services.helpers'])
                             ajax.url = buildUrl(prm) + loadSuffix;
                             var data = angular.extend({}, obj.params)
                             data.routeParams && delete data.routeParams;
+                            if (attr.postParams) {
+                                var postParams = scope.$eval(attr.postParams);
+                                data = angular.extend({},data, postParams)
+                            }
                             ajax.data = {}, ajax.data = options.paramsField ? ajax.data[options.paramsField] : data;
                         }
                         else {
@@ -242,7 +252,7 @@ angular.module('ngQuantum.pageable.factory', ['ngQuantum.services.helpers'])
                     ajax && (ajax.cache = options.cacheResult);
                     if (ajax)
                         return $http(ajax)
-                            .success(function (res) {
+                            .then(function (res) {
                                 var data = res.data ? res.data : res;
                                 if (options.formatData) {
                                     data = options.formatData(scope, { $response: res })
@@ -252,8 +262,8 @@ angular.module('ngQuantum.pageable.factory', ['ngQuantum.services.helpers'])
                                 scope.$pageableBusy = false;
                                 scope.$errorResponse = '';
                                 scope.$error = false;
-                            })
-                            .error(function (res) {
+                            },
+                            function (res) {
                                 scope.$pageableBusy = false;
                                 scope.$noResultFound = true;
                                 if (options.loadError) {
@@ -459,7 +469,7 @@ angular.module('ngQuantum.pageable.factory', ['ngQuantum.services.helpers'])
 
                 }
                 function buildUrl(params, suffix) {
-                    var url = (options.serverRoot || '') + (options.baseUrl || '');
+                    var url = (options.serverRoot || '') + options.baseUrl;
                     if (suffix)
                         url = url.trimEnd('/'), url = url + suffix;
                     if (!options.useQueryString && params) {
@@ -536,7 +546,7 @@ angular.module('ngQuantum.pageable.factory', ['ngQuantum.services.helpers'])
                     }
                     if(ajax)
                     return $http(ajax)
-                        .success(function (res) {
+                        .then(function (res) {
                             var data = res.data ? res.data : res;
                             if (data != false)
                                 removeRows(items);
@@ -544,11 +554,11 @@ angular.module('ngQuantum.pageable.factory', ['ngQuantum.services.helpers'])
                             options.deleted && options.deleted(scope, { $response: res });
                             if (options.refreshOnChange)
                                 $pageable.getRows();
-                        })
-                        .error(function (res) {
+                        },
+                        function (res) {
                             scope.$deletingProcess = false;
                             options.deleted && options.deleted(scope, { $response: res, $error: true })
-                        });
+                        })
                 }
                 function removeRows(items) {
                     angular.forEach(items, function (item) {
@@ -577,7 +587,7 @@ angular.module('ngQuantum.pageable.factory', ['ngQuantum.services.helpers'])
                         eventType = isNew ? 'insert' : 'update',
                         method = isNew ? 'POST' : options.methodUpdate,
                         parseKey = isNew ? 'inserted' : 'updated',
-                    obj = { params: { routeParams: rp, data: item }, url: buildUrl(null, options[eventType + 'Suffix']), eventType: eventType }, ajax = {};
+                    obj = { params: {routeParams:rp, data:item}, url: buildUrl(null, options[eventType + 'Suffix']), eventType: eventType}, ajax = {};
                     if (options.formatRequest) {
                         ajax = callFormatUrl(obj)
                     }
@@ -593,7 +603,7 @@ angular.module('ngQuantum.pageable.factory', ['ngQuantum.services.helpers'])
                     }
                     if (ajax)
                         return $http(ajax)
-                            .success(function (res) {
+                            .then(function (res) {
                                 var data = res.data ? res.data : res;
                                 if (isNew && data) {
                                     angular.extend(item, data);
@@ -603,11 +613,11 @@ angular.module('ngQuantum.pageable.factory', ['ngQuantum.services.helpers'])
                                 options[parseKey] && options[parseKey](scope, { $response: res });
                                 if (options.refreshOnChange)
                                     $pageable.getRows();
-                            })
-                            .error(function (res) {
+                            },
+                            function (res) {
                                 scope.$savingProcess = false;
                                 options[parseKey] && options[parseKey](scope, { $response: res, $error: true })
-                            });
+                            })
 
                     return $q.when('');
                 }

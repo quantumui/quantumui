@@ -25,7 +25,7 @@ angular.module('ngQuantum.slider', ['ngQuantum.services.mouse', 'ngQuantum.servi
     };
     this.$get = ['$rootScope', '$document', '$mouse', '$parse',
       function ($rootScope, $document, $mouse, $parse) {
-          function Factory(element, config) {
+          function Factory(element, config, controller) {
               var $slider = {}, template, track, selection, thumb, thumb2, sizes, body = angular.element('body');
               var ruller, rullerMax, rullerMin;
               
@@ -132,7 +132,7 @@ angular.module('ngQuantum.slider', ['ngQuantum.services.mouse', 'ngQuantum.servi
                   unbindMouse();
                   scope.$destroy();
               }
-              function applyValue(){
+              function applyValue() {
                   if (options.doubleThumb)
                       scope.values = [$slider.value0 || options.min, $slider.value1 || options.max];
                   else
@@ -173,6 +173,15 @@ angular.module('ngQuantum.slider', ['ngQuantum.services.mouse', 'ngQuantum.servi
                   }
                   angular.element('body').removeClass('unselectable');
                   $mouse.offUp(body, documentUp);
+                  scope.$parent.$apply(function () {
+                      controller.$setViewValue(scope.values);
+                      scope.$parent.$searchFilters && (scope.$parent.$searchFilters.PriceRange = scope.values)
+                  })
+                  
+                  if (options.mouseUp) {
+                      scope.$parent.$eval(options.mouseUp);
+                  }
+                  
                   
               }
               function slideThumb(event) {
@@ -321,7 +330,7 @@ angular.module('ngQuantum.slider', ['ngQuantum.services.mouse', 'ngQuantum.servi
                   } else {
                       
                       sizes.stepRate = (options.max - options.min) / sizes.trw;
-                      sizes.stepSize = sizes.trw / sizes.stepRate;
+                      sizes.stepSize = sizes.trw / diff;
                   }
                   options.diff && options.doubleThumb && (sizes.diffPixel = Math.round(sizes.stepSize * options.diff));
                   
@@ -374,7 +383,7 @@ angular.module('ngQuantum.slider', ['ngQuantum.services.mouse', 'ngQuantum.servi
             var options = {
                 $scope : scope
             }
-            var keys = ['disabled', 'keyboard', 'decimalPlace', 'step', 'min', 'max', 'doubleThumb', 'showLabel',
+            var keys = ['disabled', 'keyboard', 'decimalPlace', 'step', 'min', 'max', 'doubleThumb', 'showLabel', 'mouseUp',
                         'diff', 'size', 'sizeClass', 'showRuller', 'direction', 'theme', 'thumbClass', 'valuePrefix', 'valueSuffix', 'formatValue']
             angular.forEach(keys,
                 function (key) {
@@ -386,7 +395,7 @@ angular.module('ngQuantum.slider', ['ngQuantum.services.mouse', 'ngQuantum.servi
 
                 });
             
-            var slider = new $slider(element, options)
+            var slider = new $slider(element, options, controller)
             scope.$watch(attr.ngModel, function (newVal, oldVal) {
                 if (newVal) {
                     if (newVal != slider.$scope.values) {
@@ -404,18 +413,15 @@ angular.module('ngQuantum.slider', ['ngQuantum.services.mouse', 'ngQuantum.servi
                     })
                 }
             })
-            
+            scope.$watch(attr.qsSuffix, function (newVal, oldVal) {
+                newVal && slider.setOption('valueSuffix', newVal);
+            })
             attr.$observe('disabled', function (newVal, oldVal) {
                 if (newVal) {
                     slider.toggleDisable(true);
                 }
                 else if(oldVal){
                     slider.toggleDisable(false);
-                }
-            })
-            slider.$scope.$watch('values', function (newVal, oldVal) {
-                if (newVal && (newVal !== oldVal)) {
-                    controller.$setViewValue(newVal);
                 }
             })
             scope.$on('$destroy', function () {

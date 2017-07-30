@@ -21,7 +21,7 @@
 
   &.in     { @include opacity($tooltip-opacity); }
   &.top,&.top-left,&.top-right    {
-      $margin-top:ceil((($tooltip-arrow-width * 2) - 1px)) !default;
+      $margin-top:ceil((($tooltip-arrow-width * 2) - 1px));
        margin-top:  -$margin-top; 
        padding: ceil(($tooltip-arrow-width * 2)) 0; 
 
@@ -36,7 +36,7 @@
 
   }
   &.left   { 
-      $margin-left:ceil((($tooltip-arrow-width * 2) - 1px)) !default;
+      $margin-left:ceil((($tooltip-arrow-width * 2) - 1px));
       margin-left: -$margin-left; 
       padding: 0 ceil(($tooltip-arrow-width * 2)); 
 

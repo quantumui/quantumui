@@ -2,50 +2,50 @@
 
 
 // Reset and dependencies
-@import '../../wwwroot/lib/bootstrap/less/normalize';
-@import '../../wwwroot/lib/bootstrap/less/print';
-@import '../../wwwroot/lib/bootstrap/less/glyphicons';
+@import "../../wwwroot/lib/bootstrap/scss/normalize.scss";
+@import "../../wwwroot/lib/bootstrap/scss/print.scss";
+@import "../../wwwroot/lib/bootstrap/scss/glyphicons.scss";
 
 // Core CSS
-@import '../../wwwroot/lib/bootstrap/less/scaffolding';
-@import '../../wwwroot/lib/bootstrap/less/type';
-@import '../../wwwroot/lib/bootstrap/less/code';
-@import '../../wwwroot/lib/bootstrap/less/grid';
-@import '../../wwwroot/lib/bootstrap/less/tables';
-@import '../../wwwroot/lib/bootstrap/less/forms';
-@import '../../wwwroot/lib/bootstrap/less/buttons';
+@import "../../wwwroot/lib/bootstrap/scss/scaffolding.scss";
+@import "../../wwwroot/lib/bootstrap/scss/type.scss";
+@import "../../wwwroot/lib/bootstrap/scss/code.scss";
+@import "../../wwwroot/lib/bootstrap/scss/grid.scss";
+@import "../../wwwroot/lib/bootstrap/scss/tables.scss";
+@import "../../wwwroot/lib/bootstrap/scss/forms.scss";
+@import "../../wwwroot/lib/bootstrap/scss/buttons.scss";
 
 // Components
-@import '../../wwwroot/lib/bootstrap/less/component-animations';
-@import '../../wwwroot/lib/bootstrap/less/dropdowns';
-@import '../../wwwroot/lib/bootstrap/less/button-groups';
-@import '../../wwwroot/lib/bootstrap/less/input-groups';
-@import '../../wwwroot/lib/bootstrap/less/navs';
-@import '../../wwwroot/lib/bootstrap/less/navbar';
-@import '../../wwwroot/lib/bootstrap/less/breadcrumbs';
-@import '../../wwwroot/lib/bootstrap/less/pagination';
-@import '../../wwwroot/lib/bootstrap/less/pager';
-@import '../../wwwroot/lib/bootstrap/less/labels';
-@import '../../wwwroot/lib/bootstrap/less/badges';
-@import '../../wwwroot/lib/bootstrap/less/jumbotron';
-@import '../../wwwroot/lib/bootstrap/less/thumbnails';
-@import '../../wwwroot/lib/bootstrap/less/alerts';
-@import '../../wwwroot/lib/bootstrap/less/progress-bars';
-@import '../../wwwroot/lib/bootstrap/less/media';
-@import '../../wwwroot/lib/bootstrap/less/list-group';
-@import '../../wwwroot/lib/bootstrap/less/panels';
-@import '../../wwwroot/lib/bootstrap/less/responsive-embed';
-@import '../../wwwroot/lib/bootstrap/less/wells';
-@import '../../wwwroot/lib/bootstrap/less/close';
+@import "../../wwwroot/lib/bootstrap/scss/component-animations.scss";
+@import "../../wwwroot/lib/bootstrap/scss/dropdowns.scss";
+@import "../../wwwroot/lib/bootstrap/scss/button-groups.scss";
+@import "../../wwwroot/lib/bootstrap/scss/input-groups.scss";
+@import "../../wwwroot/lib/bootstrap/scss/navs.scss";
+@import "../../wwwroot/lib/bootstrap/scss/navbar.scss";
+@import "../../wwwroot/lib/bootstrap/scss/breadcrumbs.scss";
+@import "../../wwwroot/lib/bootstrap/scss/pagination.scss";
+@import "../../wwwroot/lib/bootstrap/scss/pager.scss";
+@import "../../wwwroot/lib/bootstrap/scss/labels.scss";
+@import "../../wwwroot/lib/bootstrap/scss/badges.scss";
+@import "../../wwwroot/lib/bootstrap/scss/jumbotron.scss";
+@import "../../wwwroot/lib/bootstrap/scss/thumbnails.scss";
+@import "../../wwwroot/lib/bootstrap/scss/alerts.scss";
+@import "../../wwwroot/lib/bootstrap/scss/progress-bars.scss";
+@import "../../wwwroot/lib/bootstrap/scss/media.scss";
+@import "../../wwwroot/lib/bootstrap/scss/list-group.scss";
+@import "../../wwwroot/lib/bootstrap/scss/panels.scss";
+@import "../../wwwroot/lib/bootstrap/scss/responsive-embed.scss";
+@import "../../wwwroot/lib/bootstrap/scss/wells.scss";
+@import "../../wwwroot/lib/bootstrap/scss/close.scss";
 
 // Components w/ JavaScript
-@import '../../wwwroot/lib/bootstrap/less/modals';
-//@import '../../wwwroot/lib/bootstrap/less/tooltip'; //this is not required
-@import '../../wwwroot/lib/bootstrap/less/popovers';
-@import '../../wwwroot/lib/bootstrap/less/carousel';
+@import "../../wwwroot/lib/bootstrap/scss/modals.scss";
+//@import "../../wwwroot/lib/bootstrap/scss/tooltip.scss"; //this is not required
+@import "../../wwwroot/lib/bootstrap/scss/popovers.scss";
+@import "../../wwwroot/lib/bootstrap/scss/carousel.scss";
 
 // Utility classes
-@import '../../wwwroot/lib/bootstrap/less/utilities';
-@import '../../wwwroot/lib/bootstrap/less/responsive-utilities';
+@import "../../wwwroot/lib/bootstrap/scss/utilities.scss";
+@import "../../wwwroot/lib/bootstrap/scss/responsive-utilities.scss";
 
 

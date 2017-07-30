@@ -14,7 +14,7 @@
 .tab-container {
    position:relative;
    width:100%;
-   &:extend(clearfix all);
+   @extend clearfix;
 }
 .tab-content {
    position:relative;

@@ -1,6 +1,6 @@
 /*!
- * QuantumUI Free v1.0.0 (http://quantumui.org)
- * Copyright 2014-2016 Mehmet Otkun, quantumui.org
+ * QuantumUI Free v1.1.0 (http://quantumui.org)
+ * Copyright 2014-2017 Mehmet Otkun, quantumui.org
  */
 
 /*aside menu*/
@@ -881,6 +881,9 @@ a.dropdown-toggle {
   margin-right: auto;
   margin-left: auto;
 }
+.carousel-control {
+  cursor: pointer;
+}
 .carousel-inner {
   position: relative;
   width: 100%;
@@ -898,6 +901,10 @@ a.dropdown-toggle {
 }
 .carousel-indicators li {
   text-indent: -9999px;
+}
+.carousel-indicators li img {
+  width: 100%;
+  height: 100%;
 }
 .carousel-title {
   position: absolute;
@@ -927,7 +934,7 @@ a.dropdown-toggle {
 .carousel.thumb-navigation .carousel-indicators {
   bottom: 0;
   left: 0;
-  z-index: 15;
+  z-index: 91;
   width: 100%;
   padding: 2px;
   margin: 0;
@@ -941,12 +948,14 @@ a.dropdown-toggle {
 .carousel.thumb-navigation .carousel-indicators > li {
   width: 30px;
   height: 30px;
-  margin: 1px;
+  padding: 1px;
+  margin: 0;
   text-indent: 0;
   background-image: -webkit-radial-gradient(center, ellipse cover, #d9d9d9, #cacaca);
   background-image: -webkit-radial-gradient(center, ellipse, #d9d9d9, #cacaca);
   background-image:         radial-gradient(ellipse at center, #d9d9d9, #cacaca);
   background-repeat: no-repeat;
+  background-origin: content-box;
   border-radius: 4px;
   opacity: .4;
 }
@@ -978,18 +987,31 @@ a.dropdown-toggle {
   padding-bottom: 5px;
 }
 .carousel.thumb-navigation .carousel-indicators {
-  height: 54px;
+  height: 56px;
+  padding: 0;
+  padding-top: 3px;
   overflow: hidden;
 }
 .carousel.thumb-navigation .carousel-indicators > li {
   width: 70px;
   height: 50px;
-  margin: 1px;
-  margin-bottom: 3px;
-  line-height: 50px;
+  padding: 3px;
+  margin: 0;
+  margin-bottom: 0;
   text-indent: 0;
+  border: 0;
   border-radius: 0;
   opacity: .6;
+}
+.carousel.thumb-navigation .carousel-indicators > li span {
+  display: block;
+  line-height: 46px;
+  text-align: center;
+}
+.carousel.thumb-navigation .carousel-indicators > li canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 .carousel.thumb-navigation .indicator-no {
   display: block;
@@ -997,6 +1019,76 @@ a.dropdown-toggle {
 .carousel.thumb-navigation .carousel-caption {
   bottom: 50px;
   color: #fff;
+}
+.carousel.thumb-navigation.show-page-butons:hover .carousel-page-control.page-left,
+.carousel.thumb-navigation.show-page-butons:hover .carousel-page-control.page-right {
+  display: block;
+}
+.carousel.thumb-navigation.show-page-butons:hover .carousel-page-control.page-all {
+  right: 32px;
+}
+.carousel.thumb-navigation.all-thumbs-button:hover .carousel-page-control.page-all {
+  display: block;
+}
+.carousel.thumb-navigation.shown-all-thumbs,
+.carousel.thumb-navigation.shown-all-thumbs:hover {
+  padding-bottom: 0;
+}
+.carousel.thumb-navigation.shown-all-thumbs .carousel-page-control,
+.carousel.thumb-navigation.shown-all-thumbs:hover .carousel-page-control {
+  display: none !important;
+}
+.carousel.thumb-navigation.shown-all-thumbs .carousel-indicators,
+.carousel.thumb-navigation.shown-all-thumbs:hover .carousel-indicators {
+  position: relative;
+  height: auto;
+  max-height: 216px;
+  overflow: auto;
+}
+.carousel.thumb-navigation.shown-all-thumbs .carousel-indicators > li,
+.carousel.thumb-navigation.shown-all-thumbs:hover .carousel-indicators > li {
+  display: inline-block !important;
+  width: 52px !important;
+}
+.carousel-page-control {
+  position: absolute;
+  bottom: 0;
+  z-index: 92;
+  display: none;
+  width: 30px;
+  height: 54px;
+  line-height: 53px;
+  text-align: center;
+  cursor: pointer;
+  background-color: #b4b4b4;
+  background-image: -webkit-radial-gradient(circle, #bebebe, #6f6f6f);
+  background-image:         radial-gradient(circle, #bebebe, #6f6f6f);
+  background-repeat: no-repeat;
+  border: 1px solid #a2a2a2;
+}
+.carousel-page-control.page-left {
+  left: 0;
+  font-size: 1.667em;
+}
+.carousel-page-control.page-right {
+  right: 0;
+  font-size: 1.667em;
+}
+.carousel-page-control.page-all {
+  right: 0;
+  width: 54px;
+  padding-top: 12px;
+  line-height: 10px;
+}
+.carousel-page-control.page-all > * {
+  display: block;
+}
+.carousel-page-control.page-all .page-all-total {
+  font-weight: bold;
+}
+.carousel-zoom .zoom-item {
+  cursor: -webkit-zoom-in;
+  cursor:         zoom-in;
 }
 @media (max-width: 767px) {
   .carousel-caption {
@@ -1848,6 +1940,14 @@ iframe::-webkit-scrollbar {
   font-size: 5em;
   line-height: .35;
 }
+.fic.fic-3xl {
+  font-size: 7em;
+  line-height: .35;
+}
+.fic.fic-4xl {
+  font-size: 9em;
+  line-height: .35;
+}
 .fic.fic-right {
   float: right;
   height: 100%;
@@ -2092,6 +2192,46 @@ iframe::-webkit-scrollbar {
 .calendar-footer:empty {
   display: none;
 }
+.calendar-footer-title {
+  position: relative;
+  display: block;
+  padding: 5px 9px;
+  background-color: #fdfdfd;
+}
+.calendar-footer-title .footer-today {
+  position: absolute;
+  top: 5px;
+  right: 9px;
+  font-size: 1em;
+  color: inherit;
+  cursor: pointer;
+}
+.calendar-footer-title .footer-today .fic {
+  font-size: 1.1em;
+}
+.calendar-header-title {
+  position: relative;
+  display: block;
+  padding: 5px 9px;
+  font-size: 1.2em;
+  font-weight: bold;
+  background-color: #fff;
+}
+.calendar-header-title .header-hide {
+  position: absolute;
+  top: 8px;
+  right: 9px;
+  font-size: .7em;
+  font-weight: normal;
+  color: #181818;
+  cursor: pointer;
+}
+.calendar-header-title .header-hide .fic {
+  top: .2em;
+  font-size: 1.5em;
+  font-weight: bold;
+  line-height: 0;
+}
 .calendar-table {
   min-width: 212px;
   max-width: 100%;
@@ -2165,10 +2305,18 @@ iframe::-webkit-scrollbar {
   border-right-width: 2px;
 }
 .calendar-table tbody th.out-month,
-.calendar-table tbody td.out-month {
+.calendar-table tbody td.out-month,
+.calendar-table tbody th.out-month.unselectable,
+.calendar-table tbody td.out-month.unselectable,
+.calendar-table tbody th.out-month:hover,
+.calendar-table tbody td.out-month:hover,
+.calendar-table tbody th.out-month.unselectable:hover,
+.calendar-table tbody td.out-month.unselectable:hover {
   color: #3d3030;
+  pointer-events: none;
+  cursor: default;
   background-color: #fdfdfd;
-  opacity: .8;
+  opacity: 0 !important;
 }
 .calendar-table tbody th.weekend,
 .calendar-table tbody td.weekend {
@@ -2186,21 +2334,28 @@ iframe::-webkit-scrollbar {
 }
 .calendar-table tbody td.selected,
 .calendar-table tbody td.selected:hover {
+  color: #1d1d1d;
+  background-color: #e3e3e3;
+}
+.calendar-table tbody td.model_selected,
+.calendar-table tbody td.model_selected:hover {
   color: #fff;
   background-color: #ec971f;
 }
 .calendar-table tbody th.unselectable,
 .calendar-table tbody td.unselectable {
-  text-decoration: line-through;
+  color: #181818 !important;
+  text-decoration: double;
   cursor: default;
   cursor: not-allowed;
-  background-color: #fdfdfd;
+  background-color: #fdfdfd !important;
+  opacity: .5 !important;
 }
 .calendar-table tbody th.unselectable:hover,
 .calendar-table tbody td.unselectable:hover {
   color: #181818;
   background-color: #fdfdfd;
-  opacity: .9 !important;
+  opacity: .5 !important;
 }
 .calendar-table tr th:last-child,
 .calendar-table tr td:last-child {
@@ -2223,7 +2378,7 @@ table.cal-header-table {
 .cal-header-table tr > td.next,
 .cal-header-table tr > td.today,
 .cal-header-table tr > td.hide-cal {
-  width: 25px;
+  width: 35px;
   /*overflow:hidden;*/
   vertical-align: middle;
 }
@@ -2234,12 +2389,17 @@ table.cal-header-table {
 .cal-header-table tr > td > button {
   padding: 3px 4px;
   margin: 0;
+  font-size: 1.5em;
   background-color: transparent;
   background-image: none;
   border: none;
 }
 .cal-header-table tr > td > button:focus {
   outline: none;
+}
+.cal-header-table tr > td > button:before,
+.cal-header-table tr > td > button:after {
+  content: '';
 }
 .calendar-panel .year-selector {
   position: relative;
@@ -2284,6 +2444,9 @@ table.cal-header-table {
 }
 .year-selector a:hover {
   opacity: .9;
+}
+.calendar-footer-title + .year-selector {
+  padding-top: 3px;
 }
 /*timepicker*/
 .tp-container {
@@ -2393,6 +2556,35 @@ table.cal-header-table {
 }
 .calendar-inline td.hide-cal {
   display: none;
+}
+.cal-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: none;
+  width: 100%;
+  background-color: rgba(0, 0, 0, .5);
+}
+@media (max-width: 480px) {
+  .calendar-panel {
+    padding: 0;
+  }
+  .calendar-panel > div {
+    z-index: 1;
+    background-color: inherit;
+  }
+  .calendar-panel > div.cal-overlay {
+    z-index: -1;
+    display: block;
+    background-color: rgba(0, 0, 0, .5);
+  }
+  .calendar-footer {
+    padding-top: 3px;
+    margin-top: 0;
+    border-top: 1px solid #dbdbdb;
+  }
 }
 .color-pick {
   display: inline-block;
@@ -3971,9 +4163,9 @@ body > .loading-container {
 }
 .nav.select-render-nav.input-lg .select-input,
 .nav.select-render-nav.input-lg > li > a {
-  height: 19px;
+  height: 35px;
   padding: 5px 4px;
-  line-height: 19px;
+  line-height: 35px;
 }
 .nav.select-render-nav.input-lg > li > a {
   padding: 0 7px;

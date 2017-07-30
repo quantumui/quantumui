@@ -4,17 +4,17 @@
 //## they already include bootstrap mixins and variables
 
 // Core variables and mixins
-@import 'variables';
-@import 'mixins';
+@import "variables.scss";
+@import "mixins.scss";
 
 // Second Import Bootstrap modules which you want
 
 // Reset and dependencies
-@import 'bootstrap-modules';
+@import "bootstrap-modules.scss";
 
 
 // Last import QuantunUI files
 
 // Components w/ Extended
-@import 'quantumui';
+@import "quantumui.scss";
 

@@ -39,12 +39,12 @@ body.unselectable{
   background-color: $range-selection-bg;
 }
 .slider-selection {
-  #gradient > .vertical($start-color: $range-selection-bg; $end-color: darken($range-selection-bg, 7%)) !default;
+  @include gradient_vertical($start-color: $range-selection-bg, $end-color: darken($range-selection-bg, 7%));
   @include box-shadow($range-box-shadow);
   border-radius: ceil(($range-height / 2));
 }
 .slider-track {
-  #gradient > .vertical($start-color: $range-bg; $end-color: darken($range-bg, 7%)) !default;
+  @include gradient_vertical($start-color: $range-bg, $end-color: darken($range-bg, 7%));
   border-radius: ceil(($range-height / 2));
 }
 .slider-vertical .slider-track,
@@ -52,10 +52,10 @@ body.unselectable{
    @include box-shadow($range-box-shadow-horizontal);
 }
 .slider-vertical .slider-selection  {
-   #gradient > .horizontal($start-color: $range-selection-bg; $end-color: darken($range-selection-bg, 7%)) !default;
+   @include gradient_horizontal($start-color: $range-selection-bg, $end-color: darken($range-selection-bg, 7%));
 }
 .slider-vertical .slider-track  {
-   #gradient > .horizontal($start-color: $range-bg; $end-color: darken($range-bg, 7%)) !default;
+   @include gradient_horizontal($start-color: $range-bg, $end-color: darken($range-bg, 7%));
 }
 .slider-ticks {
     border-width:0;
@@ -79,7 +79,7 @@ body.unselectable{
     width: $range-thumb-width;
     height: $range-thumb-height;
     background-color: $range-thumb-border;
-    @include gradient-elipse($inner-color: lighten($range-thumb-border, 30%); $outer-color: darken($range-thumb-border, 5%)) !default;
+    @include gradient_elipse($inner-color: lighten($range-thumb-border, 30%), $outer-color: darken($range-thumb-border, 5%));
     @include box-shadow($range-thumb-box-shadow);
     opacity: 0.8;
     border: 1px solid transparent;
@@ -271,22 +271,22 @@ body.unselectable{
     }
     .slider-thumb {
       background-color:$border-color;
-      @include gradient-elipse($inner-color: lighten($border-color, 30%); $outer-color: darken($border-color, 5%)) !default;
+      @include gradient_elipse($inner-color: lighten($border-color, 30%), $outer-color: darken($border-color, 5%));
     }
     .slider-track {
-      #gradient > .vertical($start-color: $bg-color; $end-color: darken($bg-color, 7%)) !default;
+      @include gradient_vertical($start-color: $bg-color, $end-color: darken($bg-color, 7%));
     }
     .slider-vertical .slider-track  {
-       #gradient > .horizontal($start-color: $bg-color; $end-color: darken($bg-color, 7%)) !default;
+       @include gradient_horizontal($start-color: $bg-color, $end-color: darken($bg-color, 7%));
     }
     .slider-selection {
-      #gradient > .vertical($start-color: $selection; $end-color: darken($selection, 7%)) !default;
+      @include gradient_vertical($start-color: $selection, $end-color: darken($selection, 7%));
     }
     .slider-vertical .slider-selection  {
-       #gradient > .horizontal($start-color: $selection; $end-color: darken($selection, 7%)) !default;
+       @include gradient_horizontal($start-color: $selection, $end-color: darken($selection, 7%));
     }
 }
-@mixin range-slider-size($track-size; $thumb-width; $thumb-height){
+@mixin range-slider-size($track-size, $thumb-width, $thumb-height){
     .slider-track,
     .slider-selection {
       border-radius: ceil(($track-size / 2));
@@ -341,28 +341,28 @@ body.unselectable{
     }
 }
 .slider-xs{
-    .range-slider-size($range-height-xs; $range-thumb-width-xs;$range-thumb-height-xs)
+    @include range-slider-size($range-height-xs, $range-thumb-width-xs,$range-thumb-height-xs);
 }
 .slider-md{
-    .range-slider-size($range-height-md; $range-thumb-width-md;$range-thumb-height-md)
+    @include range-slider-size($range-height-md, $range-thumb-width-md,$range-thumb-height-md);
 }
 .slider-lg{
-    .range-slider-size($range-height-lg; $range-thumb-width-lg;$range-thumb-height-lg)
+    @include range-slider-size($range-height-lg, $range-thumb-width-lg,$range-thumb-height-lg);
 }
 .slider-primary{
-    .slider-skin($range-primary-bg; $range-primary-selection-bg; $range-primary-border)
+    @include slider-skin($range-primary-bg, $range-primary-selection-bg, $range-primary-border);
 }
 .slider-success{
-    .slider-skin($range-success-bg; $range-success-selection-bg; $range-success-border)
+    @include slider-skin($range-success-bg, $range-success-selection-bg, $range-success-border);
 }
 .slider-info{
-    .slider-skin($range-info-bg;$range-info-selection-bg; $range-info-border)
+    @include slider-skin($range-info-bg,$range-info-selection-bg, $range-info-border);
 }
 .slider-warning{
-    .slider-skin($range-warning-bg; $range-warning-selection-bg; $range-warning-border)
+    @include slider-skin($range-warning-bg, $range-warning-selection-bg, $range-warning-border);
 }
 .slider-danger{
-    .slider-skin($range-danger-bg;$range-danger-selection-bg; $range-danger-border)
+    @include slider-skin($range-danger-bg,$range-danger-selection-bg, $range-danger-border);
 }
 
 

@@ -1,10 +1,10 @@
 // Core variables and mixins of QuantumUI
-@import 'mixins';
-@import 'variables';
+@import "mixins.scss";
+@import "variables.scss";
 
 
 
 
 
-@import 'titip-core'; //if you want to use titip full https://github.com/quantumui/titip you can remove this.
-@import 'modules';
+@import "titip-core.scss"; //if you want to use titip full https://github.com/quantumui/titip you can remove this.
+@import "modules.scss";

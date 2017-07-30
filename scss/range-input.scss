@@ -16,28 +16,28 @@ input[type=range] {
     @include range-track($range-height, $range-bg);
     @include range-thumb($range-height, $range-bg, $range-thumb-border);
     &.range-xs{
-        .range-input-size($range-height-xs)
+        @include range-input-size($range-height-xs);
     }
     &.range-md{
-        .range-input-size($range-height-md)
+        @include range-input-size($range-height-md);
     }
     &.range-lg{
-        .range-input-size($range-height-lg)
+        @include range-input-size($range-height-lg);
     }
     &.range-primary{
-        .range-input-skin($range-primary-bg, $range-primary-border)
+        @include range-input-skin($range-primary-bg, $range-primary-border);
     }
     &.range-success{
-        .range-input-skin($range-success-bg, $range-success-border)
+        @include range-input-skin($range-success-bg, $range-success-border);
     }
     &.range-info{
-        .range-input-skin($range-info-bg, $range-info-border)
+        @include range-input-skin($range-info-bg, $range-info-border);
     }
     &.range-warning{
-        .range-input-skin($range-warning-bg, $range-warning-border)
+        @include range-input-skin($range-warning-bg, $range-warning-border);
     }
     &.range-danger{
-        .range-input-skin($range-danger-bg, $range-danger-border)
+        @include range-input-skin($range-danger-bg, $range-danger-border);
     }
 }
 

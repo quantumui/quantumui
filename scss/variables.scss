@@ -8,90 +8,90 @@
 //
 //## Import Bootstap variables
 
-@import '../../wwwroot/lib/bootstrap/less/variables';
+@import "../../wwwroot/lib/bootstrap/scss/variables.scss";
 
 //** Load fonts from this directory.
-$icon-font-path:          "../../wwwroot/lib/bootstrap/fonts/" !default;
+$icon-font-path:          "../../wwwroot/lib/bootstrap/fonts/";
 
 //== Colors
 //
 //## Skin and brand colors for use across QuantumUI Bootstrap Skin.
 
-$skin-base-color:                  $gray-light !default;
-$skin-base-accent:                 lighten($brand-info, 10%) !default;
-$skin-base-active:                 darken($brand-warning, 10%) !default;
+$skin-base-color:                  $gray-light;
+$skin-base-accent:                 lighten($brand-info, 10%);
+$skin-base-active:                 darken($brand-warning, 10%);
 
 
-$skin-base-50:             tint(shade($skin-base-color, -48.5%), 97%) !default;
-$skin-base-100:            tint(shade($skin-base-color, -40%), 88%) !default;
-$skin-base-200:            tint(shade($skin-base-color, -30%), 60%) !default;
-$skin-base-300:            tint(shade($skin-base-color, -20%), 40%) !default;
-$skin-base-400:            tint(shade($skin-base-color, -10%), 20%) !default;
-$skin-base-500:            $skin-base-color !default;
-$skin-base-600:            shade(tint($skin-base-color, -7.5%), 15%) !default;
-$skin-base-700:            shade(tint($skin-base-color, -15%), 30%) !default;
-$skin-base-800:            shade(tint($skin-base-color, -22.5%), 45%) !default;
-$skin-base-900:            shade(tint($skin-base-color, -33.5%), 67%) !default;
-$skin-base-1000:           shade(tint($skin-base-color, -40%), 80%) !default;
+$skin-base-50:             tint(shade($skin-base-color, -48.5%), 97%);
+$skin-base-100:            tint(shade($skin-base-color, -40%), 88%);
+$skin-base-200:            tint(shade($skin-base-color, -30%), 60%);
+$skin-base-300:            tint(shade($skin-base-color, -20%), 40%);
+$skin-base-400:            tint(shade($skin-base-color, -10%), 20%);
+$skin-base-500:            $skin-base-color;
+$skin-base-600:            shade(tint($skin-base-color, -7.5%), 15%);
+$skin-base-700:            shade(tint($skin-base-color, -15%), 30%);
+$skin-base-800:            shade(tint($skin-base-color, -22.5%), 45%);
+$skin-base-900:            shade(tint($skin-base-color, -33.5%), 67%);
+$skin-base-1000:           shade(tint($skin-base-color, -40%), 80%);
 
 
-$skin-accent-50:           tint(shade($skin-base-accent, -41.5%), 92%) !default;
-$skin-accent-100:          tint(shade($skin-base-accent, -35%), 74%) !default;
-$skin-accent-200:          tint(shade($skin-base-accent, -27%), 54%) !default;
-$skin-accent-300:          tint(shade($skin-base-accent, -14%), 28%) !default;
-$skin-accent-400:          $skin-base-accent !default;
-$skin-accent-700:          shade(tint($skin-base-accent, -15%), 30%) !default;
+$skin-accent-50:           tint(shade($skin-base-accent, -41.5%), 92%);
+$skin-accent-100:          tint(shade($skin-base-accent, -35%), 74%);
+$skin-accent-200:          tint(shade($skin-base-accent, -27%), 54%);
+$skin-accent-300:          tint(shade($skin-base-accent, -14%), 28%);
+$skin-accent-400:          $skin-base-accent;
+$skin-accent-700:          shade(tint($skin-base-accent, -15%), 30%);
 
-$skin-active-50:           tint(shade($skin-base-active, -47.5%), 95%) !default;
-$skin-active-100:          tint(shade($skin-base-active, -40%), 80%) !default;
-$skin-active-200:          tint(shade($skin-base-active, -27%), 54%) !default;
-$skin-active-300:          tint(shade($skin-base-active, -14%), 28%) !default;
-$skin-active-400:          $skin-base-active !default;
-$skin-active-700:          shade(tint($skin-base-active, -15%), 30%) !default;
+$skin-active-50:           tint(shade($skin-base-active, -47.5%), 95%);
+$skin-active-100:          tint(shade($skin-base-active, -40%), 80%);
+$skin-active-200:          tint(shade($skin-base-active, -27%), 54%);
+$skin-active-300:          tint(shade($skin-base-active, -14%), 28%);
+$skin-active-400:          $skin-base-active;
+$skin-active-700:          shade(tint($skin-base-active, -15%), 30%);
 
-$white:                   #fff !default;
-$white-lighter:           darken($white, 0.6%) !default;
-$white-light:             darken($white, 1.8%) !default;
-$white-dark:              darken($white, 3.3%) !default;
-$white-darker:            darken($white, 5.8%) !default;
+$white:                   #fff;
+$white-lighter:           darken($white, 0.6%);
+$white-light:             darken($white, 1.8%);
+$white-dark:              darken($white, 3.3%);
+$white-darker:            darken($white, 5.8%);
 
 
 //==Brand Shades
 //
 //## Brand colors for use across QuantumUI.
 
-$brand-primary-darker:         shade(tint($brand-primary, -19%), 38%) !default;
-$brand-primary-dark:           shade(tint($brand-primary, -9%), 18%) !default;
-$brand-primary-light:          tint(shade($brand-primary, -9%), 18%) !default;
-$brand-primary-lighter:        tint(shade($brand-primary, -19%), 38%) !default;
+$brand-primary-darker:         shade(tint($brand-primary, -19%), 38%);
+$brand-primary-dark:           shade(tint($brand-primary, -9%), 18%);
+$brand-primary-light:          tint(shade($brand-primary, -9%), 18%);
+$brand-primary-lighter:        tint(shade($brand-primary, -19%), 38%);
 
-$brand-info-darker:            shade(tint($brand-info, -7.5%), 15%) !default;
-$brand-info-dark:              shade(tint($brand-info, -3.75%), 7.5%) !default;
-$brand-info-light:             tint(shade($brand-info, -9%), 18%) !default;
-$brand-info-lighter:           tint(shade($brand-info, -19%), 38%) !default;
+$brand-info-darker:            shade(tint($brand-info, -7.5%), 15%);
+$brand-info-dark:              shade(tint($brand-info, -3.75%), 7.5%);
+$brand-info-light:             tint(shade($brand-info, -9%), 18%);
+$brand-info-lighter:           tint(shade($brand-info, -19%), 38%);
 
-$brand-success-darker:         shade(tint($brand-success, -7.5%), 15%) !default;
-$brand-success-dark:           shade(tint($brand-success, -3.75%), 7.5%) !default;
-$brand-success-light:          tint(shade($brand-success, -9%), 18%) !default;
-$brand-success-lighter:        tint(shade($brand-success, -18%), 38%) !default;
+$brand-success-darker:         shade(tint($brand-success, -7.5%), 15%);
+$brand-success-dark:           shade(tint($brand-success, -3.75%), 7.5%);
+$brand-success-light:          tint(shade($brand-success, -9%), 18%);
+$brand-success-lighter:        tint(shade($brand-success, -18%), 38%);
 
-$brand-warning-darker:         shade(tint($brand-warning, -7.5%), 15%) !default;
-$brand-warning-dark:           shade(tint($brand-warning, -3.75%), 7.5%) !default;
-$brand-warning-light:          tint(shade($brand-warning, -9%), 18%) !default;
-$brand-warning-lighter:        tint(shade($brand-warning, -19%), 38%) !default;
+$brand-warning-darker:         shade(tint($brand-warning, -7.5%), 15%);
+$brand-warning-dark:           shade(tint($brand-warning, -3.75%), 7.5%);
+$brand-warning-light:          tint(shade($brand-warning, -9%), 18%);
+$brand-warning-lighter:        tint(shade($brand-warning, -19%), 38%);
 
 
-$brand-danger-darker:         shade(tint($brand-danger, -7.5%), 15%) !default;
-$brand-danger-dark:           shade(tint($brand-danger, -3.75%), 7.5%) !default;
-$brand-danger-light:          tint(shade($brand-danger, -9%), 18%) !default;
-$brand-danger-lighter:        tint(shade($brand-danger, -19%), 38%) !default;
+$brand-danger-darker:         shade(tint($brand-danger, -7.5%), 15%);
+$brand-danger-dark:           shade(tint($brand-danger, -3.75%), 7.5%);
+$brand-danger-light:          tint(shade($brand-danger, -9%), 18%);
+$brand-danger-lighter:        tint(shade($brand-danger, -19%), 38%);
 //== Scaffolding
 //
 //## Settings for some of the most global styles.
 
 
-$font-size-largest:       21px !default;
-$font-size-smallest:      ceil(($font-size-base * 0.7)) !default; // ~10px
+$font-size-largest:       21px;
+$font-size-smallest:      ceil(($font-size-base * 0.7)); // ~10px
 
 
 
@@ -100,21 +100,21 @@ $font-size-smallest:      ceil(($font-size-base * 0.7)) !default; // ~10px
 //## Define common padding and border radius sizes and more. Values based on 14px text and 1.428 line-height (~20px to start).
 
 
-$line-height-largest:       1.18 !default;
+$line-height-largest:       1.18;
 
-$border-radius-largest:     8px !default;
+$border-radius-largest:     8px;
 
 //** component font family.
-$component-font-family:        'Glyphicons Halflings' !default;
-$angle-icon:                   '\e259' !default;
-$angle-up-icon:                '\e260' !default;
-$tick-icon:                    '\e013' !default;
-$info-icon:                    '\e086' !default;
-$danger-icon:                  '\e107' !default;
-$warning-icon:                 '\e101' !default;
+$component-font-family:        'Glyphicons Halflings';
+$angle-icon:                   '\e259';
+$angle-up-icon:                '\e260';
+$tick-icon:                    '\e013';
+$info-icon:                    '\e086';
+$danger-icon:                  '\e107';
+$warning-icon:                 '\e101';
 
 
-$caret-width-large:         5px !default;
+$caret-width-large:         5px;
 
 
 
@@ -124,28 +124,28 @@ $caret-width-large:         5px !default;
 //
 //## Dropdown menu container and contents.
 
-$dropdown-min-width:             160px !default;
-$dropdown-box-shadow:            0 6px 12px rgba($skin-base-700, (2/100)) !default;
-$dropdown-caret-color:           $skin-base-800 !default;
+$dropdown-min-width:             160px;
+$dropdown-box-shadow:            0 6px 12px rgba($skin-base-700, 2%/100.0%);
+$dropdown-caret-color:           $skin-base-800;
 
 //** Background for the dropdown container.
-$dropdown-container-bg:                    $skin-base-100 !default;
+$dropdown-container-bg:                    $skin-base-100;
 
-$dropdown-container-box-shadow:            0 5px 10px rgba($skin-base-700, (2/100)) !default;
+$dropdown-container-box-shadow:            0 5px 10px rgba($skin-base-700, 2%/100.0%);
 
-$dropdown-container-box-shadow-top:        0 -5px 10px rgba($skin-base-700, (2/100)) !default;
+$dropdown-container-box-shadow-top:        0 -5px 10px rgba($skin-base-700, 2%/100.0%);
 //** Dropdown container `border-color`.
-$dropdown-container-border:                shade($dropdown-container-bg, 5.5%) !default;
+$dropdown-container-border:                shade($dropdown-container-bg, 5.5%);
 
-$dropdown-container-fallback-border:       shade($dropdown-container-bg, 5.5%) !default;
+$dropdown-container-fallback-border:       shade($dropdown-container-bg, 5.5%);
 
-$dropdown-container-min-width:             170px !default;
+$dropdown-container-min-width:             170px;
 //** Dropdown container `max-width`.
-$dropdown-container-max-width:             360px !default;
-$dropdown-container-header-padding:        5px 7px !default;
-$dropdown-container-footer-padding:        5px 7px !default;
-$dropdown-container-header-color:          $skin-base-800 !default;
-$dropdown-container-footer-color:          $skin-base-800 !default;
+$dropdown-container-max-width:             360px;
+$dropdown-container-header-padding:        5px 7px;
+$dropdown-container-footer-padding:        5px 7px;
+$dropdown-container-header-color:          $skin-base-800;
+$dropdown-container-footer-color:          $skin-base-800;
 
 
 
@@ -156,15 +156,15 @@ $dropdown-container-footer-color:          $skin-base-800 !default;
 //
 // Note: These variables are not generated into the Customizer.
 
-$zindex-dropdown:          1040 !default;
-$zindex-aside:             1040 !default;
-$zindex-modal:             1050 !default;
-$zindex-titip:             9999 !default;
+$zindex-dropdown:          1040;
+$zindex-aside:             1040;
+$zindex-modal:             1050;
+$zindex-titip:             9999;
 
 
 
 //== Tabs
-$nav-tabs-font-size:                        ($font-size-base - 1px) !default;
+$nav-tabs-font-size:                        ($font-size-base - 1px);
 
 
 //== Modalbox
@@ -172,214 +172,214 @@ $nav-tabs-font-size:                        ($font-size-base - 1px) !default;
 //##
 
 
-$modal-box-lg:                    600px !default;
-$modal-box-md:                    450px !default;
-$modal-box-sm:                    250px !default;
+$modal-box-lg:                    600px;
+$modal-box-md:                    450px;
+$modal-box-sm:                    250px;
 
 //== Carousel
 //
 //##
 
-$carousel-indicator-thumb-color:             $skin-base-800 !default;
-$carousel-indicator-thumb-bg:                $skin-base-200 !default;
-$carousel-indicator-thumb-border-color:      $skin-base-300 !default;
+$carousel-indicator-thumb-color:             $skin-base-800;
+$carousel-indicator-thumb-bg:                $skin-base-200;
+$carousel-indicator-thumb-border-color:      $skin-base-300;
 
-$carousel-caption-color:                     #fff !default;
-$carousel-caption-bg:                        $skin-base-700 !default;
+$carousel-caption-color:                     #fff;
+$carousel-caption-bg:                        $skin-base-700;
 
 //== Scrollbar
 //
 //##
 
 //** general scrollbar size.
-$scrollbar-image-path:       "../../images/scrollbar" !default;
-$scrollbar-size:              8px !default; 
+$scrollbar-image-path:       "../../images/scrollbar";
+$scrollbar-size:              8px; 
 //** page scrollbar size.
-$scrollbar-page-size:         12px !default; 
+$scrollbar-page-size:         12px; 
 
-$scrollbar-offset:            5px !default;
+$scrollbar-offset:            5px;
 
-$scrollbar-color:             #fff !default;
-$scrollbar-bg-color:          rgba($skin-base-300, (30/100)) !default; 
-$scrollbar-button-bg-color:   rgba($skin-base-300, (50/100)) !default;
-$scrollbar-hover-bg-color:    rgba($skin-base-300, (65/100)) !default; 
-$scrollbar-border-color:      lighten($skin-base-300, 35%) !default; 
+$scrollbar-color:             #fff;
+$scrollbar-bg-color:          rgba($skin-base-300, 30%/100.0%); 
+$scrollbar-button-bg-color:   rgba($skin-base-300, 50%/100.0%);
+$scrollbar-hover-bg-color:    rgba($skin-base-300, 65%/100.0%); 
+$scrollbar-border-color:      lighten($skin-base-300, 35%); 
 
-$scrollbar-track-border-radius:    6px !default; 
-$scrollbar-track-box-shadow:       inset 0 0 6px rgba(0,0,0,0.3) !default;
+$scrollbar-track-border-radius:    6px; 
+$scrollbar-track-box-shadow:       inset 0 0 6px rgba(0,0,0,0.3);
 
-$scrollbar-thumb-opacity:          0.9 !default;
-$scrollbar-thumb-bg-color:         $skin-base-600 !default;
-$scrollbar-thumb-border-radius:    6px !default; 
-$scrollbar-thumb-box-shadow:       inset 3px 3px 9px rgba(255, 255, 255, 0.3), inset -3px -3px 9px rgba(255, 255, 255, 0.3) !default;
-$scrollbar-thumb-box-shadow-hover: inset 3px 3px 9px rgba(0, 0, 0, 0.2), inset -3px -3px 9px rgba(0, 0, 0, 0.2) !default;
-$scrollbar-thumb-filter-image:     radial-gradient(ellipse at center, rgba(255,255,255,0.2) 40%, rgba(0,0,0,0.1) 100%) !default;
+$scrollbar-thumb-opacity:          0.9;
+$scrollbar-thumb-bg-color:         $skin-base-600;
+$scrollbar-thumb-border-radius:    6px; 
+$scrollbar-thumb-box-shadow:       inset 3px 3px 9px rgba(255, 255, 255, 0.3), inset -3px -3px 9px rgba(255, 255, 255, 0.3);
+$scrollbar-thumb-box-shadow-hover: inset 3px 3px 9px rgba(0, 0, 0, 0.2), inset -3px -3px 9px rgba(0, 0, 0, 0.2);
+$scrollbar-thumb-filter-image:     radial-gradient(ellipse at center, rgba(255,255,255,0.2) 40%, rgba(0,0,0,0.1) 100%);
 
-$scrollbar-corner-bg-color:          $skin-base-100 !default;
-$scrollbar-corner-border-color:      $scrollbar-corner-bg-color !default;
+$scrollbar-corner-bg-color:          $skin-base-100;
+$scrollbar-corner-border-color:      $scrollbar-corner-bg-color;
 
 //** quantum scrollbar settings
-$scrollbar-z-index:                9 !default;
+$scrollbar-z-index:                9;
 
-$scrollbar-button-bg-color:        $scrollbar-thumb-bg-color !default;
-$scrollbar-button-box-shadow:      1px 1px 2px 0px rgba(50, 50, 50, 0.3) !default;
-$scrollbar-button-size:            $scrollbar-size !default;
-$scrollbar-button-border-width:    4px !default;
-$scrollbar-button-border-color:    rgba(255, 255, 255, 0.8) !default;
+$scrollbar-button-bg-color:        $scrollbar-thumb-bg-color;
+$scrollbar-button-box-shadow:      1px 1px 2px 0px rgba(50, 50, 50, 0.3);
+$scrollbar-button-size:            $scrollbar-size;
+$scrollbar-button-border-width:    4px;
+$scrollbar-button-border-color:    rgba(255, 255, 255, 0.8);
 
-$scrollbar-info-bg                    : $brand-info-lighter !default;
-$scrollbar-info-color                 : $brand-info-lighter !default;
-$scrollbar-info-thumb-bg              : $brand-info !default;
+$scrollbar-info-bg                    : $brand-info-lighter;
+$scrollbar-info-color                 : $brand-info-lighter;
+$scrollbar-info-thumb-bg              : $brand-info;
 
-$scrollbar-warning-bg                 : $brand-warning-lighter !default;
-$scrollbar-warning-color              : $brand-warning-lighter !default;
-$scrollbar-warning-thumb-bg           : $brand-warning-dark !default;
+$scrollbar-warning-bg                 : $brand-warning-lighter;
+$scrollbar-warning-color              : $brand-warning-lighter;
+$scrollbar-warning-thumb-bg           : $brand-warning-dark;
 
-$scrollbar-danger-bg                  : $brand-danger-lighter !default;
-$scrollbar-danger-color               : $brand-danger-lighter !default;
-$scrollbar-danger-thumb-bg            : $brand-danger !default;
+$scrollbar-danger-bg                  : $brand-danger-lighter;
+$scrollbar-danger-color               : $brand-danger-lighter;
+$scrollbar-danger-thumb-bg            : $brand-danger;
 
-$scrollbar-success-bg                 : $brand-success-lighter !default;
-$scrollbar-success-color              : $brand-success-lighter !default;
-$scrollbar-success-thumb-bg           : $brand-success !default;
+$scrollbar-success-bg                 : $brand-success-lighter;
+$scrollbar-success-color              : $brand-success-lighter;
+$scrollbar-success-thumb-bg           : $brand-success;
 
 //== with-arrow Utils
 //
 //##
-$with-arrow-border-width:           10px !default;
-$with-arrow-margin:                 $with-arrow-border-width !default;
-$with-arrow-offset:                 $with-arrow-border-width !default;
-$with-arrow-top-box-shadow:         0 -6px 12px rgba(0, 0, 0, 0.175) !default;
+$with-arrow-border-width:           10px;
+$with-arrow-margin:                 $with-arrow-border-width;
+$with-arrow-offset:                 $with-arrow-border-width;
+$with-arrow-top-box-shadow:         0 -6px 12px rgba(0, 0, 0, 0.175);
 
-$with-arrow-border-inner-color:    #fff !default;
-$with-arrow-border-outer-color:    #fff !default;
+$with-arrow-border-inner-color:    #fff;
+$with-arrow-border-outer-color:    #fff;
 
 //== titip pure CSS tooltip
 //
 //##
-$titip-tringle-width:               8px !default;
-$titip-bg:                          $skin-base-600 !default;
-$titip-border-color:                $skin-base-700 !default;
-$titip-color:                       $skin-base-100 !default;
-$titip-padding:                     6px 9px 7px !default;
-$titip-font-size:                   13px !default;
-$titip-line-height:                 13px !default;
-$titip-radius:                      $border-radius-base !default;
-$titip-box-shadow:                  1px 1px 7px 0px rgba(50, 50, 50, 0.09) !default;
+$titip-tringle-width:               8px;
+$titip-bg:                          $skin-base-600;
+$titip-border-color:                $skin-base-700;
+$titip-color:                       $skin-base-100;
+$titip-padding:                     6px 9px 7px;
+$titip-font-size:                   13px;
+$titip-line-height:                 13px;
+$titip-radius:                      $border-radius-base;
+$titip-box-shadow:                  1px 1px 7px 0px rgba(50, 50, 50, 0.09);
 
 //== input[type="range"] IE10+ and nq-range-slider
 //
 //##
-$range-height:                      6px !default;
-$range-bg:                          $skin-base-50 !default;
-$range-selection-bg:                $skin-base-400 !default;
-$range-thumb-border:                $skin-base-500 !default;
-$range-ticks-color:                 $skin-base-800 !default;
-$range-ticks-border-color:          $skin-base-100 !default;
-$range-values-font-size:            11px !default;
-$range-thumb-width:                 10px !default;
-$range-thumb-height:                20px !default;
+$range-height:                      6px;
+$range-bg:                          $skin-base-50;
+$range-selection-bg:                $skin-base-400;
+$range-thumb-border:                $skin-base-500;
+$range-ticks-color:                 $skin-base-800;
+$range-ticks-border-color:          $skin-base-100;
+$range-values-font-size:            11px;
+$range-thumb-width:                 10px;
+$range-thumb-height:                20px;
 
-$range-box-shadow:                  inset 0 1px 2px rgba(0, 0, 0, 0.2) !default;
-$range-box-shadow-horizontal:       inset 0 -1px 2px rgba(0, 0, 0, 0.1) !default;
-$range-thumb-box-shadow:            inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05) !default;
+$range-box-shadow:                  inset 0 1px 2px rgba(0, 0, 0, 0.2);
+$range-box-shadow-horizontal:       inset 0 -1px 2px rgba(0, 0, 0, 0.1);
+$range-thumb-box-shadow:            inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
 
-$range-height-xs:                   4px !default;
-$range-thumb-width-xs:              8px !default;
-$range-thumb-height-xs:             16px !default;
-$range-height-md:                   10px !default;
-$range-thumb-width-md:              14px !default;
-$range-thumb-height-md:             24px !default;
-$range-height-lg:                   14px !default;
-$range-thumb-width-lg:              18px !default;
-$range-thumb-height-lg:             28px !default;
-$range-slider-size:                 210px !default;
-$range-ticks-size:                  12px !default;
+$range-height-xs:                   4px;
+$range-thumb-width-xs:              8px;
+$range-thumb-height-xs:             16px;
+$range-height-md:                   10px;
+$range-thumb-width-md:              14px;
+$range-thumb-height-md:             24px;
+$range-height-lg:                   14px;
+$range-thumb-width-lg:              18px;
+$range-thumb-height-lg:             28px;
+$range-slider-size:                 210px;
+$range-ticks-size:                  12px;
 
-$range-primary-bg:                 $brand-primary-lighter !default;
-$range-primary-selection-bg:       $brand-primary !default;
-$range-primary-border:             $brand-primary-dark !default;
+$range-primary-bg:                 $brand-primary-lighter;
+$range-primary-selection-bg:       $brand-primary;
+$range-primary-border:             $brand-primary-dark;
 
-$range-success-bg:                 $state-success-bg !default;
-$range-success-selection-bg:       $brand-success !default;
-$range-success-border:             $brand-success-dark !default;
+$range-success-bg:                 $state-success-bg;
+$range-success-selection-bg:       $brand-success;
+$range-success-border:             $brand-success-dark;
 
 
-$range-info-bg:                    $state-info-bg !default;
-$range-info-selection-bg:          $brand-info !default;
-$range-info-border:                $brand-info-dark !default;
+$range-info-bg:                    $state-info-bg;
+$range-info-selection-bg:          $brand-info;
+$range-info-border:                $brand-info-dark;
 
-$range-warning-bg:                 $state-warning-bg !default;
-$range-warning-selection-bg:       $brand-warning !default;
-$range-warning-border:             $brand-warning-dark !default;
+$range-warning-bg:                 $state-warning-bg;
+$range-warning-selection-bg:       $brand-warning;
+$range-warning-border:             $brand-warning-dark;
 
-$range-danger-bg:                  $state-danger-bg !default;
-$range-danger-selection-bg:        $brand-danger !default;
-$range-danger-border:              $brand-danger-dark !default;
+$range-danger-bg:                  $state-danger-bg;
+$range-danger-selection-bg:        $brand-danger;
+$range-danger-border:              $brand-danger-dark;
 
 //== calendars, datepicker, datetimepicker
 //
 //##
-$cal-panel-bg:                      #fff !default;
-$cal-panel-z-index:                 $listbox-z-index !default;
-$cal-panel-border-color:            $skin-base-100 !default;
-$cal-panel-color:                   $skin-base-900 !default;
-$cal-active-bg:                     $skin-base-active !default;
-$cal-active-color:                  #fff !default;
-$cal-hover-bg:                      $skin-base-700 !default;
-$cal-hover-color:                   #fff !default;
-$cal-panel-padding:                 3px !default;
-$cal-panel-radius:                  $border-radius-base !default;
-$cal-panel-max-width:               270px !default;
-$cal-panel-font:                    "Trebuchet MS", "Lucida Sans Unicode", "Lucida Sans", Arial, Helvetica, sans-serif !default;
+$cal-panel-bg:                      #fff;
+$cal-panel-z-index:                 $listbox-z-index;
+$cal-panel-border-color:            $skin-base-100;
+$cal-panel-color:                   $skin-base-900;
+$cal-active-bg:                     $skin-base-active;
+$cal-active-color:                  #fff;
+$cal-hover-bg:                      $skin-base-700;
+$cal-hover-color:                   #fff;
+$cal-panel-padding:                 3px;
+$cal-panel-radius:                  $border-radius-base;
+$cal-panel-max-width:               270px;
+$cal-panel-font:                    "Trebuchet MS", "Lucida Sans Unicode", "Lucida Sans", Arial, Helvetica, sans-serif;
 
 //cal-table
-$cal-table-bg:                      $skin-base-50 !default;
-$cal-table-color:                   $cal-panel-color !default;
-$cal-table-border-color:            $cal-panel-border-color !default;
-$cal-table-header-size:             25px !default;
+$cal-table-bg:                      $skin-base-50;
+$cal-table-color:                   $cal-panel-color;
+$cal-table-border-color:            $cal-panel-border-color;
+$cal-table-header-size:             25px;
 
-$cal-table-cell-size:               30px !default;
-$cal-table-cell-color:              lighten($cal-panel-color, 12%) !default;
-$cal-table-cell-hover-color:        #fff !default;
-$cal-table-cell-hover-bg:           $cal-hover-bg !default;
+$cal-table-cell-size:               30px;
+$cal-table-cell-color:              lighten($cal-panel-color, 12%);
+$cal-table-cell-hover-color:        #fff;
+$cal-table-cell-hover-bg:           $cal-hover-bg;
 //== aside
 //
 //##
-$aside-bg:                          $skin-base-700 !default;
-$aside-overlay-bg:                  #fff !default;
-$aside-color:                       $skin-base-400 !default;
-$aside-width:                       220px !default;
-$aside-collapsed-width:             60px !default;
-$aside-font:                       "Trebuchet MS", "Lucida Sans Unicode", "Lucida Sans", Arial, Helvetica, sans-serif !default;
-$aside-header-height:               35px !default;
-$aside-footer-height:               35px !default;
-$aside-transition-duration:         0.2s !default;
+$aside-bg:                          $skin-base-700;
+$aside-overlay-bg:                  #fff;
+$aside-color:                       $skin-base-400;
+$aside-width:                       220px;
+$aside-collapsed-width:             60px;
+$aside-font:                       "Trebuchet MS", "Lucida Sans Unicode", "Lucida Sans", Arial, Helvetica, sans-serif;
+$aside-header-height:               35px;
+$aside-footer-height:               35px;
+$aside-transition-duration:         0.2s;
 /*aside menu*/
-$aside-menu-color:                  $skin-base-400 !default;
-$aside-menu-link-height:            40px !default;
+$aside-menu-color:                  $skin-base-400;
+$aside-menu-link-height:            40px;
 
-$aside-default-bg:                          $skin-base-100 !default;
-$aside-default-overlay-bg:                  $skin-base-600 !default;
-$aside-default-color:                       $skin-base-1000 !default;
-$aside-default-menu-color:                  $skin-base-1000 !default;
+$aside-default-bg:                          $skin-base-100;
+$aside-default-overlay-bg:                  $skin-base-600;
+$aside-default-color:                       $skin-base-1000;
+$aside-default-menu-color:                  $skin-base-1000;
 
 
 
 //== listbox(select)
 //
 //##
-$listbox-max-height:                 180px !default;
-$listbox-max-width:                  350px !default;
-$listbox-color:                      $skin-base-800 !default;
-$listbox-bg:                         #fff !default;
-$listbox-border-color:               $skin-base-100 !default;
-$listbox-font-size:                  ($font-size-base - 1px) !default;
-$listbox-border-radius:              $border-radius-base !default;
-$listbox-z-index:                    $zindex-dropdown !default;
-$listbox-option-hover-bg:            $skin-accent-100 !default;
-$listbox-option-hover-color:         $skin-accent-700 !default;
-$listbox-option-active-bg:           $skin-base-active !default;
-$listbox-option-active-color:        #fff !default;
-$listbox-highlight-color:            $skin-base-active !default;
+$listbox-max-height:                 180px;
+$listbox-max-width:                  350px;
+$listbox-color:                      $skin-base-800;
+$listbox-bg:                         #fff;
+$listbox-border-color:               $skin-base-100;
+$listbox-font-size:                  ($font-size-base - 1px);
+$listbox-border-radius:              $border-radius-base;
+$listbox-z-index:                    $zindex-dropdown;
+$listbox-option-hover-bg:            $skin-accent-100;
+$listbox-option-hover-color:         $skin-accent-700;
+$listbox-option-active-bg:           $skin-base-active;
+$listbox-option-active-color:        #fff;
+$listbox-highlight-color:            $skin-base-active;
 

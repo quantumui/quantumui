@@ -33,7 +33,14 @@ angular.module('ngQuantum.services.helpers', [])
             }
             var isTouch = fn.isTouch();
             fn.isHtml = function (value) {
-                return /<[a-z][\s\S]*>/i.test(value)
+                return /^<.*?>$/.test(value) && !!angular.element(value)[0];
+            }
+            fn.isMobileSize = function () {
+                if (window.innerWidth <= 768 && window.innerHeight <= 600) {
+                    return true;
+                } else {
+                    return false;
+                }
             }
             fn.ensureNumber = function (value, defaultval) {
                 if (!value) return defaultval || 0;

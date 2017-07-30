@@ -1,4 +1,4 @@
-@mixin range-track($height; $bg-color){
+@mixin range-track($height, $bg-color){
   &::-webkit-slider-runnable-track {
       width: 100%;
       height: $height;
@@ -43,7 +43,7 @@
       background: darken($bg-color, 10%);
   }
 }
-@mixin range-thumb($height; $bg-color; $border-color){
+@mixin range-thumb($height, $bg-color, $border-color){
   &::-webkit-slider-thumb {
       -webkit-appearance: none;
       width: ceil((($height * 3) + 2px));
@@ -51,7 +51,7 @@
       border-radius: 50%;
       background: $bg-color;
       border: $height solid $border-color;
-      $margin-top:($height  + 2px) !default;
+      $margin-top:($height  + 2px);
       margin-top: -$margin-top;
   }
   &:hover::-webkit-slider-thumb {
@@ -119,7 +119,7 @@
       border-radius: ceil(($height /2));
   }
 }
-@mixin range-input-skin($bg-color; $border-color){
+@mixin range-input-skin($bg-color, $border-color){
   &::-webkit-slider-thumb {
       background: $bg-color;
       border-color:$border-color;

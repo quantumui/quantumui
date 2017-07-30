@@ -37,7 +37,7 @@ angular.module('ngQuantum.datepicker', [
     .run(['$templateCache', function ($templateCache) {
         'use strict';
         $templateCache.put('datepicker/datepicker.tpl.html',
-          "<div tabindex=\"-1\" class=\"calendar-panel\" role=\"listbox\"><div tabindex=\"-1\" class=\"calendar-header\" role=\"listbox\"></div><div tabindex=\"-1\" class=\"calendar-body\" role=\"listbox\"></div><div tabindex=\"-1\" class=\"calendar-footer\" role=\"listbox\"></div></div>"
+          "<div tabindex=\"-1\" class=\"calendar-panel\" role=\"listbox\"><div tabindex=\"-1\" class=\"calendar-header\" role=\"listbox\"></div><div tabindex=\"-1\" class=\"calendar-body\" role=\"listbox\"></div><div tabindex=\"-1\" class=\"calendar-footer\" role=\"listbox\"></div><div class=\"cal-overlay\" ng-click=\"$hide()\"></div></div>"
         );
 
     }])
@@ -62,6 +62,7 @@ angular.module('ngQuantum.datepicker', [
             defaultTime: false,
             timesSet: [], //to do
             todayButton: true,
+            hideButton:true,
             rangeType: 'day',
             minRange: 1,
             maxRange: false,
@@ -116,6 +117,7 @@ angular.module('ngQuantum.datepicker', [
               function Factory(element, config, attr, ngModel) {
                   config = $helpers.parseOptions(attr, config);
                   var options = angular.extend({}, defaults, config);
+                  var _maxYear = 0;
                   if (options.inline) {
                       options.show = true;
                       options.trigger = false;
@@ -125,6 +127,10 @@ angular.module('ngQuantum.datepicker', [
                       options.effect = false;
                       options.autoHide = false;
                       options.readonly = false;
+                  }
+                  if (options.maxYear < 30) {
+                      _maxYear = options.maxYear;
+                      options.maxYear = options.minYear + _maxYear;
                   }
                   var $picker = new $popMaster(element, options);
                   var scope = $picker.$scope; var $target, $header, $body, $footer, yearSelector, table, tbody, initialized, lastCacheKey, keyTarget;
@@ -168,6 +174,7 @@ angular.module('ngQuantum.datepicker', [
 
                   var init = $picker.init;
                   $picker.init = function () {
+                      options.language && moment.locale(options.language);
                       optimize();
                       init();
                       if (!initialized) {
@@ -260,9 +267,7 @@ angular.module('ngQuantum.datepicker', [
                       apply(function () {
                           scope.currentDate = scope.minDate && scope.startDate < scope.minDate ? scope.minDate.clone() : scope.maxDate && scope.startDate > scope.maxDate ? scope.maxDate.clone() : scope.startDate.clone();
                           buildNew()
-                          scope.modelSetted = true;
-                          renderModel();
-                          fireChange();
+                          fireChange('date');
                           scope.selectedDay = scope.currentDate.month() + '-' + scope.currentDate.date();
                       })
 
@@ -271,8 +276,6 @@ angular.module('ngQuantum.datepicker', [
                       apply(function () {
                           scope.currentDate.year(val);
                           buildNew();
-                          scope.modelSetted = true;
-                          renderModel();
                           fireChange('year')
                       })
 
@@ -380,9 +383,6 @@ angular.module('ngQuantum.datepicker', [
                       if (options.timepicker && !options.datepicker)
                           return;
                       var cachekey = cacheKey(scope.currentDate);
-                      if (lastCacheKey && cachekey == lastCacheKey)
-                          return;
-                      lastCacheKey = cachekey;
                       var data = $picker.caches[cachekey];
 
                       if (!data) {
@@ -393,6 +393,7 @@ angular.module('ngQuantum.datepicker', [
                       })
 
                       $body.find('td.selected').removeClass('selected');
+                      $body.find('td.model_selected').removeClass('model_selected');
                       tbody.html(data.content);
                       $compile($body)(scope);
                       $picker.$builded = true;
@@ -461,6 +462,8 @@ angular.module('ngQuantum.datepicker', [
                           else
                               scope.minDate = detectDate(options.minDate, moment())
                           options.minYear = scope.minDate.year();
+                          if (_maxYear > 0)
+                              options.maxYear = options.minYear + _maxYear;
                           scope.minDate.clearTime();
                       }
                       if (options.maxDate) {
@@ -550,7 +553,7 @@ angular.module('ngQuantum.datepicker', [
                               trdate.append('<th class="cal-week-no">' + rdates[0].week + '</th>');
                           angular.forEach(rdates, function (val, key) {
                               var slday = val.month + '-' + val.day;
-                              var td = angular.element('<td cal-date-item="' + idx + '" ng-class="{selected:selectedDay==\'' + slday + '\'}">'+val.day+'</td>').appendTo(trdate);
+                              var td = angular.element('<td cal-date-item="' + idx + '" ng-class="{selected:selectedDay==\'' + slday + '\',model_selected:modelDay==\'' + slday + '\'}">' + val.day + '</td>').appendTo(trdate);
                               if (val.unselectable)
                                   td.addClass('unselectable')
                               if (val.isWeekend)
@@ -566,15 +569,15 @@ angular.module('ngQuantum.datepicker', [
                   }
                   function buildHeader() {
                       var ul = '<table class="cal-header-table"><tr>' +
-                                   '<td class="before"><button data-title="Before" class="titip-top" type="button" ng-click="$before()"><i ng-class="$options.prevIcon"></i></button></td>' +
-                                   '<td class="date-head"><span>{{currentMonthTitle}}</span></td>' +
-                                   '<td class="today"><button data-title="Today" class="titip-top" type="button" ng-click="$today($event)"><i ng-class="$options.todayIcon"></i></button></td>' +
-                                   '<td class="next"><button data-title="Next" class="titip-top" type="button" ng-click="$next()"><i ng-class="$options.nextIcon"></i></button></td>' +
-                                   '<td class="hide-cal"><button data-title="Close" class="titip-top" type="button" ng-click="$hide()"><i ng-class="$options.closeIcon"></i></button></td>' +
+                                   '<td class="before"><button type="button" ng-click="$before()"><i ng-class="$options.prevIcon"></i></button></td>' +
+                                   '<td class="date-head"><span ng-bind-html="currentMonthTitle"></span></td>' +
+                                   '<td class="today" ng-if="$options.todayButton"><button type="button" ng-click="$today($event)"><i ng-class="$options.todayIcon"></i></button></td>' +
+                                   '<td class="next"><button type="button" ng-click="$next()"><i ng-class="$options.nextIcon"></i></button></td>' +
+                                   '<td class="hide-cal" ng-if="$options.hideButton"><button type="button" ng-click="$hide()"><i ng-class="$options.closeIcon"></i></button></td>' +
                                '</tr></table>';
                       ul = angular.element(ul)
                       $compile(ul)(scope);
-                      $header.html(ul)
+                      $header.append(ul)
                   }
                   function buildYearSelector() {
                       if (options.showYears) {
@@ -753,9 +756,10 @@ angular.module('ngQuantum.datepicker', [
                   function validateHhMm(val) {
                       return /^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9])?$/.test(val);
                   }
-                  function renderModel() {
-                      if (scope.hasModel) {
-                          $timeout(function () {
+                  function renderModel(force) {
+                      var promise;
+                      if (scope.hasModel && (ngModel.$modelValue || force)) {
+                          promise =  $timeout(function () {
                               if (options.modelType == 'date')
                                   ngModel.$setViewValue(scope.currentDate.clone().toDate());
                               else {
@@ -764,6 +768,7 @@ angular.module('ngQuantum.datepicker', [
                               ngModel.$commitViewValue();
                           }, 0)
                       }
+                      return promise;
                   }
                   function buildScope() {
                       angular.forEach(['onDateChange', 'onTimeChange', 'onChange'], function (key) {
@@ -774,8 +779,8 @@ angular.module('ngQuantum.datepicker', [
                           scope.hasModel = true;
                           var oldRender = ngModel.$render;
                           ngModel.$render = function (value) {
-                              if (options.modelType == 'date') {
-                                  var val = scope.currentDate.format(scope.format)
+                              if (options.modelType == 'date' && (ngModel.$modelValue || value)) {
+                                  var val = scope.currentDate.format(scope.format);
                                   if (element[0].tagName.toLowerCase() === 'input') {
                                       element.val(val);
                                   } else
@@ -812,12 +817,18 @@ angular.module('ngQuantum.datepicker', [
                                           fireChange()
                                           buildNew()
                                       }
-                                      ngModel.$render();
+                                      ngModel.$render(true);
                                       scope.modelDate = scope.currentDate.clone().toDate();
+                                      scope.modelDay = scope.currentDate.month() + '-' + scope.currentDate.date();
                                       if (options.autoHide && !options.timepicker)
                                           $picker.hide();
                                   }, 0);
                                   
+                              }
+                              else if (!newValue && !oldValue) {
+                                  renderModel();
+                              }
+                              else {
                               }
                           })
                       }
@@ -828,42 +839,41 @@ angular.module('ngQuantum.datepicker', [
                               var hasChage = false;
                               var fromPicker = fromEl.data('$datepicker');
                               var fromScope = fromPicker && fromPicker.$scope;
+                              var preventHide = false;
                               fromScope && fromScope.$watch('modelDate', function (newValue, oldValue) {
-                                  
+                                  var show = newValue ? true : false;
                                   if (!newValue)
                                       newValue = fromScope.currentDate;
-                                  if (newValue) {
+                                  if (newValue && newValue != oldValue) {
                                       $timeout(function () {
                                           var dt = moment(newValue);
                                           var min_dt = dt.clone().add(options.minRange, options.rangeType);
+                                          scope.minDate = min_dt;
+                                          options.minYear = scope.minDate.year();
+                                          if (_maxYear > 0)
+                                              options.maxYear = options.minYear + _maxYear;
+                                          if (options.maxRange) {
+                                              scope.maxDate = dt.clone().add(options.maxRange, options.rangeType);
+                                              options.maxYear = scope.maxDate.year();
+                                          }
+                                          getYearArray();
+                                          $picker.caches = {};
                                           if (min_dt.isAfter(scope.currentDate)) {
-                                              scope.minDate = min_dt;
                                               scope.currentDate = dt.clone().add(options.defaultRange, options.rangeType);
                                               scope.selectedDay = scope.currentDate.month() + '-' + scope.currentDate.date();
-                                              $picker.caches = {};
-                                              options.minYear = scope.minDate.year();
-                                              if (options.maxRange) {
-                                                  scope.maxDate = dt.clone().add(options.maxRange, options.rangeType);
-                                                  options.maxYear = scope.maxDate.year();
-                                              }
                                               ngModel.$render();
-                                              getYearArray()
-                                              buildNew();
                                               fireChange();
                                               hasChage = true;
+
                                           }
-                                          
-                                      }, 0)
-                                      fireChange();
-                                      hasChage = true;
+                                          buildNew();
+                                          renderModel();
+                                      }, 0);
+                                      $picker.preventHide = true;
+                                      show && $picker.show();
                                   }
 
                               })
-                              fromScope && fromScope.$on(options.prefixEvent + '.hide', function () {
-                                  if (hasChage)
-                                      $picker.show();
-                                  hasChage = false;
-                              });
                           }
                       }
                       if (options.iconId) {
@@ -880,6 +890,7 @@ angular.module('ngQuantum.datepicker', [
                       scope.$watch('selectedIndex', function (newValue, oldValue) {
                           
                           if (newValue != oldValue) {
+                              $picker.preventHide = false;
                               var idx = newValue;
                               if (idx >= scope.dayArray.length)
                                   idx = scope.dayArray.length - 1;
@@ -896,7 +907,7 @@ angular.module('ngQuantum.datepicker', [
                               scope.currentDate.date(dt.day);
                               scope.currentDate.month(dt.month);
                               fireChange('date');
-                              renderModel();
+                              renderModel(true);
                           }
                       })
                       

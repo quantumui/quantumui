@@ -98,7 +98,7 @@ quantumui/
 │   |   └── quantumui.min.js *//exclude angular.nojq  and pageable*
 │   |   └── quantumui.min.js.map *//exclude angular.nojq  and pageable*
 │   |   └── quantumui-nojq.js *//include angular.nojq  **exclude pageable***
-│   |   └── quantumui-nojq.js *//include angular.nojq  **exclude pageable***
+│   |   └── quantumui-nojq.min.js *//include angular.nojq  **exclude pageable***
 │   |   └── quantumui-nojq.js.map *//include angular.nojq  **exclude pageable***
 │   |   └── quantumui-all.min.js
 │   |   └── quantumui-all.min.js
@@ -128,8 +128,8 @@ Below source are just for demos like **Plunker** or **JSBin.** Don't use in your
 This is a [plunker](http://embed.plnkr.co/uMKBlkHArfV0CwdJF5lH/preview) example of Temporary CDN usage
 
 ```
-http//cdn.quantumui.org/v1.0.0/quantumui.min.css
-http//cdn.quantumui.org/v1.0.0/quantumui-all.min.js
+http//cdn.quantumui.org/v1.2.0/quantumui.min.css
+http//cdn.quantumui.org/v1.2.0/quantumui-all.min.js
 ```
 
 ## Authors

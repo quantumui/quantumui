@@ -3,6 +3,9 @@ if (!String.prototype.trim) {
         return this.replace(/^\s+|\s+$/g, '');
     };
 };
+String.prototype.clean = function () {
+    return this.replace(/(\r\n|\n|\r)/gm, "").trim().replace(/\s\s+/g, ' ');
+};
 String.prototype.trimEnd = function (c) {
     var that = this.trim();
     if (c == null || c == "" || c.length > 1 || that.length < 2)
@@ -34,6 +37,13 @@ if (typeof String.prototype.endsWith !== 'function') {
 String.prototype.toTitleCase = function (str) {
     var str = this || '';
     return str.replace(/\w\S*/g, function (txt) { return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase(); });
+};
+String.prototype.toSentenceCase = function (str) {
+    str = this || '';
+    return str.replace(/([^ \r\n][^!?\.\r\n]+[\w!?\.]+)/g, function (txt) {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+
+    });
 };
 String.prototype.replaceAll = function (find, replace) {
     var str = this || '';
@@ -67,7 +77,30 @@ window.addResizeEvent = function (callback) {
         window.attachEvent('onresize', callback);
     }
 };
-
+window.addScrollEvent = function (callback) {
+    if (window.addEventListener) {
+        window.addEventListener('scroll', callback, true);
+    }
+    else if (window.attachEvent) {
+        window.attachEvent('onscroll', callback);
+    }
+};
+window.removeResizeEvent = function (callback) {
+    if (window.removeEventListener) {
+        window.removeEventListener('resize', callback, false);
+    }
+    else if (window.detachEvent) {
+        window.detachEvent('onresize', callback);
+    }
+};
+window.removeScrollEvent = function (callback) {
+    if (window.removeEventListener) {
+        window.removeEventListener('scroll', callback, true);
+    }
+    else if (window.detachEvent) {
+        window.detachEvent('onscroll', callback);
+    }
+};
 +function (window, angular, undefined) {
     'use strict';
     var  $$raf  =

@@ -1,7 +1,7 @@
 {
   "name": "quantumui",
   "description": "The most powerful ANGULARJS and Bootstrap CSS based UI components make developer life easy.",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "keywords": [
     "quantumui",
     "angular",
@@ -28,7 +28,7 @@
     "url": "https://github.com/quantumui/quantumui/issues"
   },
   "license": {
-    "type": "MIT",
+    "type": "mit",
     "url": "https://github.com/quantumui/quantumui/blob/master/LICENSE"
   },
   "devDependencies": {

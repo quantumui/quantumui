@@ -71,6 +71,7 @@ angular.module('ngQuantum.services.mouse', [])
                 return callback ? element.off(eventName, callback) : element.off(eventName);
             }
 
+           
             mause.onWheel = function (element, callback) {
                 if (isTouch)
                     return false;

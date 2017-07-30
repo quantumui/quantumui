@@ -3,7 +3,7 @@ angular.module('ngQuantum.modal', ['ngQuantum.popMaster'])
     .run(['$templateCache', function ($templateCache) {
         'use strict';
         $templateCache.put('modal/modal.tpl.html',
-          '<div class="modal" tabindex="-1" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header" ng-show="title"><h4 class="modal-title" ng-bind="title"></h4></div><div class="modal-body"  ng-bind="content"></div><div class="modal-footer"><button type="button" class="btn btn-default" ng-click="$hide()">{{closeText}}</button></div><button type="button" class="close" ng-click="$hide()" ng-bind-html="closeIcon">&nbsp;</button></div></div></div>'
+          '<div class="modal" tabindex="-1" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header" ng-show="title"><h4 class="modal-title" ng-bind="title"></h4></div><div class="modal-body"  ng-bind="content"></div><div class="modal-footer" ng-show="$showFooter"><button type="button" class="btn btn-default" ng-click="$hide()">{{closeText}}</button></div><button type="button" class="close" ng-click="$hide()" ng-bind-html="closeIcon">&nbsp;</button></div></div></div>'
         );
         $templateCache.put('modalbox/alertbox.tpl.html',
           '<div class="modal" tabindex="-1" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header" ng-show="title"><h4 class="modal-title" ng-bind="title"></h4></div><div class="modal-body"><div class="modal-body-inner" ng-bind="content"></div></div><div class="modal-footer"><button type="button" class="btn btn-primary" ng-click="$hide()">{{okText}}</button></div><button type="button" class="close" ng-click="$hide()" ng-bind-html="closeIcon">&nbsp;</button></div></div></div>'
@@ -12,7 +12,7 @@ angular.module('ngQuantum.modal', ['ngQuantum.popMaster'])
         '<div class="modal" tabindex="-1" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header" ng-show="title"><h4 class="modal-title" ng-bind="title"></h4></div><div class="modal-body"><div class="modal-body-inner" ng-bind="content"></div></div><div class="modal-footer"><button type="button" class="btn btn-primary" ng-click="$cancel()">{{cancelText}}</button> <button type="button" class="btn btn-success" ng-click="$confirm()">{{confirmText}}</button></div><button type="button" class="close" ng-click="$cancel()" ng-bind-html="closeIcon">&nbsp;</button></div></div></div>'
         );
         $templateCache.put('modalbox/promptbox.tpl.html',
-          '<div class="modal" tabindex="-1" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header" ng-show="title"><h4 class="modal-title" ng-bind="title"></h4></div><div class="modal-body"><div class="modal-body-inner" ng-bind="content"></div><div class="margin-t form-group"><label for="promptModel">{{promptLabel}}</label><input type="text" class="form-control" name="promptModel" ng-model="promptModel"></div></div><div class="modal-footer"><button type="button" class="btn btn-primary" ng-click="$cancel()">{{cancelText}}</button> <button type="button" class="btn btn-success" ng-click="$confirm()">{{confirmText}}</button></div><button type="button" class="close" ng-click="$cancel()" ng-bind-html="closeIcon">&nbsp;</button></div></div></div>'
+          '<div class="modal" tabindex="-1" role="dialog"><div class="modal-dialog"><div class="modal-content"><div class="modal-header" ng-show="title"><h4 class="modal-title" ng-bind="title"></h4></div><div class="modal-body"><div class="modal-body-inner" ng-bind="content"></div><div class="margin-t form-group"><label for="promptModel">{{promptLabel}}</label><input type="text" class="form-control" name="promptModel" ng-model="promptModel"/></div></div><div class="modal-footer"><button type="button" class="btn btn-primary" ng-click="$cancel()">{{cancelText}}</button> <button type="button" class="btn btn-success" ng-click="$confirm()">{{confirmText}}</button></div><button type="button" class="close" ng-click="$cancel()" ng-bind-html="closeIcon">&nbsp;</button></div></div></div>'
           );
     }])
         .provider('$modal', function () {
@@ -41,7 +41,8 @@ angular.module('ngQuantum.modal', ['ngQuantum.popMaster'])
                 size: false,
                 displayReflow: false,
                 show: false,
-                autoDestroy:false
+                autoDestroy: false,
+                showFooter: true
             };
             this.$get = ['$window', '$compile', '$http', '$sce', '$timeout', '$helpers', '$popMaster',
               function ($window, $compile, $http, $sce, $timeout, $helpers, $popMaster) {
@@ -76,7 +77,7 @@ angular.module('ngQuantum.modal', ['ngQuantum.popMaster'])
                       config.title && (scope.title = config.title)
                       scope.closeText = options.closeText;
                       scope.closeIcon = options.closeIcon;
-
+                      scope.$showFooter = options.showFooter;
                       var backdropElement = angular.element('<div class="' + options.typeClass + '-backdrop"/>');
 
                       var init = $modal.init;
@@ -287,25 +288,30 @@ angular.module('ngQuantum.modal', ['ngQuantum.popMaster'])
           return {
               restrict: 'EAC',
               scope: true,
-              link: function postLink(scope, element, attr, transclusion) {
-                  var options = {
-                      $scope: scope
-                  };
-                  options.uniqueId = attr.qoUniqueId || attr.id || scope.$id;
-                  var modal = {}
-                  if (angular.isDefined(attr.qoIndependent)) {
-                      options.htmlObject = true;
-                      scope.content = element;
-                      options.buildOnShow = false;
-                      modal = $modal(options, attr);
-                  }
-                  else {
-                      options.element = element;
-                      options.html = true;
-                      modal = $modal(options, attr);
+              compile: function (tElm, tAttr, transclude) {
+                  var content;
+                  if (angular.isDefined(tAttr.qoIndependent))
+                      content = tElm[0].outerHTML;
+                  return function postLink(scope, element, attr, transclusion) {
+                      var options = {
+                          $scope: scope
+                      };
+                      options.uniqueId = attr.qoUniqueId || attr.id || scope.$id;
+                      var modal = {}
+                      if (angular.isDefined(attr.qoIndependent)) {
+                          options.htmlObject = true;
+                          scope.content = element;
+                          options.buildOnShow = false;
+                          modal = $modal(options, attr);
+                      }
+                      else {
+                          options.element = element;
+                          options.html = true;
+                          modal = $modal(options, attr);
 
+                      }
+                      element.data('$nqModal', modal)
                   }
-                  element.data('$nqModal', modal)
               }
           };
       }

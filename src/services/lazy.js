@@ -29,6 +29,4 @@ angular.module('ngQuantum.services.lazy', [])
           return Factory;
       }
     ];
-})
-
-//}]);
+});

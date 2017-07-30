@@ -61,7 +61,7 @@
 .modal-body {
   max-height:100%;
   overflow:auto;
-  &:extend(.clearfix all);
+  @extend .clearfix;
 }
 
 // Footer (for actions)

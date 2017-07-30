@@ -36,7 +36,7 @@
 * .titip-hidden .titip-content {
   visibility: hidden !important;
   opacity: 0  !important;
-  filter: alpha(opacity=0 !important);
+  filter: alpha(opacity=0)  !important;
 }
 .titip-content {
     border:1px solid $titip-border-color;
@@ -95,7 +95,7 @@
     &[data-title]:before,
     &[data-title]:after{
         left: 50%;
-        .translateX(-50%)
+        @include translateX(-50%);
     }
     > .titip-content:before,
     > .titip-content:after,
@@ -104,12 +104,12 @@
         border-right-color: transparent !important;
     }
     > .titip-content:before {
-         $margin:ceil(($titip-tringle-width / 2)) !default;
+         $margin:ceil(($titip-tringle-width / 2));
         left:50%;
         margin-left:-$margin;
     }
     > .titip-content:after {
-        $margin:ceil((($titip-tringle-width / 2) + 2px)) !default;
+        $margin:ceil((($titip-tringle-width / 2) + 2px));
         left:50%;
         margin-left:-$margin;
     }
@@ -150,7 +150,7 @@
         bottom: -$titip-tringle-width;
     }
     > .titip-content:after {
-        $margin:ceil(($titip-tringle-width + 2px)) !default;
+        $margin:ceil(($titip-tringle-width + 2px));
         bottom: -$margin;
     }
     > .titip-content.thick-border {
@@ -192,7 +192,7 @@
         top: -$titip-tringle-width;
     }
     > .titip-content:after {
-        $margin:ceil(($titip-tringle-width + 2px)) !default;
+        $margin:ceil(($titip-tringle-width + 2px));
         top: -$margin;
     }
     > .titip-content.thick-border {
@@ -266,7 +266,7 @@
     &[data-title]:before,
     &[data-title]:after{
         top: 50%;
-        .translateY(-50%)
+        @include translateY(-50%);
     }
     > .titip-content:before,
     > .titip-content:after,
@@ -275,17 +275,17 @@
         border-bottom-color: transparent !important;
     }
     > .titip-content:before {
-        $margin:ceil(($titip-tringle-width / 2)) !default;
+        $margin:ceil(($titip-tringle-width / 2));
         top:50%;
         margin-top:-$margin
     }
     > .titip-content:after {
-        $margin:ceil((($titip-tringle-width / 2) + 2px)) !default;
+        $margin:ceil((($titip-tringle-width / 2) + 2px));
         top:50%;
         margin-top:-$margin
     }
     > .titip-content.thick-border:after {
-        $margin:ceil((($titip-tringle-width / 2) + 5px)) !default;
+        $margin:ceil((($titip-tringle-width / 2) + 5px));
       margin-top:-$margin
     }
 }
@@ -315,7 +315,7 @@
         right: -$titip-tringle-width;
     }
     > .titip-content:after {
-        $margin:ceil(($titip-tringle-width + 2px)) !default;
+        $margin:ceil(($titip-tringle-width + 2px));
         right: -$margin;
     }
     > .titip-content.thick-border {
@@ -356,7 +356,7 @@
         left: -$titip-tringle-width;
     }
     > .titip-content:after {
-        $margin:ceil(($titip-tringle-width + 2px)) !default;
+        $margin:ceil(($titip-tringle-width + 2px));
         left: -$margin;
     }
     > .titip-content.thick-border {

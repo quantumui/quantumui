@@ -25,13 +25,14 @@ angular.module('ngQuantum.dropdown', ['ngQuantum.popMaster'])
             keyboard: true,
             fixWidth: true,
             clearClick: true,
-            holdHoverDelta:true
+            holdHoverDelta: true,
+            dontCompile: false
         };
         this.$get = [
           '$timeout',
           '$rootScope',
-          '$popMaster', '$helpers',
-          function ($timeout, $rootScope, $popMaster, $helpers) {
+          '$popMaster', '$helpers', '$compile',
+          function ($timeout, $rootScope, $popMaster, $helpers, $compile) {
 
               function DropdownFactory(element, config, attr) {
                   var $dropdown = {};
@@ -74,6 +75,13 @@ angular.module('ngQuantum.dropdown', ['ngQuantum.popMaster'])
                       scope.lastIndex = index;
 
                   };
+                  var init = $dropdown.init;
+                  $dropdown.init = function () {
+                      init();
+                      if (options.container !== 'self' && !options.dontCompile) {
+                          $compile(options.targetElement)(scope);
+                      }
+                  }
                   var show = $dropdown.show;
                   $dropdown.show = function (callback) {
                       var promise = show(callback);
@@ -99,7 +107,7 @@ angular.module('ngQuantum.dropdown', ['ngQuantum.popMaster'])
                   $dropdown.hide = function (callback) {
                       scope.lastIndex = -1;
                       angular.element(document).off('keydown.nqDropdown.api.data');
-                      element && element.parent().removeClass('open')
+                      element && element.parent().removeClass('open');
                      return hide(callback);
                   };
                   if (attr && angular.isDefined(options.directive)) {

@@ -155,7 +155,7 @@
     border-radius:ceil(($scrollbar-button-size / 2));
     min-width:$scrollbar-button-size;
     min-height:$scrollbar-button-size;
-    @include gradient-elipse($inner-color: rgba(0, 0, 0, 0.05); $outer-color:rgba(255, 255, 255, 0.3)) !default;
+    @include gradient_elipse($inner-color: rgba(0, 0, 0, 0.05), $outer-color:rgba(255, 255, 255, 0.3));
     @include box-shadow($scrollbar-button-box-shadow);
 
     > span {
@@ -287,16 +287,16 @@ iframe::-webkit-scrollbar {
 }
 
 .bar-info {
-   .scrollbar-variant($scrollbar-info-bg; $scrollbar-info-color;$scrollbar-info-thumb-bg;)                                                                                                 
+   @include scrollbar-variant($scrollbar-info-bg, $scrollbar-info-color,$scrollbar-info-thumb-bg,);                                                                                                 
 }
 .bar-danger {
-   .scrollbar-variant($scrollbar-danger-bg; $scrollbar-danger-color;$scrollbar-danger-thumb-bg;)                                                                                                 
+   @include scrollbar-variant($scrollbar-danger-bg, $scrollbar-danger-color,$scrollbar-danger-thumb-bg,);                                                                                                 
 }
 .bar-warning {
-   .scrollbar-variant($scrollbar-warning-bg; $scrollbar-warning-color;$scrollbar-warning-thumb-bg;)                                                                                                 
+   @include scrollbar-variant($scrollbar-warning-bg, $scrollbar-warning-color,$scrollbar-warning-thumb-bg,);                                                                                                 
 }
 .bar-success {
-   .scrollbar-variant($scrollbar-success-bg; $scrollbar-success-color;$scrollbar-success-thumb-bg;)                                                                                                 
+   @include scrollbar-variant($scrollbar-success-bg, $scrollbar-success-color,$scrollbar-success-thumb-bg,);                                                                                                 
 }
 
 @media (max-width: $screen-xs-max) {

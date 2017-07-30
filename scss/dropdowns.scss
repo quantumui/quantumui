@@ -3,7 +3,7 @@
 // --------------------------------------------------
 
 .caret.big {
-    $caret-width-big: ceil(($caret-width-base * 0.5)) !default;
+    $caret-width-big: ceil(($caret-width-base * 0.5));
   margin-left: ceil(($caret-width-big / 2));
   border-top: $caret-width-big solid;
   border-right: $caret-width-big solid transparent;
@@ -22,7 +22,7 @@
        /*top:0.15em;*/
        margin-top: -0.8em;
     }
-    a& {
+    a & {
       padding-right:1.9em !important;
     }
     &[data-qo-placement^="left"].btn,
@@ -146,7 +146,7 @@
       width:100%;
   }
   > .dc-body {
-      &:extend(.clearfix all);
+      @extend .clearfix;
       padding:7px 10px;
       background-color:#fff;
       border-radius: $border-radius-base;
@@ -206,7 +206,7 @@
 .dropup,
 .navbar-fixed-bottom .dropdown {
   .caret.big {
-        $caret-width-big: ceil(($caret-width-base * 0.5)) !default;
+        $caret-width-big: ceil(($caret-width-base * 0.5));
         border-bottom: $caret-width-big solid;
     }
   // Different positioning for bottom up menu

@@ -66,12 +66,16 @@ angular.module('ngQuantum.services.placement', ['ngQuantum.services.helpers'])
             fn.ensurePosition = function ($target, element, options) {
                 var offset = options.insideFixed ? $target.position() : $target.offset(), ww = window.screen.width, dh = $helpers.docHeight(),
                     tw = $target.width(), th = $target.height(), eh = element.height(), eo = options.insideFixed ? element.position() : element.offset(), classList = $target.attr('class');
+               
                 if (offset.left < 0) {
                     $target.css('left', 0);
                     $target.attr('class', classList.replace('right', 'left'));
                 }
-                else if (offset.left >  (ww - tw)) {
-                    $target.css('left', (element.width() - tw));
+                else if (offset.left > (ww - tw) && ww > tw) {
+                    var left = element.width() - tw;
+                    if (left < 0)
+                        left = parseInt((ww - tw) / 2);
+                    $target.css('left', left);
                     $target.attr('class', classList.replace('left', 'right'));
                 }
                 if (offset.top < 0) {
@@ -79,7 +83,7 @@ angular.module('ngQuantum.services.placement', ['ngQuantum.services.helpers'])
                     $target.attr('class', classList.replace('bottom', 'top'));
                 }
                 else if (offset.top > (dh - th)) {
-                    $target.css('left', (eo.top - th));
+                    $target.css('top', (eo.top - th));
                     $target.attr('class', classList.replace('top', 'bottom'));
                 }
                     
@@ -88,6 +92,7 @@ angular.module('ngQuantum.services.placement', ['ngQuantum.services.helpers'])
             fn.replaceArrow = function ($target, delta, dimension, position) {
                 $target.find('.arrow').css(position, delta ? (50 * (1 - delta / dimension) + "%") : '')
             }
+            fn.getPosition = getPosition;
             function getPosition(element, options) {
                 var el = element[0];
                 var clipRect = (typeof el.getBoundingClientRect == 'function') ? el.getBoundingClientRect() : {
@@ -98,7 +103,7 @@ angular.module('ngQuantum.services.placement', ['ngQuantum.services.helpers'])
                 for (var o in clipRect) {
                     rectObj[o] = clipRect[o];
                 }
-                var offset = options.insideFixed ? element.position() : element.offset();
+                var offset = options && options.insideFixed ? element.position() : element.offset();
                 var result = angular.extend({}, rectObj, offset);
                return result;
             }

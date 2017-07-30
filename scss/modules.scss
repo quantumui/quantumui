@@ -2,31 +2,31 @@
 // DON'T Import These without variables and mixins
 
 // Components w/ Extended
-@import 'dropdowns';
-@import 'modals';
-@import 'tooltip'; //you must remove bootstrap tooltip.less file from bootstrap.less
-@import 'carousel';
-@import 'alert';
+@import "dropdowns.scss";
+@import "modals.scss";
+@import "tooltip.scss"; //you must remove bootstrap tooltip.scss file from bootstrap.scss
+@import "carousel.scss";
+@import "alert.scss";
 
 
 // quantumui components
-@import 'with-arrow';
-@import 'aside';
-@import 'scrollbar';
-@import 'font-icon';
-@import 'calendars';
-@import 'colorpicker';
-@import 'range-input';
-@import 'range-slider';
-@import 'loading';
-@import 'switch-button';
-@import 'listbox';
+@import "with-arrow.scss";
+@import "aside.scss";
+@import "scrollbar.scss";
+@import "font-icon.scss";
+@import "calendars.scss";
+@import "colorpicker.scss";
+@import "range-input.scss";
+@import "range-slider.scss";
+@import "loading.scss";
+@import "switch-button.scss";
+@import "listbox.scss";
 
-@import 'pageable'; //if you don't want to use pageable component u can remove this
+@import "pageable.scss"; //if you don't want to use pageable component u can remove this
 
 
 // bootstrap extend
-@import 'navs-extend';
-@import 'pagination-extend';
-@import 'component-animations';
-@import 'bootstrap-extend';
+@import "navs-extend.scss";
+@import "pagination-extend.scss";
+@import "component-animations.scss";
+@import "bootstrap-extend.scss";

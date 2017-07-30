@@ -94,7 +94,7 @@
     max-height:100%;
     padding:0;
     color :inherit;
-    &:extend(.clearfix all);
+    @extend .clearfix;
 
     .nav {
         color :inherit;
@@ -190,7 +190,7 @@
     } 
     &.left-off-canvas-all,
     &.left-off-canvas-desktop  {
-        width:calc(~'100% + #{$aside-width}');
+        width:calc('100% + #{$aside-width}');
     }
     &.left-off-canvas-all,
     &.left-off-canvas-desktop,
@@ -245,7 +245,7 @@
     }
     &.right-off-canvas-all,
     &.right-off-canvas-desktop  {
-        width:calc(~'100% + #{$aside-width}');
+        width:calc('100% + #{$aside-width}');
         margin-left: -$aside-width;
     }
     &.right-off-canvas-all,

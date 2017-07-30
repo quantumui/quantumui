@@ -1,14 +1,14 @@
-$colorpicker-cell-size              :20px !default;
-$colorpicker-cellspace              :3px !default;
-$colorpicker-cell-border-color      :$skin-base-100 !default;
-$colorpicker-row-cell-count         :8 !default;
-$colorpicker-padding-horizontal     :7px !default;
-$colorpicker-padding-vertical       :7px !default;
+$colorpicker-cell-size              :20px;
+$colorpicker-cellspace              :3px;
+$colorpicker-cell-border-color      :$skin-base-100;
+$colorpicker-row-cell-count         :8;
+$colorpicker-padding-horizontal     :7px;
+$colorpicker-padding-vertical       :7px;
 $colorpicker-calculated-innerwidth  :ceil((($colorpicker-cell-size * $colorpicker-row-cell-count) 
                                      + ($colorpicker-cellspace  * ($colorpicker-row-cell-count - 1))));
-$colorpicker-calculated-width       : ceil(($colorpicker-calculated-innerwidth + ($colorpicker-padding-horizontal * 2) + 2px)) !default;
+$colorpicker-calculated-width       : ceil(($colorpicker-calculated-innerwidth + ($colorpicker-padding-horizontal * 2) + 2px));
 
-$colorpicker-saturation-size        : ceil(($colorpicker-calculated-innerwidth - $colorpicker-cell-size - 15px)) !default;
+$colorpicker-saturation-size        : ceil(($colorpicker-calculated-innerwidth - $colorpicker-cell-size - 15px));
 .color-pick {
         border: 1px solid $colorpicker-cell-border-color;
         width:16px;

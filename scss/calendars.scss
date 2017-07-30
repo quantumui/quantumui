@@ -1,4 +1,4 @@
-$cal-table-min-width: ceil((($cal-table-cell-size * 7) + 2px)) !default;
+$cal-table-min-width: ceil((($cal-table-cell-size * 7) + 2px));
 .calendar-panel {
     display:none;
     position:absolute;
@@ -69,7 +69,46 @@ $cal-table-min-width: ceil((($cal-table-cell-size * 7) + 2px)) !default;
 .calendar-footer:empty {
     display:none;
 }
-
+.calendar-footer-title{
+    background-color:$cal-table-bg;
+    display:block;
+    padding:5px 9px;
+    position:relative;
+    .footer-today{
+        position:absolute;
+        top:5px;
+        right:9px;
+        font-size:1em;
+        cursor:pointer;
+        color:inherit;
+        .fic{
+            font-size:1.1em;
+        }
+    }
+}
+.calendar-header-title{
+    background-color:#fff;
+    display:block;
+    padding:5px 9px;
+    position:relative;
+    font-size:1.2em;
+    font-weight:bold;
+    .header-hide{
+        position:absolute;
+        top:8px;
+        right:9px;
+        cursor:pointer;
+        color:$cal-table-color;
+        font-size:0.7em;
+        font-weight:normal;
+        .fic{
+            font-size:1.5em;
+            line-height:0;
+            top:0.2em;
+            font-weight:bold;
+        }
+    }
+}
 .calendar-table {
     border-collapse: separate;
     min-width:$cal-table-min-width;
@@ -110,7 +149,7 @@ $cal-table-min-width: ceil((($cal-table-cell-size * 7) + 2px)) !default;
         border-left-color:white;
         vertical-align: middle;
         text-align: center;
-        #gradient > .vertical($start-color: $cal-table-bg !default; $end-color: darken($cal-table-bg, 6%))
+        @include gradient_vertical($start-color: $cal-table-bg, $end-color: darken($cal-table-bg, 6%));
     }
 
     &.has-week-no thead th,
@@ -146,10 +185,18 @@ $cal-table-min-width: ceil((($cal-table-cell-size * 7) + 2px)) !default;
     }
     
     tbody th.out-month,
-    tbody td.out-month {
-       opacity:0.8;
-       color:saturate($cal-table-cell-color, 12%);
-       background-color: desaturate($cal-table-bg, 10%);
+    tbody td.out-month,
+    tbody th.out-month.unselectable,
+    tbody td.out-month.unselectable {
+       &,
+       &:hover{
+           cursor:default;
+           pointer-events:none;
+           opacity:0 !important;
+           color:saturate($cal-table-cell-color, 12%);
+           background-color: desaturate($cal-table-bg, 10%);
+       }
+      
     }
     tbody th.weekend,
     tbody td.weekend {
@@ -165,23 +212,30 @@ $cal-table-min-width: ceil((($cal-table-cell-size * 7) + 2px)) !default;
     tbody td:hover {
        opacity:0.9 !important;
     }
+    
     tbody td.selected,
     tbody td.selected:hover {
+       color:darken($cal-table-cell-color, 10%);
+       background-color: darken($cal-table-bg, 10%);
+    }
+    tbody td.model_selected,
+    tbody td.model_selected:hover {
        background-color:$cal-active-bg;
        color:$cal-active-color;
     }
-
     tbody th.unselectable,
     tbody td.unselectable {
        cursor:default;
        cursor:not-allowed;
-       background-color: greyscale($cal-table-bg, 10%);
-       text-decoration:line-through;
+       background-color: greyscale($cal-table-bg, 50%) !important;
+       text-decoration:double;
+       opacity:0.5 !important;
+       color:$cal-panel-color !important;
     }
     tbody th.unselectable:hover,
     tbody td.unselectable:hover {
-       background-color: greyscale($cal-table-bg, 10%);
-       opacity:0.9 !important;
+       background-color: greyscale($cal-table-bg, 50%);
+       opacity:0.5 !important;
        color:$cal-panel-color;
     }
     tr th:last-child,
@@ -209,7 +263,7 @@ table.cal-header-table{
     tr > td.next,
     tr > td.today,
     tr > td.hide-cal{
-        width:25px;
+        width:35px;
         /*overflow:hidden;*/
         vertical-align:middle;
     }
@@ -223,8 +277,13 @@ table.cal-header-table{
         padding:3px 4px;
         border:none;
         margin:0;
+        font-size:1.5em;
         &:focus{
             outline:none;
+        }
+        &:before,
+        &:after{
+            content:'';
         }
     }
     tr > td.before button:before{
@@ -282,7 +341,9 @@ table.cal-header-table{
         opacity:0.9;
     }
 }
-
+.calendar-footer-title + .year-selector{
+    padding-top:3px;
+}
 /*timepicker*/
 .tp-container {
     width:100%;
@@ -400,5 +461,34 @@ table.cal-header-table{
     }
     td.hide-cal{
         display:none;
+    }
+}
+.cal-overlay{
+    display:none;
+    width:100%;
+    position:fixed;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+    background-color:rgba(#000000, 50%/100.0%);
+}
+@media (max-width: 480px){
+    .calendar-panel{
+        padding:0;
+        > div{
+            z-index:1;
+            background-color:inherit;
+        }
+        > div.cal-overlay{
+            display:block;
+            z-index:-1;
+            background-color:rgba(#000000, 50%/100.0%);
+        }
+    }
+    .calendar-footer{
+        margin-top:0;
+        padding-top:3px;
+        border-top: 1px solid darken($cal-table-border-color, 10%);
     }
 }
