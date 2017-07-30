@@ -100,7 +100,7 @@ quantumui/
 │   |   └── quantumui-nojq.js *//include angular.nojq  **exclude pageable***
 │   |   └── quantumui-nojq.min.js *//include angular.nojq  **exclude pageable***
 │   |   └── quantumui-nojq.js.map *//include angular.nojq  **exclude pageable***
-│   |   └── quantumui-all.min.js
+│   |   └── quantumui-all.js
 │   |   └── quantumui-all.min.js
 │   |   └── quantumui-all.min.js.map
 ├── docs/
